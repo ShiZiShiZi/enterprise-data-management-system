@@ -28,7 +28,7 @@ export default {
       }
     },
   created: function () {
-    axios.get('http://localhost:8080/static/businessList.json').then(res => {
+    axios.get('static/businessList.json').then(res => {
       this.businessList = res.data.businessList
       this.name = this.businessList[0].name
     }).catch(function (error) {

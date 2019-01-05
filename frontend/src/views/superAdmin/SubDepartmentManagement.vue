@@ -126,7 +126,7 @@ export default {
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    axios.get('http://localhost:8080/static/developerList.json', {
+    axios.get('static/developerList.json', {
       params: {
         currentPage: this.currentPage,
         pageSize: this.pageSize
@@ -154,7 +154,7 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('http://localhost:8080/static/departmentList2.json', {
+      axios.get('static/departmentList2.json', {
         params: {
           currentPage: this.currentPage,
           pageSize: this.pageSize

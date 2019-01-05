@@ -55,7 +55,7 @@ export default {
     }
   },
   created: function () {
-    axios.get('http://localhost:8080/static/departmentList.json', {
+    axios.get('static/departmentList.json', {
       params: {
         currentPage: this.currentPage,
         pageSize: this.pageSize
@@ -72,7 +72,7 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('http://localhost:8080/static/departmentList2.json', {
+      axios.get('static/departmentList2.json', {
         params: {
           currentPage: this.currentPage,
           pageSize: this.pageSize

@@ -41,7 +41,7 @@ export default {
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    axios.get('http://localhost:8080/static/developerList.json', {
+    axios.get('static/developerList.json', {
       params: {
         id: this.id,
         currentPage: this.currentPage,

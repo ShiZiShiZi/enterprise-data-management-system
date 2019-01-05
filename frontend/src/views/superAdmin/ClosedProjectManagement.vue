@@ -32,7 +32,7 @@ export default {
     }
   },
   created: function () {
-    axios.get('http://localhost:8080/static/departmentList.json').then(res => {
+    axios.get('static/departmentList.json').then(res => {
       this.departmentList = res.data.departmentList
     }).catch(function (error) {
       alert(error)
