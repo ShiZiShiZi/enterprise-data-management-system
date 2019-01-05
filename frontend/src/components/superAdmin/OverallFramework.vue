@@ -22,7 +22,7 @@
           active-text-color="#ffd04b">
           <el-menu-item index="1">
             <i class="el-icon-menu"></i>
-            <span slot="title">企业管理</span>
+            <span slot="title" @click="jumpToBusiness">企业管理</span>
           </el-menu-item>
           <el-submenu index="2">
             <template slot="title">
@@ -44,7 +44,7 @@
           </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-setting"></i>
-            <span slot="title">财务人员管理</span>
+            <span slot="title"  @click="jumpToFinancialPersonnel">财务人员管理</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -59,14 +59,20 @@
 export default {
   name: 'OverallFramework',
   methods: {
-    jumpToDepartment: function () {
-      this.$router.push('/superAdmin/departmentMng')
+    jumpToBusiness: function () {
+      this.$router.push('/superAdmin/businessMng')
     },
     jumpToCloseProject: function () {
       this.$router.push('/superAdmin/closedProjectMng')
     },
     jumpToDoingProject: function () {
       this.$router.push('/superAdmin/doingProjectMng')
+    },
+    jumpToDepartment: function () {
+      this.$router.push('/superAdmin/departmentMng')
+    },
+    jumpToFinancialPersonnel: function () {
+      this.$router.push('/superAdmin/financialPersonnelMng')
     }
   }
 

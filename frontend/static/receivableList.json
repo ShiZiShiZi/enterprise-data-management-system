@@ -1,0 +1,21 @@
+{
+  "options": [{
+    "value": "1",
+    "label": "项目1"
+  }, {
+    "value": "2",
+    "label": "项目2"
+
+  }, {
+    "value": "3",
+    "label": "项目3"
+  }, {
+    "value": "4",
+    "label": "项目4"
+  }, {
+    "value": "5",
+    "label": "项目5"
+  }],
+  "options1": [],
+  "fileList": [{"name": "", "url": ""}]
+}
