@@ -1,21 +1,27 @@
 {
-  "options": [{
-    "value": "1",
+  "projectList": [{
+    "id": "1",
     "label": "项目1"
   }, {
-    "value": "2",
+    "id": "2",
     "label": "项目2"
 
   }, {
-    "value": "3",
+    "id": "3",
     "label": "项目3"
   }, {
-    "value": "4",
+    "id": "4",
     "label": "项目4"
   }, {
-    "value": "5",
+    "id": "5",
     "label": "项目5"
   }],
-  "options1": [],
+  "costTypeList": [{
+    "id": "1",
+    "label": "伙食费"
+  }, {
+      "id": "5",
+      "label": "出行费"
+  }],
   "fileList": [{"name": "", "url": ""}]
 }

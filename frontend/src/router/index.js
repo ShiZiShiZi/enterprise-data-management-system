@@ -7,7 +7,11 @@ import ClosedProjectManagement from '@/views/superAdmin/ClosedProjectManagement'
 import DoingProjectManagement from '@/views/superAdmin/DoingProjectManagement'
 import SubDepartmentManagement from '@/views/superAdmin/SubDepartmentManagement'
 import BusinessManagement from '@/views/superAdmin/BusinessManagement'
+import OverallDeveloper from '@/components/developer/OverallDeveloper'
 import FinancialPersonnelManagement from '@/views/superAdmin/FinancialPersonnelManagement'
+import ViewFeedback from '@/views/developer/ViewFeedback'
+import NewReceivable from '@/views/developer/NewReceivable'
+import NewCost from '@/views/developer/NewCost'
 
 Vue.use(Router)
 
@@ -53,6 +57,28 @@ export default new Router({
           path: 'financialPersonnelMng',
           name: 'FinancialPersonnelManagement',
           component: FinancialPersonnelManagement
+        }
+      ]
+    },
+    {
+      path: '/developer',
+      name: 'OverallDeveloper',
+      component: OverallDeveloper,
+      children: [
+        {
+          path: 'viewFeedback',
+          name: 'ViewFeedback',
+          component: ViewFeedback
+        },
+        {
+          path: 'newReceivable',
+          name: 'NewReceivable',
+          component: NewReceivable
+        },
+        {
+          path: 'newCost',
+          name: 'NewCost',
+          component: NewCost
         }
       ]
     }

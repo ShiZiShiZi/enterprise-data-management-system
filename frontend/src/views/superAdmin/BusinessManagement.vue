@@ -19,6 +19,7 @@
             class="upload-demo"
             :http-request="uploadLogoMethod"
             :file-list="logoList"
+            :limit="1"
             list-type="picture">
       <el-button size="small" slot="trigger" type="primary">选择图片</el-button>
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">更换图标</el-button>
