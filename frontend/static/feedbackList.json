@@ -1,0 +1,31 @@
+{
+  "feedbackList": [{
+    "projectName": "项目一",
+    "type": "应收",
+    "name": "666",
+    "time": "2018.9.10",
+    "status": "待审核",
+    "remark": "777"
+  }, {
+    "projectName": "项目二",
+    "type": "应收",
+    "name": "666",
+    "time": "2018.9.10",
+    "status": "驳回",
+    "remark": "777"
+  }, {
+    "projectName": "项目三",
+    "type": "应收",
+    "name": "666",
+    "time": "2018.9.10",
+    "status": "通过",
+    "remark": "777"
+  }, {
+    "projectName": "项目四",
+    "type": "应收",
+    "name": "666",
+    "time": "2018.9.10",
+    "status": "通过",
+    "remark": "777"
+  }]
+}

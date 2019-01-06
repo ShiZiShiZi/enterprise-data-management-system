@@ -1,0 +1,27 @@
+{
+  "projectList": [{
+    "id": "1",
+    "label": "项目1"
+  }, {
+    "id": "2",
+    "label": "项目2"
+
+  }, {
+    "id": "3",
+    "label": "项目3"
+  }, {
+    "id": "4",
+    "label": "项目4"
+  }, {
+    "id": "5",
+    "label": "项目5"
+  }],
+  "costTypeList": [{
+    "id": "1",
+    "label": "伙食费"
+  }, {
+      "id": "5",
+      "label": "出行费"
+  }],
+  "fileList": [{"name": "", "url": ""}]
+}

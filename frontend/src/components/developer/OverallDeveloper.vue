@@ -22,29 +22,15 @@
           active-text-color="#ffd04b">
           <el-menu-item index="1">
             <i class="el-icon-menu"></i>
-            <span slot="title">企业管理</span>
+            <span slot="title" @click="jumpToViewFeedback">查看反馈</span>
           </el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">
+          <el-menu-item index="2">
               <i class="el-icon-location"></i>
-              <span>项目管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="2-1">
-                <span slot="title" @click="jumpToCloseProject">已关闭项目</span>
-              </el-menu-item>
-              <el-menu-item index="2-2">
-                <span slot="title" @click="jumpToDoingProject">进行中项目</span>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+              <span slot="title" @click="jumpToNewReceivable">新建应收</span>
+          </el-menu-item>
           <el-menu-item index="3">
             <i class="el-icon-document"></i>
-            <span slot="title" @click="jumpToDepartment">部门管理</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">财务人员管理</span>
+            <span slot="title" @click="jumpToNewCost">新建费用</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -57,16 +43,16 @@
 
 <script>
 export default {
-  name: 'OverallFramework',
+  name: 'OverallDeveloper',
   methods: {
-    jumpToDepartment: function () {
-      this.$router.push('/superAdmin/departmentMng')
+    jumpToViewFeedback: function () {
+      this.$router.push('/developer/viewFeedback')
     },
-    jumpToCloseProject: function () {
-      this.$router.push('/superAdmin/closedProjectMng')
+    jumpToNewReceivable: function () {
+      this.$router.push('/developer/newReceivable')
     },
-    jumpToDoingProject: function () {
-      this.$router.push('/superAdmin/doingProjectMng')
+    jumpToNewCost: function () {
+      this.$router.push('/developer/newCost')
     }
   }
 
@@ -85,15 +71,12 @@ export default {
     text-align: center;
     line-height: 60px;
   }
-  .el-main {
-    background-color: #E9EEF3;
-    text-align: center;
-    color: #333;
-  }
+
   .el-aside {
     background-color: #D3DCE6;
     color: #333;
     text-align: center;
+    line-height: 650px;
   }
 
   body > .el-container {

@@ -18,52 +18,29 @@
         <div slot="header" class="clearfix">
           <span>设置部门管理员</span>
         </div>
-        <el-form :model="dynamicValidateForm" label-width="100px" class="demo-dynamic">
-          <el-form-item label="姓名" prop="dname" :rules="[{required: true, message: '请输入姓名',trigger: 'blur'}]"
-          >
-            <el-input v-model.number="dynamicValidateForm.dname"></el-input>
+        <el-form :model="dynamicValidateForm" ref="addDepartmentMngForm" label-width="100px" class="demo-dynamic">
+          <el-form-item label="姓名" prop="name" :rules="dynamicValidateForm.rules.name">
+            <el-input v-model.number="dynamicValidateForm.name"></el-input>
           </el-form-item>
-          <el-form-item
-            prop="email"
-            label="邮箱"
-            :rules="[
-                      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-                      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-                    ]">
+          <el-form-item prop="email" label="邮箱" :rules="dynamicValidateForm.rules.email">
             <el-input v-model="dynamicValidateForm.email"></el-input>
           </el-form-item>
-          <el-form-item label="手机号" prop="phone" :rules="[{required: true, message: '请输入手机号',trigger: 'blur'},
-          { type: 'number', message: '请输入正确的手机号', trigger: ['blur', 'change'] }]"
-          >
+          <el-form-item label="手机号" prop="phone" :rules="dynamicValidateForm.rules.phone">
             <el-input v-model.number="dynamicValidateForm.phone"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="addDepartmentManagement()">提交</el-button>
-            <el-button @click="resetForm()">重置</el-button>
+            <el-button type="primary" @click="addDepartmentManagement('addDepartmentMngForm')">提交</el-button>
+            <el-button @click="resetForm('addDepartmentMngForm')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-card>
     </el-col></el-tab-pane>
     <el-tab-pane label="人员信息"><el-col :span="11">
       <el-card class="box-card">
-        <el-table
-          ref="singleTable"
-          :data="developerList"
-          highlight-current-row>
-          <el-table-column
-            type="index"
-            width="50">
-          </el-table-column>
-          <el-table-column
-            property="id"
-            label="人员id"
-            width="120">
-          </el-table-column>
-          <el-table-column
-            property="name"
-            label="姓名"
-            width="120">
-          </el-table-column>
+        <el-table ref="singleTable" :data="developerList" highlight-current-row>
+          <el-table-column type="index" width="50"></el-table-column>
+          <el-table-column property="id" label="人员id" width="120"></el-table-column>
+          <el-table-column property="name" label="姓名" width="120"></el-table-column>
         </el-table>
         <el-pagination
           @size-change="handleSizeChange"
@@ -105,9 +82,18 @@ export default {
       id: 0,
       name: '',
       dynamicValidateForm: {
-        dname: '',
+        name: '',
         email: '',
-        phone: ''
+        phone: '',
+        rules: {
+          name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
+          email: [
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          ],
+          phone: [{required: true, message: '请输入手机号', trigger: 'blur'},
+            { type: 'number', message: '请输入正确的手机号', trigger: ['blur', 'change'] }]
+        }
       },
       developerList: [],
       currentPage: 1,
@@ -145,16 +131,21 @@ export default {
     onSubmit: function () {
       alert('这里需要添加修改部门名称的请求')
     },
-    addDepartmentManagement: function () {
-      alert('这里需要添加添加部门管理员的请求')
+    addDepartmentManagement: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('这里需要添加添加部门管理员的请求')
+        } else {
+          alert('请按照要求填写')
+        }
+      })
     },
-    resetForm: function () {
-      this.dynamicValidateForm.dname = ''
-      this.dynamicValidateForm.email = ''
+    resetForm: function (formName) {
+      this.$refs[formName].resetFields()
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('http://localhost:8080/static/departmentList2.json', {
+      axios.get('static/departmentList2.json', {
         params: {
           currentPage: this.currentPage,
           pageSize: this.pageSize
