@@ -29,15 +29,15 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入姓名', trigger: 'blur' },
-          { min: 1, max: 12, message: '长度在 1 到 12 个字符', trigger: 'blur' }
+          { min: 1, max: 12, message: '请输入有效的姓名', trigger: 'blur' }
         ],
         mail: [
           { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { min: 3, max: 12, message: '长度在 3 到 12 个字符', trigger: 'blur' }
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ],
         phoneNum: [
           { required: true, message: '请输入电话号码', trigger: 'blur' },
-          { min: 7, max: 11, message: '长度在 7 到 11 个字符', trigger: 'blur' }
+          { min: 7, max: 11, message: '请输入正确的电话号码', trigger: 'blur' }
         ]
       }
     }
@@ -58,7 +58,7 @@ export default {
 
           })
         } else {
-          console.log('error submit!!')
+          alert('error submit!!')
           return false
         }
       })

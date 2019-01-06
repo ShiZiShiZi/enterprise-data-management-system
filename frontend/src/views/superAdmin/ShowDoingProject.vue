@@ -43,7 +43,7 @@ export default {
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    axios.post('static/closedproject.json', {
+    axios.post('http://localhost:8080/static/closedproject.json', {
       params: {
         id: this.id,
         status: 'close'
