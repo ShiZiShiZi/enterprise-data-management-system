@@ -12,6 +12,8 @@ import FinancialPersonnelManagement from '@/views/superAdmin/FinancialPersonnelM
 import ViewFeedback from '@/views/developer/ViewFeedback'
 import NewReceivable from '@/views/developer/NewReceivable'
 import NewCost from '@/views/developer/NewCost'
+import ShowDoingProject from '@/views/superAdmin/ShowDoingProject'
+import ShowClosedProject from '@/views/superAdmin/ShowClosedProject'
 
 Vue.use(Router)
 
@@ -57,6 +59,16 @@ export default new Router({
           path: 'financialPersonnelMng',
           name: 'FinancialPersonnelManagement',
           component: FinancialPersonnelManagement
+        },
+        {
+          path: 'showDoingProject/:id/:name',
+          name: 'ShowDoingProject',
+          component: ShowDoingProject
+        },
+        {
+          path: 'showClosedProject/:id/:name',
+          name: 'ShowClosedProject',
+          component: ShowClosedProject
         }
       ]
     },

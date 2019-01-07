@@ -1,0 +1,8 @@
+{
+  "closedProjectList": [
+    { "id":"1" , "name":"alpha","department": "Alpha","closedtime": "2018-12-17" },
+    { "id":"2" , "name":"beta","department": "Alpha","closedtime": "2018-12-17" },
+    { "id":"3" , "name":"gamma","department": "Beta","closedtime": "2018-12-17" },
+    { "id":"4" , "name":"delta","department": "Beta","closedtime": "2018-12-18" }
+  ]
+}
