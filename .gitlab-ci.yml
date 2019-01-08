@@ -1,9 +1,8 @@
 stages:
-  - bulid
+  - compile
 
 job1:
-  stage: build
-
+  stage: compile
   script:
     - cd backend
     - mvn compile
