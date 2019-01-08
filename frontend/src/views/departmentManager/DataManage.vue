@@ -58,7 +58,7 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels>
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -72,7 +72,7 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels>
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
