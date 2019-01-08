@@ -19,10 +19,10 @@
       <el-card class="box-card">
         <el-row>
           <el-col :span="20">
-            <div id="myChart" :style="{width: '1000px', height: '400px'}"></div>
+            <div id="showTotal" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
           <el-col :span="3">
-            <el-input-number v-model="financialData.financialPart.year" @change="drawLine" :min="2016" :max="2100" label="描述文字"></el-input-number>
+            <el-input-number v-model="financialData.financialPart.year" @change="drawTotal" :min="2016" :max="2100" label="描述文字"></el-input-number>
             <el-alert type="success" :closable="false">
               总收入: {{financialData.totalInput}}
             </el-alert>
@@ -36,37 +36,35 @@
         </el-row>
       </el-card>
     </el-tab-pane>
-    <el-tab-pane label="项目收入"><el-col :span="11">
+    <el-tab-pane label="项目收入" class="finance">
       <el-card class="box-card">
-        <el-table ref="singleTable" :data="developerList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
-          <el-table-column property="name" label="姓名" width="120"></el-table-column>
-        </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="maxPage*10">
-        </el-pagination>
+        <el-row>
+          <el-col :span="16">
+            <div id="showIncome" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels>
+            </el-date-picker>
+          </el-col>
+        </el-row>
       </el-card>
-    </el-col></el-tab-pane>
-    <el-tab-pane label="项目支出"><el-col :span="11">
+    </el-tab-pane>
+    <el-tab-pane label="项目支出" class="finance">
       <el-card class="box-card">
-        <el-table ref="singleTable" :data="developerList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
-          <el-table-column property="name" label="姓名" width="120"></el-table-column>
-        </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="maxPage*10">
-        </el-pagination>
+        <el-row>
+          <el-col :span="16">
+            <div id="showExpenditure" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels>
+            </el-date-picker>
+          </el-col>
+        </el-row>
       </el-card>
-    </el-col></el-tab-pane>
-    <el-tab-pane label="项目利润"><el-col :span="11">
+    </el-tab-pane>
+    <el-tab-pane label="项目利润" class="finance"><el-col :span="11">
       <el-card class="box-card">
         <el-table ref="singleTable" :data="developerList" highlight-current-row>
           <el-table-column type="index" width="50"></el-table-column>
@@ -103,6 +101,13 @@ export default {
           'income': [122, 123, 200, 120, 132, 400, 134, 90, 230, 210, 120, 340],
           'expenditure': [120, 132, 101, 134, 90, 230, 210, 110, 20, 23, 220, 219],
           'profit': [2, -9, 99, -14, 42, 170, -76, -20, 210, 187, -100, 121]}
+      },
+      ProjectData: {
+        chooseDate: '',
+        incomePart: {
+          'data': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]},
+        expenditurePart: {
+          'data': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]}
       }
     }
   },
@@ -122,28 +127,14 @@ export default {
     })
   },
   mounted: function () {
-    this.drawLine()
+    this.drawTotal()
+    this.drawIncome()
+    this.drawExpenditure()
   },
   methods: {
-    resetForm: function (formName) {
-      this.$refs[formName].resetFields()
-    },
-    handleCurrentChange: function (currentPage) {
-      this.currentPage = currentPage
-      axios.get('static/departmentList2.json', {
-        params: {
-          currentPage: this.currentPage,
-          pageSize: this.pageSize
-        }
-      }).then(res => {
-        this.departmentList = res.data.departmentList
-      }).catch(function (error) {
-        alert(error)
-      })
-    },
-    drawLine: function () {
+    drawTotal: function () {
       // to do fasong qingqiu
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
+      let myChart = this.$echarts.init(document.getElementById('showTotal'))
       let colors = ['#5793f3', '#d14a61', '#675bba']
 
       let option = {
@@ -236,6 +227,126 @@ export default {
         ]
       }
       myChart.setOption(option, true)
+    },
+    drawIncome: function () {
+      // to do fasong qingqiu
+      let showIncome = this.$echarts.init(document.getElementById('showIncome'))
+
+      let option = {
+        title: {
+          text: '项目收入对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {
+              show: true,
+              type: ['pie']
+            },
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        calculable: true,
+        series: [
+          {
+            name: '收入',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.incomePart.data
+          }
+        ]
+      }
+      showIncome.setOption(option, true)
+    },
+    drawExpenditure: function () {
+      // to do fasong qingqiu
+      let showExpenditure = this.$echarts.init(document.getElementById('showExpenditure'))
+
+      let option = {
+        title: {
+          text: '项目支出对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {
+              show: true,
+              type: ['pie']
+            },
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        calculable: true,
+        series: [
+          {
+            name: '支出',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.expenditurePart.data
+          }
+        ]
+      }
+      showExpenditure.setOption(option, true)
     }
   }
 }
