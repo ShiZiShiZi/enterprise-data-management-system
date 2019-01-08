@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.hfut.mapper.ContractMapper">
   <resultMap id="BaseResultMap" type="org.hfut.pojo.Contract">
-    <id column="id" jdbcType="INTEGER" property="id"/>
+      <id column="id" jdbcType="INTEGER" property="id"/>
+      <result column="name" jdbcType="VARCHAR" property="name"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.hfut.pojo.Contract">
-    <result column="contract" jdbcType="LONGVARBINARY" property="contract"/>
+      <result column="contract" jdbcType="LONGVARBINARY" property="contract"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id
+    id, name
   </sql>
   <sql id="Blob_Column_List">
     contract
@@ -76,12 +77,12 @@
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List"/>
+      <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List"/>
+      <include refid="Blob_Column_List"/>
     from contract
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -92,20 +93,20 @@
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List"/>
+      <include refid="Base_Column_List"/>
     from contract
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
+      select
+      <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List"/>
+      <include refid="Blob_Column_List"/>
     from contract
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -116,15 +117,15 @@
   <delete id="deleteByExample" parameterType="org.hfut.pojo.ContractExample">
     delete from contract
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="org.hfut.pojo.Contract">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into contract (contract)
-    values (#{contract,jdbcType=LONGVARBINARY})
+      insert into contract (name, contract)
+      values (#{name,jdbcType=VARCHAR}, #{contract,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="org.hfut.pojo.Contract">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -132,11 +133,17 @@
     </selectKey>
     insert into contract
     <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="name != null">
+            name,
+        </if>
       <if test="contract != null">
         contract,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="name != null">
+            #{name,jdbcType=VARCHAR},
+        </if>
       <if test="contract != null">
         #{contract,jdbcType=LONGVARBINARY},
       </if>
@@ -145,7 +152,7 @@
   <select id="countByExample" parameterType="org.hfut.pojo.ContractExample" resultType="java.lang.Long">
     select count(*) from contract
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause"/>
+        <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -154,32 +161,40 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+        <if test="record.name != null">
+            name = #{record.name,jdbcType=VARCHAR},
+        </if>
       <if test="record.contract != null">
         contract = #{record.contract,jdbcType=LONGVARBINARY},
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause"/>
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update contract
     set id = #{record.id,jdbcType=INTEGER},
-    contract = #{record.contract,jdbcType=LONGVARBINARY}
+      name = #{record.name,jdbcType=VARCHAR},
+      contract = #{record.contract,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause"/>
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update contract
-    set id = #{record.id,jdbcType=INTEGER}
+      set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause"/>
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="org.hfut.pojo.Contract">
     update contract
     <set>
+        <if test="name != null">
+            name = #{name,jdbcType=VARCHAR},
+        </if>
       <if test="contract != null">
         contract = #{contract,jdbcType=LONGVARBINARY},
       </if>
@@ -188,7 +203,13 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.hfut.pojo.Contract">
     update contract
-    set contract = #{contract,jdbcType=LONGVARBINARY}
+    set name = #{name,jdbcType=VARCHAR},
+      contract = #{contract,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="org.hfut.pojo.Contract">
+    update contract
+    set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

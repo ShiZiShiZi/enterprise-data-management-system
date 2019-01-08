@@ -3,14 +3,14 @@ package org.hfut.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContractExample {
+public class FinancialLogContractExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ContractExample() {
+    public FinancialLogContractExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,133 +104,123 @@ public class ContractExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdIsNull() {
-            addCriterion("id is null");
+        public Criteria andFinancialLogIdIsNull() {
+            addCriterion("financial_log_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdIsNotNull() {
-            addCriterion("id is not null");
+        public Criteria andFinancialLogIdIsNotNull() {
+            addCriterion("financial_log_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
-            addCriterion("id =", value, "id");
+        public Criteria andFinancialLogIdEqualTo(Integer value) {
+            addCriterion("financial_log_id =", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("id <>", value, "id");
+        public Criteria andFinancialLogIdNotEqualTo(Integer value) {
+            addCriterion("financial_log_id <>", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("id >", value, "id");
+        public Criteria andFinancialLogIdGreaterThan(Integer value) {
+            addCriterion("financial_log_id >", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("id >=", value, "id");
+        public Criteria andFinancialLogIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("financial_log_id >=", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
-            addCriterion("id <", value, "id");
+        public Criteria andFinancialLogIdLessThan(Integer value) {
+            addCriterion("financial_log_id <", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("id <=", value, "id");
+        public Criteria andFinancialLogIdLessThanOrEqualTo(Integer value) {
+            addCriterion("financial_log_id <=", value, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
-            addCriterion("id in", values, "id");
+        public Criteria andFinancialLogIdIn(List<Integer> values) {
+            addCriterion("financial_log_id in", values, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("id not in", values, "id");
+        public Criteria andFinancialLogIdNotIn(List<Integer> values) {
+            addCriterion("financial_log_id not in", values, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("id between", value1, value2, "id");
+        public Criteria andFinancialLogIdBetween(Integer value1, Integer value2) {
+            addCriterion("financial_log_id between", value1, value2, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("id not between", value1, value2, "id");
+        public Criteria andFinancialLogIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("financial_log_id not between", value1, value2, "financialLogId");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNull() {
-            addCriterion("name is null");
+        public Criteria andContractIdIsNull() {
+            addCriterion("contract_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("name is not null");
+        public Criteria andContractIdIsNotNull() {
+            addCriterion("contract_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("name =", value, "name");
+        public Criteria andContractIdEqualTo(Integer value) {
+            addCriterion("contract_id =", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("name <>", value, "name");
+        public Criteria andContractIdNotEqualTo(Integer value) {
+            addCriterion("contract_id <>", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("name >", value, "name");
+        public Criteria andContractIdGreaterThan(Integer value) {
+            addCriterion("contract_id >", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("name >=", value, "name");
+        public Criteria andContractIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("contract_id >=", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("name <", value, "name");
+        public Criteria andContractIdLessThan(Integer value) {
+            addCriterion("contract_id <", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("name <=", value, "name");
+        public Criteria andContractIdLessThanOrEqualTo(Integer value) {
+            addCriterion("contract_id <=", value, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLike(String value) {
-            addCriterion("name like", value, "name");
+        public Criteria andContractIdIn(List<Integer> values) {
+            addCriterion("contract_id in", values, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion("name not like", value, "name");
+        public Criteria andContractIdNotIn(List<Integer> values) {
+            addCriterion("contract_id not in", values, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("name in", values, "name");
+        public Criteria andContractIdBetween(Integer value1, Integer value2) {
+            addCriterion("contract_id between", value1, value2, "contractId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("name not in", values, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
+        public Criteria andContractIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("contract_id not between", value1, value2, "contractId");
             return (Criteria) this;
         }
     }

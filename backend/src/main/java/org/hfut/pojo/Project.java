@@ -9,15 +9,15 @@ public class Project {
 
     private String description;
 
-    private Date starttime;
+    private Date startTime;
 
-    private Date finishtime;
+    private Date finishTime;
 
-    private Integer departmentid;
+    private Integer departmentId;
 
     private Boolean active;
 
-    private Date closetime;
+    private Date closeTime;
 
     public Integer getId() {
         return id;
@@ -43,28 +43,28 @@ public class Project {
         this.description = description == null ? null : description.trim();
     }
 
-    public Date getStarttime() {
-        return starttime;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getFinishtime() {
-        return finishtime;
+    public Date getFinishTime() {
+        return finishTime;
     }
 
-    public void setFinishtime(Date finishtime) {
-        this.finishtime = finishtime;
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
     }
 
-    public Integer getDepartmentid() {
-        return departmentid;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentid(Integer departmentid) {
-        this.departmentid = departmentid;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Boolean getActive() {
@@ -75,11 +75,11 @@ public class Project {
         this.active = active;
     }
 
-    public Date getClosetime() {
-        return closetime;
+    public Date getCloseTime() {
+        return closeTime;
     }
 
-    public void setClosetime(Date closetime) {
-        this.closetime = closetime;
+    public void setCloseTime(Date closeTime) {
+        this.closeTime = closeTime;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.hfut.mapper.DepartmentMapper">
-    <resultMap id="BaseResultMap" type="org.hfut.pojo.Department">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+<mapper namespace="org.hfut.mapper.ProjectManagerMapper">
+    <resultMap id="BaseResultMap" type="org.hfut.pojo.ProjectManagerKey">
+        <id column="project_id" jdbcType="INTEGER" property="projectId"/>
+        <id column="project_people_id" jdbcType="INTEGER" property="projectPeopleId"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,101 +64,82 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name
+    project_id, project_people_id
   </sql>
-    <select id="selectByExample" parameterType="org.hfut.pojo.DepartmentExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="org.hfut.pojo.ProjectManagerExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
-        from department
+        <include refid="Base_Column_List"/>
+        from project_manager
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+        <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from department
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from department
-    where id = #{id,jdbcType=INTEGER}
+    <delete id="deleteByPrimaryKey" parameterType="org.hfut.pojo.ProjectManagerKey">
+    delete from project_manager
+    where project_id = #{projectId,jdbcType=INTEGER}
+      and project_people_id = #{projectPeopleId,jdbcType=INTEGER}
   </delete>
-    <delete id="deleteByExample" parameterType="org.hfut.pojo.DepartmentExample">
-        delete from department
+    <delete id="deleteByExample" parameterType="org.hfut.pojo.ProjectManagerExample">
+        delete from project_manager
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+        <include refid="Example_Where_Clause"/>
     </if>
   </delete>
-    <insert id="insert" parameterType="org.hfut.pojo.Department">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into department (name)
-        values (#{name,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="org.hfut.pojo.ProjectManagerKey">
+    insert into project_manager (project_id, project_people_id)
+    values (#{projectId,jdbcType=INTEGER}, #{projectPeopleId,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" parameterType="org.hfut.pojo.Department">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into department
+    <insert id="insertSelective" parameterType="org.hfut.pojo.ProjectManagerKey">
+        insert into project_manager
     <trim prefix="(" suffix=")" suffixOverrides=",">
-        <if test="name != null">
-            name,
+        <if test="projectId != null">
+            project_id,
+      </if>
+        <if test="projectPeopleId != null">
+            project_people_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-        <if test="name != null">
-            #{name,jdbcType=VARCHAR},
+        <if test="projectId != null">
+            #{projectId,jdbcType=INTEGER},
+      </if>
+        <if test="projectPeopleId != null">
+            #{projectPeopleId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-    <select id="countByExample" parameterType="org.hfut.pojo.DepartmentExample" resultType="java.lang.Long">
-        select count(*) from department
+    <select id="countByExample" parameterType="org.hfut.pojo.ProjectManagerExample" resultType="java.lang.Long">
+        select count(*) from project_manager
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+        <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-      update department
+      update project_manager
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        <if test="record.projectId != null">
+            project_id = #{record.projectId,jdbcType=INTEGER},
       </if>
-        <if test="record.name != null">
-            name = #{record.name,jdbcType=VARCHAR},
-        </if>
+        <if test="record.projectPeopleId != null">
+            project_people_id = #{record.projectPeopleId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-      update department
-      set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR}
+      update project_manager
+      set project_id = #{record.projectId,jdbcType=INTEGER},
+      project_people_id = #{record.projectPeopleId,jdbcType=INTEGER}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+        <include refid="Update_By_Example_Where_Clause"/>
     </if>
-  </update>
-    <update id="updateByPrimaryKeySelective" parameterType="org.hfut.pojo.Department">
-        update department
-        <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="org.hfut.pojo.Department">
-    update department
-    set name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
