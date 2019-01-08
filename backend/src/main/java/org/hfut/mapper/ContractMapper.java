@@ -31,4 +31,6 @@ public interface ContractMapper {
     int updateByPrimaryKeySelective(Contract record);
 
     int updateByPrimaryKeyWithBLOBs(Contract record);
+
+    int updateByPrimaryKey(Contract record);
 }

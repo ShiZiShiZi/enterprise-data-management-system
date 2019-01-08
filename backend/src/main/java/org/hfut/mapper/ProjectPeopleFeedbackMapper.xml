@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hfut.mapper.ProjectPeopleFeedbackMapper">
+    <resultMap id="BaseResultMap" type="org.hfut.pojo.ProjectPeopleFeedback">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="request_people_id" jdbcType="INTEGER" property="requestPeopleId"/>
+        <result column="request_time" jdbcType="TIMESTAMP" property="requestTime"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="response_peopele_id" jdbcType="INTEGER" property="responsePeopeleId"/>
+        <result column="reesponse_time" jdbcType="TIMESTAMP" property="reesponseTime"/>
+        <result column="target_people_id" jdbcType="INTEGER" property="targetPeopleId"/>
+        <result column="target_department_id" jdbcType="INTEGER" property="targetDepartmentId"/>
+        <result column="target_project_id" jdbcType="INTEGER" property="targetProjectId"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, request_people_id, request_time, state, response_peopele_id, reesponse_time, 
+    target_people_id, target_department_id, target_project_id, description
+  </sql>
+    <select id="selectByExample" parameterType="org.hfut.pojo.ProjectPeopleFeedbackExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from project_people_feedback
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from project_people_feedback
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from project_people_feedback
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="org.hfut.pojo.ProjectPeopleFeedbackExample">
+        delete from project_people_feedback
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="org.hfut.pojo.ProjectPeopleFeedback">
+    insert into project_people_feedback (id, request_people_id, request_time, 
+      state, response_peopele_id, reesponse_time, 
+      target_people_id, target_department_id, target_project_id, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{requestPeopleId,jdbcType=INTEGER}, #{requestTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=TINYINT}, #{responsePeopeleId,jdbcType=INTEGER}, #{reesponseTime,jdbcType=TIMESTAMP}, 
+      #{targetPeopleId,jdbcType=INTEGER}, #{targetDepartmentId,jdbcType=INTEGER}, #{targetProjectId,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="org.hfut.pojo.ProjectPeopleFeedback">
+        insert into project_people_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="requestPeopleId != null">
+                request_people_id,
+            </if>
+            <if test="requestTime != null">
+                request_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="responsePeopeleId != null">
+                response_peopele_id,
+            </if>
+            <if test="reesponseTime != null">
+                reesponse_time,
+            </if>
+            <if test="targetPeopleId != null">
+                target_people_id,
+            </if>
+            <if test="targetDepartmentId != null">
+                target_department_id,
+            </if>
+            <if test="targetProjectId != null">
+                target_project_id,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="requestPeopleId != null">
+                #{requestPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="requestTime != null">
+                #{requestTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="responsePeopeleId != null">
+                #{responsePeopeleId,jdbcType=INTEGER},
+            </if>
+            <if test="reesponseTime != null">
+                #{reesponseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="targetPeopleId != null">
+                #{targetPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="targetDepartmentId != null">
+                #{targetDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="targetProjectId != null">
+                #{targetProjectId,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="org.hfut.pojo.ProjectPeopleFeedbackExample" resultType="java.lang.Long">
+        select count(*) from project_people_feedback
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update project_people_feedback
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.requestPeopleId != null">
+                request_people_id = #{record.requestPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="record.requestTime != null">
+                request_time = #{record.requestTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state,jdbcType=TINYINT},
+            </if>
+            <if test="record.responsePeopeleId != null">
+                response_peopele_id = #{record.responsePeopeleId,jdbcType=INTEGER},
+            </if>
+            <if test="record.reesponseTime != null">
+                reesponse_time = #{record.reesponseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.targetPeopleId != null">
+                target_people_id = #{record.targetPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="record.targetDepartmentId != null">
+                target_department_id = #{record.targetDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="record.targetProjectId != null">
+                target_project_id = #{record.targetProjectId,jdbcType=INTEGER},
+            </if>
+            <if test="record.description != null">
+                description = #{record.description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update project_people_feedback
+        set id = #{record.id,jdbcType=INTEGER},
+        request_people_id = #{record.requestPeopleId,jdbcType=INTEGER},
+        request_time = #{record.requestTime,jdbcType=TIMESTAMP},
+        state = #{record.state,jdbcType=TINYINT},
+        response_peopele_id = #{record.responsePeopeleId,jdbcType=INTEGER},
+        reesponse_time = #{record.reesponseTime,jdbcType=TIMESTAMP},
+        target_people_id = #{record.targetPeopleId,jdbcType=INTEGER},
+        target_department_id = #{record.targetDepartmentId,jdbcType=INTEGER},
+        target_project_id = #{record.targetProjectId,jdbcType=INTEGER},
+        description = #{record.description,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="org.hfut.pojo.ProjectPeopleFeedback">
+        update project_people_feedback
+        <set>
+            <if test="requestPeopleId != null">
+                request_people_id = #{requestPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="requestTime != null">
+                request_time = #{requestTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="responsePeopeleId != null">
+                response_peopele_id = #{responsePeopeleId,jdbcType=INTEGER},
+            </if>
+            <if test="reesponseTime != null">
+                reesponse_time = #{reesponseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="targetPeopleId != null">
+                target_people_id = #{targetPeopleId,jdbcType=INTEGER},
+            </if>
+            <if test="targetDepartmentId != null">
+                target_department_id = #{targetDepartmentId,jdbcType=INTEGER},
+            </if>
+            <if test="targetProjectId != null">
+                target_project_id = #{targetProjectId,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.hfut.pojo.ProjectPeopleFeedback">
+    update project_people_feedback
+    set request_people_id = #{requestPeopleId,jdbcType=INTEGER},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=TINYINT},
+      response_peopele_id = #{responsePeopeleId,jdbcType=INTEGER},
+      reesponse_time = #{reesponseTime,jdbcType=TIMESTAMP},
+      target_people_id = #{targetPeopleId,jdbcType=INTEGER},
+      target_department_id = #{targetDepartmentId,jdbcType=INTEGER},
+      target_project_id = #{targetProjectId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
