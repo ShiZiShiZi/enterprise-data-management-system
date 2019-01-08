@@ -64,21 +64,20 @@
         </el-row>
       </el-card>
     </el-tab-pane>
-    <el-tab-pane label="项目利润" class="finance"><el-col :span="11">
+    <el-tab-pane label="项目利润" class="finance">
       <el-card class="box-card">
-        <el-table ref="singleTable" :data="developerList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
-          <el-table-column property="name" label="姓名" width="120"></el-table-column>
-        </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="maxPage*10">
-        </el-pagination>
+        <el-row>
+          <el-col :span="16">
+            <div id="showProfit" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels>
+            </el-date-picker>
+          </el-col>
+        </el-row>
       </el-card>
-    </el-col></el-tab-pane>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -107,7 +106,10 @@ export default {
         incomePart: {
           'data': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]},
         expenditurePart: {
-          'data': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]}
+          'data': [{value: 120, name: '项目1'}, {value: 132, name: '项目2'}, {value: 101, name: '项目3'}, {value: 134, name: '项目4'}, {value: 90, name: '项目5'}, {value: 230, name: '项目6'}, {value: 210, name: '项目7'}, {value: 110, name: '项目8'}, {value: 200, name: '项目9'}, {value: 230, name: '项目10'}, {value: 220, name: '项目11'}, {value: 219, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]},
+        profitPart: {
+          'data1': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}],
+          'data2': [{value: 0.1, name: '项目1'}, {value: 0.2, name: '项目2'}, {value: 0.2, name: '项目3'}, {value: 0.15, name: '项目4'}, {value: 0.7, name: '项目5'}, {value: 0.42, name: '项目6'}, {value: 0.42, name: '项目7'}, {value: 0.43, name: '项目8'}, {value: 0.27, name: '项目9'}, {value: 0.12, name: '项目10'}, {value: 0.54, name: '项目11'}, {value: 0.56, name: '项目12'}, {value: 0.17, name: '项目13'}, {value: 0.12, name: '项目14'}, {value: 0.34, name: '项目15'}]}
       }
     }
   },
@@ -130,6 +132,7 @@ export default {
     this.drawTotal()
     this.drawIncome()
     this.drawExpenditure()
+    this.drawProfit()
   },
   methods: {
     drawTotal: function () {
@@ -347,6 +350,90 @@ export default {
         ]
       }
       showExpenditure.setOption(option, true)
+    },
+    drawProfit: function () {
+      // to do fasong qingqiu
+      let showProfit = this.$echarts.init(document.getElementById('showProfit'))
+
+      let option = {
+        title: {
+          text: '项目利润对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {
+              show: true,
+              type: ['pie']
+            },
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        calculable: true,
+        series: [
+          {
+            name: '利润',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['25%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.profitPart.data1
+          },
+          {
+            name: '利润率',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['75%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.profitPart.data2
+          }
+        ]
+      }
+      showProfit.setOption(option, true)
     }
   }
 }
