@@ -44,7 +44,7 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels>
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -248,19 +248,6 @@ export default {
           x: 'center',
           y: 'bottom'
         },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: {show: true},
-            dataView: {show: true, readOnly: false},
-            magicType: {
-              show: true,
-              type: ['pie']
-            },
-            restore: {show: true},
-            saveAsImage: {show: true}
-          }
-        },
         calculable: true,
         series: [
           {
@@ -308,19 +295,6 @@ export default {
           x: 'center',
           y: 'bottom'
         },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: {show: true},
-            dataView: {show: true, readOnly: false},
-            magicType: {
-              show: true,
-              type: ['pie']
-            },
-            restore: {show: true},
-            saveAsImage: {show: true}
-          }
-        },
         calculable: true,
         series: [
           {
@@ -367,19 +341,6 @@ export default {
         legend: {
           x: 'center',
           y: 'bottom'
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: {show: true},
-            dataView: {show: true, readOnly: false},
-            magicType: {
-              show: true,
-              type: ['pie']
-            },
-            restore: {show: true},
-            saveAsImage: {show: true}
-          }
         },
         calculable: true,
         series: [
