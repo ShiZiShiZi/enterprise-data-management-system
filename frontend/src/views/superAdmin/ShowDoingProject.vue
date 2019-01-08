@@ -17,7 +17,7 @@
         </el-alert>
       </el-col>
     </el-row>
-    <el-button type="primary" icon="el-icon-delete">关闭项目</el-button>
+    <el-button type="primary" icon="el-icon-delete" @click="closeProject">关闭项目</el-button>
   </el-card>
 </template>
 
@@ -43,12 +43,16 @@ export default {
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    axios.post('http://localhost:8080/static/closedproject.json', {
+    axios.get('http://localhost:8080/static/developerList.json', {
       params: {
         id: this.id,
-        status: 'close'
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
       }
-    }).then().catch(function (error) {
+    }).then(res => {
+      this.developerList = res.data.developerList
+      this.maxPage = res.data.maxPage
+    }).catch(function (error) {
       alert(error)
     })
   },
@@ -151,6 +155,9 @@ export default {
         ]
       }
       myChart.setOption(option, true)
+    },
+    closeProject: function () {
+      alert('这里需要添加关闭项目的请求')
     }
   }
 }
