@@ -14,6 +14,8 @@ import NewReceivable from '@/views/developer/NewReceivable'
 import NewCost from '@/views/developer/NewCost'
 import ShowDoingProject from '@/views/superAdmin/ShowDoingProject'
 import ShowClosedProject from '@/views/superAdmin/ShowClosedProject'
+import OverallDepartment from '@/components/departmentManager/OverallDepartment'
+import ProjectManage from '@/views/departmentManager/ProjectManage'
 
 Vue.use(Router)
 
@@ -91,6 +93,18 @@ export default new Router({
           path: 'newCost',
           name: 'NewCost',
           component: NewCost
+        }
+      ]
+    },
+    {
+      path: '/departmentManager',
+      name: 'OverallDepartment',
+      component: OverallDepartment,
+      children: [
+        {
+          path: 'projectManage',
+          name: 'ProjectManage',
+          component: ProjectManage
         }
       ]
     }
