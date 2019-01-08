@@ -2,7 +2,7 @@ package org.hfut.controller.global;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.hfut.annotation.Log;
+//import org.hfut.annotation.Log;
 import org.hfut.pojo.ProjectPeople;
 import org.hfut.service.global.ProjectPeopleSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ProjectPeopleSearchController {
     @Autowired
     private ProjectPeopleSearchService projectPeopleSearchService;
 
-    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 1)
+//    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 1)
     @ResponseBody
     @RequestMapping(value = "/projectPeopleSearch", method = RequestMethod.GET)
     public Map<String, Object> selectProjectPeople(@RequestParam(name = "currentPage", required = false) Integer currentPage,
