@@ -8,6 +8,9 @@ import org.hfut.pojo.ProjectExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,10 +53,56 @@ public class ProjectSearchService {
         }
     }
 
-    public void selectByStartTime(ProjectExample.Criteria criteria, List<String> startTimes) {
+    public void selectByTime(ProjectExample.Criteria criteria, List<String> times, Integer type) throws ParseException {
         final int timeLength = 2;
-        if(startTimes != null && startTimes.size() == timeLength) {
+        final int startTime = 1;
+        final int finishTime = 2;
+        final int closeTime = 3;
 
+        if(times != null && times.size() == timeLength) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            Date startDate = dateFormat.parse(times.get(0));
+            Date endDate = dateFormat.parse(times.get(1));
+
+            switch(type) {
+                case startTime:
+                    criteria.andStartTimeBetween(startDate, endDate);
+                    break;
+                case finishTime:
+                    criteria.andFinishTimeBetween(startDate, endDate);
+                    break;
+                case closeTime:
+                    criteria.andCloseTimeBetween(startDate, endDate);
+                    break;
+                default:
+            }
         }
     }
+
+    public void selectByDepartmentId(ProjectExample.Criteria criteria, Integer departmentId) {
+        if(departmentId != null) {
+            criteria.andDepartmentIdEqualTo(departmentId);
+        }
+    }
+
+    public void selectByActive(ProjectExample.Criteria criteria, Integer isActive) {
+        if(isActive != null) {
+            if(isActive == 1) {
+                criteria.andActiveEqualTo(true);
+            } else {
+                criteria.andActiveEqualTo(false);
+            }
+        }
+    }
+
+    public void sortBy(ProjectExample projectExample, String sortColumn, Integer sortOrder) {
+        String sortOrderString;
+        if(sortOrder == 1) {
+            sortOrderString = " ASC";
+        } else {
+            sortOrderString = " DESC";
+        }
+        projectExample.setOrderByClause(sortColumn + sortOrderString);
+    }
+
 }
