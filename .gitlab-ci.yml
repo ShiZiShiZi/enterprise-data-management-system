@@ -1,0 +1,10 @@
+stages:
+  - compile
+
+job1:
+  stage: compile
+  script:
+    - cd backend
+    - mvn compile
+  tags:
+    - runner-WX
