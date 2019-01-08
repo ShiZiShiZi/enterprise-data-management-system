@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.hfut.mapper.ProjectMapper">
-    <resultMap id="BaseResultMap" type="org.hfut.pojo.Project">
+<mapper namespace="org.hfut.mapper.FinancialModelMapper">
+    <resultMap id="BaseResultMap" type="org.hfut.pojo.FinancialModel">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="title" jdbcType="VARCHAR" property="title"/>
-        <result column="description" jdbcType="VARCHAR" property="description"/>
-        <result column="start_time" jdbcType="DATE" property="startTime"/>
-        <result column="finish_time" jdbcType="DATE" property="finishTime"/>
-        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="num" jdbcType="DOUBLE" property="num"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="project_Id" jdbcType="INTEGER" property="projectId"/>
         <result column="active" jdbcType="BIT" property="active"/>
-        <result column="close_time" jdbcType="DATE" property="closeTime"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -72,15 +70,15 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, title, description, start_time, finish_time, department_id, active, close_time
+    id, name, num, type, project_Id, active
   </sql>
-    <select id="selectByExample" parameterType="org.hfut.pojo.ProjectExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="org.hfut.pojo.FinancialModelExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from project
+        from financial_model
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -91,114 +89,94 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from project
+        from financial_model
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from project
+    delete from financial_model
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <delete id="deleteByExample" parameterType="org.hfut.pojo.ProjectExample">
-        delete from project
+    <delete id="deleteByExample" parameterType="org.hfut.pojo.FinancialModelExample">
+        delete from financial_model
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="org.hfut.pojo.Project">
+    <insert id="insert" parameterType="org.hfut.pojo.FinancialModel">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into project (title, description, start_time,
-        finish_time, department_id, active,
-        close_time)
-        values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{startTime,jdbcType=DATE},
-        #{finishTime,jdbcType=DATE}, #{departmentId,jdbcType=INTEGER}, #{active,jdbcType=BIT},
-        #{closeTime,jdbcType=DATE})
+        insert into financial_model (name, num, type,
+        project_Id, active)
+        values (#{name,jdbcType=VARCHAR}, #{num,jdbcType=DOUBLE}, #{type,jdbcType=TINYINT},
+        #{projectId,jdbcType=INTEGER}, #{active,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="org.hfut.pojo.Project">
+    <insert id="insertSelective" parameterType="org.hfut.pojo.FinancialModel">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into project
+        insert into financial_model
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="title != null">
-                title,
+            <if test="name != null">
+                name,
             </if>
-            <if test="description != null">
-                description,
+            <if test="num != null">
+                num,
             </if>
-            <if test="startTime != null">
-                start_time,
+            <if test="type != null">
+                type,
             </if>
-            <if test="finishTime != null">
-                finish_time,
-            </if>
-            <if test="departmentId != null">
-                department_id,
+            <if test="projectId != null">
+                project_Id,
             </if>
             <if test="active != null">
                 active,
             </if>
-            <if test="closeTime != null">
-                close_time,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="title != null">
-                #{title,jdbcType=VARCHAR},
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
-            <if test="description != null">
-                #{description,jdbcType=VARCHAR},
+            <if test="num != null">
+                #{num,jdbcType=DOUBLE},
             </if>
-            <if test="startTime != null">
-                #{startTime,jdbcType=DATE},
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
             </if>
-            <if test="finishTime != null">
-                #{finishTime,jdbcType=DATE},
-            </if>
-            <if test="departmentId != null">
-                #{departmentId,jdbcType=INTEGER},
+            <if test="projectId != null">
+                #{projectId,jdbcType=INTEGER},
             </if>
             <if test="active != null">
                 #{active,jdbcType=BIT},
             </if>
-            <if test="closeTime != null">
-                #{closeTime,jdbcType=DATE},
-            </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="org.hfut.pojo.ProjectExample" resultType="java.lang.Long">
-        select count(*) from project
+    <select id="countByExample" parameterType="org.hfut.pojo.FinancialModelExample" resultType="java.lang.Long">
+        select count(*) from financial_model
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update project
+        update financial_model
         <set>
             <if test="record.id != null">
                 id = #{record.id,jdbcType=INTEGER},
             </if>
-            <if test="record.title != null">
-                title = #{record.title,jdbcType=VARCHAR},
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
             </if>
-            <if test="record.description != null">
-                description = #{record.description,jdbcType=VARCHAR},
+            <if test="record.num != null">
+                num = #{record.num,jdbcType=DOUBLE},
             </if>
-            <if test="record.startTime != null">
-                start_time = #{record.startTime,jdbcType=DATE},
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=TINYINT},
             </if>
-            <if test="record.finishTime != null">
-                finish_time = #{record.finishTime,jdbcType=DATE},
-            </if>
-            <if test="record.departmentId != null">
-                department_id = #{record.departmentId,jdbcType=INTEGER},
+            <if test="record.projectId != null">
+                project_Id = #{record.projectId,jdbcType=INTEGER},
             </if>
             <if test="record.active != null">
                 active = #{record.active,jdbcType=BIT},
-            </if>
-            <if test="record.closeTime != null">
-                close_time = #{record.closeTime,jdbcType=DATE},
             </if>
         </set>
         <if test="_parameter != null">
@@ -206,55 +184,45 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update project
+        update financial_model
         set id = #{record.id,jdbcType=INTEGER},
-        title = #{record.title,jdbcType=VARCHAR},
-        description = #{record.description,jdbcType=VARCHAR},
-        start_time = #{record.startTime,jdbcType=DATE},
-        finish_time = #{record.finishTime,jdbcType=DATE},
-        department_id = #{record.departmentId,jdbcType=INTEGER},
-        active = #{record.active,jdbcType=BIT},
-        close_time = #{record.closeTime,jdbcType=DATE}
+        name = #{record.name,jdbcType=VARCHAR},
+        num = #{record.num,jdbcType=DOUBLE},
+        type = #{record.type,jdbcType=TINYINT},
+        project_Id = #{record.projectId,jdbcType=INTEGER},
+        active = #{record.active,jdbcType=BIT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="org.hfut.pojo.Project">
-        update project
+    <update id="updateByPrimaryKeySelective" parameterType="org.hfut.pojo.FinancialModel">
+        update financial_model
         <set>
-            <if test="title != null">
-                title = #{title,jdbcType=VARCHAR},
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="description != null">
-                description = #{description,jdbcType=VARCHAR},
+            <if test="num != null">
+                num = #{num,jdbcType=DOUBLE},
             </if>
-            <if test="startTime != null">
-                start_time = #{startTime,jdbcType=DATE},
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
             </if>
-            <if test="finishTime != null">
-                finish_time = #{finishTime,jdbcType=DATE},
-            </if>
-            <if test="departmentId != null">
-                department_id = #{departmentId,jdbcType=INTEGER},
+            <if test="projectId != null">
+                project_Id = #{projectId,jdbcType=INTEGER},
             </if>
             <if test="active != null">
                 active = #{active,jdbcType=BIT},
             </if>
-            <if test="closeTime != null">
-                close_time = #{closeTime,jdbcType=DATE},
-            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="org.hfut.pojo.Project">
-    update project
-    set title = #{title,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      start_time = #{startTime,jdbcType=DATE},
-      finish_time = #{finishTime,jdbcType=DATE},
-      department_id = #{departmentId,jdbcType=INTEGER},
-      active = #{active,jdbcType=BIT},
-      close_time = #{closeTime,jdbcType=DATE}
+    <update id="updateByPrimaryKey" parameterType="org.hfut.pojo.FinancialModel">
+    update financial_model
+    set name = #{name,jdbcType=VARCHAR},
+      num = #{num,jdbcType=DOUBLE},
+      type = #{type,jdbcType=TINYINT},
+      project_Id = #{projectId,jdbcType=INTEGER},
+      active = #{active,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
