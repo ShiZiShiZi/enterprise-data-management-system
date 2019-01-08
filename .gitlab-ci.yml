@@ -1,0 +1,9 @@
+stages:
+  - bulid
+
+job1:
+  script:
+    - cd backend
+    - mvn compile
+  tags:
+    - runner-WX
