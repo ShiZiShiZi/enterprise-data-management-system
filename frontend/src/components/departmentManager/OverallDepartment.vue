@@ -22,7 +22,7 @@
           active-text-color="#ffd04b">
           <el-menu-item index="1">
             <i class="el-icon-location"></i>
-            <span slot="title" @click="jumpToNewReceivable">项目管理</span>
+            <span slot="title" @click="jumpToProjectManage">项目管理</span>
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
@@ -49,8 +49,8 @@
 export default {
   name: 'OverallDeveloper',
   methods: {
-    jumpToViewFeedback: function () {
-      this.$router.push('/developer/viewFeedback')
+    jumpToProjectManage: function () {
+      this.$router.push('/departmentManager/projectManage')
     },
     jumpToNewReceivable: function () {
       this.$router.push('/developer/newReceivable')

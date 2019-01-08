@@ -15,6 +15,7 @@ import NewCost from '@/views/developer/NewCost'
 import ShowDoingProject from '@/views/superAdmin/ShowDoingProject'
 import ShowClosedProject from '@/views/superAdmin/ShowClosedProject'
 import OverallDepartment from '@/components/departmentManager/OverallDepartment'
+import ProjectManage from '@/views/departmentManager/ProjectManage'
 
 Vue.use(Router)
 
@@ -98,7 +99,14 @@ export default new Router({
     {
       path: '/departmentManager',
       name: 'OverallDepartment',
-      component: OverallDepartment
+      component: OverallDepartment,
+      children: [
+        {
+          path: 'projectManage',
+          name: 'ProjectManage',
+          component: ProjectManage
+        }
+      ]
     }
   ]
 })
