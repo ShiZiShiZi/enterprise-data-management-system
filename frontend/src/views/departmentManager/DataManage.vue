@@ -83,7 +83,7 @@
 
 <script>import axios from 'axios'
 export default {
-  name: 'SubDepartmentManagement',
+  name: 'DataManage',
   data: function () {
     return {
       id: 0,
@@ -109,7 +109,7 @@ export default {
           'data': [{value: 120, name: '项目1'}, {value: 132, name: '项目2'}, {value: 101, name: '项目3'}, {value: 134, name: '项目4'}, {value: 90, name: '项目5'}, {value: 230, name: '项目6'}, {value: 210, name: '项目7'}, {value: 110, name: '项目8'}, {value: 200, name: '项目9'}, {value: 230, name: '项目10'}, {value: 220, name: '项目11'}, {value: 219, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}]},
         profitPart: {
           'data1': [{value: 122, name: '项目1'}, {value: 123, name: '项目2'}, {value: 200, name: '项目3'}, {value: 120, name: '项目4'}, {value: 132, name: '项目5'}, {value: 400, name: '项目6'}, {value: 134, name: '项目7'}, {value: 90, name: '项目8'}, {value: 230, name: '项目9'}, {value: 40, name: '项目10'}, {value: 40, name: '项目11'}, {value: 40, name: '项目12'}, {value: 210, name: '项目13'}, {value: 120, name: '项目14'}, {value: 340, name: '项目15'}],
-          'data2': [{value: 0.1, name: '项目1'}, {value: 0.2, name: '项目2'}, {value: 0.2, name: '项目3'}, {value: 0.15, name: '项目4'}, {value: 0.7, name: '项目5'}, {value: 0.42, name: '项目6'}, {value: 0.42, name: '项目7'}, {value: 0.43, name: '项目8'}, {value: 0.27, name: '项目9'}, {value: 0.12, name: '项目10'}, {value: 0.54, name: '项目11'}, {value: 0.56, name: '项目12'}, {value: 0.17, name: '项目13'}, {value: 0.12, name: '项目14'}, {value: 0.34, name: '项目15'}]}
+          'data2': [{value: 0.91, name: '项目16'}, {value: 0.2, name: '项目2'}, {value: 0.2, name: '项目3'}, {value: 0.15, name: '项目4'}, {value: 0.7, name: '项目5'}, {value: 0.42, name: '项目6'}, {value: 0.42, name: '项目7'}, {value: 0.43, name: '项目8'}, {value: 0.27, name: '项目9'}, {value: 0.12, name: '项目10'}, {value: 0.54, name: '项目11'}, {value: 0.56, name: '项目12'}, {value: 0.17, name: '项目13'}, {value: 0.12, name: '项目14'}, {value: 0.34, name: '项目15'}]}
       }
     }
   },
