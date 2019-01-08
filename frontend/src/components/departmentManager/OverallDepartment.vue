@@ -26,7 +26,7 @@
           </el-menu-item>
           <el-menu-item index="2">
             <i class="el-icon-menu"></i>
-            <span slot="title" @click="jumpToViewFeedback">部门数据分析</span>
+            <span slot="title" @click="jumpToDataManage">部门数据分析</span>
           </el-menu-item>
           <el-menu-item index="3">
             <i class="el-icon-document"></i>
@@ -51,6 +51,9 @@ export default {
   methods: {
     jumpToProjectManage: function () {
       this.$router.push('/departmentManager/projectManage')
+    },
+    jumpToDataManage: function () {
+      this.$router.push('/departmentManager/dataManage')
     },
     jumpToNewReceivable: function () {
       this.$router.push('/developer/newReceivable')

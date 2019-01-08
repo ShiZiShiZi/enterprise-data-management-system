@@ -16,6 +16,7 @@ import ShowDoingProject from '@/views/superAdmin/ShowDoingProject'
 import ShowClosedProject from '@/views/superAdmin/ShowClosedProject'
 import OverallDepartment from '@/components/departmentManager/OverallDepartment'
 import ProjectManage from '@/views/departmentManager/ProjectManage'
+import DataManage from '@/views/departmentManager/DataManage'
 
 Vue.use(Router)
 
@@ -105,6 +106,11 @@ export default new Router({
           path: 'projectManage',
           name: 'ProjectManage',
           component: ProjectManage
+        },
+        {
+          path: 'dataManage',
+          name: 'DataManage',
+          component: DataManage
         }
       ]
     }
