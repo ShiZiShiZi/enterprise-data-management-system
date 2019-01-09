@@ -40,7 +40,7 @@ public class ProjectSearchService {
     }
 
     public void selectByProjectId(ProjectExample.Criteria criteria, List<Integer> projectIds) {
-        if(projectIds != null) {
+        if(projectIds != null && projectIds.size() > 0) {
             criteria.andIdIn(projectIds);
         }
     }
