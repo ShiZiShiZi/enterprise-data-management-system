@@ -26,7 +26,7 @@ public class AddProjectPeopleController {
 //    @Log(needLog = false, serviceDescription = "查找已关闭项目", permission = 1)
     @ResponseBody
     @RequestMapping(value = "/departmentManager/addProjectPeople", method = RequestMethod.GET)
-    public Map<String, Object> selectCloseProject(@RequestParam(name = "projectId", required = false) Integer projectId,
+    public Map<String, Object> addProjectPeople(@RequestParam(name = "projectId", required = false) Integer projectId,
                                                   @RequestParam(name = "projectPeopleList", required = false) List<Integer> projectPeopleList,
                                                   Model model) {
         Map<String, Object> map = new HashMap<>(10);
