@@ -18,6 +18,7 @@ import OverallDepartment from '@/components/departmentManager/OverallDepartment'
 import ProjectManage from '@/views/departmentManager/ProjectManage'
 import DataManage from '@/views/departmentManager/DataManage'
 import ProjectFinanceManage from '@/views/departmentManager/ProjectFinanceManage'
+import StaffEditor from '@/views/departmentManager/StaffEditor'
 
 Vue.use(Router)
 
@@ -114,9 +115,14 @@ export default new Router({
           component: DataManage
         },
         {
-          path: 'projectFinanceManage/:id/:name',
+          path: 'projectFinanceManage/:id/:title',
           name: 'ProjectFinanceManage',
           component: ProjectFinanceManage
+        },
+        {
+          path: 'staffEditor/:id/:name',
+          name: 'StaffEditor',
+          component: StaffEditor
         }
       ]
     }

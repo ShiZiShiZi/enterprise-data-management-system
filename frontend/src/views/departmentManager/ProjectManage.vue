@@ -43,7 +43,7 @@
                         <el-button plain>编辑项目</el-button>
                     </el-col>
                     <el-col :span="2" :offset="1">
-                        <el-button plain>人员编辑</el-button>
+                        <el-button plain @click="jumpToStaffEditor(project.id, project.title)">人员编辑</el-button>
                     </el-col>
                     <el-col :span="2" :offset="1">
                         <el-button plain>财务模型</el-button>
@@ -62,6 +62,7 @@ export default {
       activeName: 1,
       currentPage: 1,
       pageSize: 10,
+      maxPage: 1,
       projectTitle: '',
       startTime: [],
       projectList: [],
@@ -84,6 +85,9 @@ export default {
     }
   },
   methods: {
+    jumpToStaffEditor: function (id, title) {
+      this.$router.push('staffEditor/' + id + '/' + title)
+    },
     getProjectList: function () {
       axios.get('http://localhost:8080/static/projectList.json', { // URL:/projectSearch
         params: {
