@@ -1,63 +1,12 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="部门设置"><el-col :span="10">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>修改部门名称</span>
-        </div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="部门名称">
-            <el-input v-model="name"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">修改</el-button>
-          </el-form-item>
-        </el-form>
-      </el-card>
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>设置部门管理员</span>
-        </div>
-        <el-form :model="dynamicValidateForm" ref="addDepartmentMngForm" label-width="100px" class="demo-dynamic">
-          <el-form-item label="姓名" prop="name" :rules="dynamicValidateForm.rules.name">
-            <el-input v-model.number="dynamicValidateForm.name"></el-input>
-          </el-form-item>
-          <el-form-item prop="email" label="邮箱" :rules="dynamicValidateForm.rules.email">
-            <el-input v-model="dynamicValidateForm.email"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号" prop="phone" :rules="dynamicValidateForm.rules.phone">
-            <el-input v-model.number="dynamicValidateForm.phone"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="addDepartmentManagement('addDepartmentMngForm')">提交</el-button>
-            <el-button @click="resetForm('addDepartmentMngForm')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </el-card>
-    </el-col></el-tab-pane>
-    <el-tab-pane label="人员信息"><el-col :span="11">
-      <el-card class="box-card">
-        <el-table ref="singleTable" :data="developerList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
-          <el-table-column property="name" label="姓名" width="120"></el-table-column>
-        </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="maxPage*10">
-        </el-pagination>
-      </el-card>
-    </el-col></el-tab-pane>
-    <el-tab-pane label="财务信息" class="finance">
+    <el-tab-pane label="项目总览" class="finance" @change="drawTotal">
       <el-card class="box-card">
         <el-row>
           <el-col :span="20">
-            <div id="myChart" :style="{width: '1000px', height: '400px'}"></div>
+            <div id="showTotal" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
           <el-col :span="3">
-            <el-input-number v-model="financialData.financialPart.year" @change="drawLine" :min="2016" :max="2100" label="描述文字"></el-input-number>
             <el-alert type="success" :closable="false">
               总收入: {{financialData.totalInput}}
             </el-alert>
@@ -65,8 +14,36 @@
               总支出: {{financialData.totalOutput}}
             </el-alert>
             <el-alert type="success" :closable="false">
-              毛利润: {{financialData.grossProfit}}
+              总利润: {{financialData.grossProfit}}
             </el-alert>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目收入类别" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showIncomeType" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目支出类别" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showExpenditureType" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
           </el-col>
         </el-row>
       </el-card>
@@ -76,36 +53,26 @@
 
 <script>import axios from 'axios'
 export default {
-  name: 'SubDepartmentManagement',
+  name: 'ProjectFinanceManage',
   data: function () {
     return {
       id: 0,
       name: '',
-      dynamicValidateForm: {
-        name: '',
-        email: '',
-        phone: '',
-        rules: {
-          name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-          ],
-          phone: [{required: true, message: '请输入手机号', trigger: 'blur'},
-            { type: 'number', message: '请输入正确的手机号', trigger: ['blur', 'change'] }]
-        }
-      },
-      developerList: [],
-      currentPage: 1,
-      pageSize: 8,
-      maxPage: 1,
       financialData: {
         totalInput: 0,
         totalOutput: 0,
         grossProfit: 0,
-        financialPart: {'year': '2018',
+        financialPart: {'month': ['2019.01', '2018.12', '2018.11', '2018.10', '2018.09', '2018.08', '2018.07', '2018.06', '2018.05', '2018.04', '2018.03', '2018.02'],
           'income': [122, 123, 200, 120, 132, 400, 134, 90, 230, 210, 120, 340],
-          'expenditure': [120, 132, 101, 134, 90, 230, 210, 110, 20, 23, 220, 219]}
+          'expenditure': [-120, -132, -101, -134, -90, -230, -210, -110, -20, -23, -220, -219],
+          'profit': [2, -9, 99, -14, 42, 170, -76, -20, 210, 187, -100, 121]}
+      },
+      ProjectData: {
+        chooseDate: '',
+        incomePart: {
+          'data': [{value: 122, name: '收入1'}, {value: 123, name: '收入2'}, {value: 200, name: '收入3'}, {value: 120, name: '收入4'}, {value: 132, name: '收入5'}, {value: 400, name: '收入6'}, {value: 134, name: '收入7'}, {value: 90, name: '收入8'}, {value: 230, name: '收入9'}, {value: 40, name: '收入10'}, {value: 40, name: '其他收入'}]},
+        expenditurePart: {
+          'data': [{value: 120, name: '支出1'}, {value: 132, name: '支出2'}, {value: 101, name: '支出3'}, {value: 134, name: '支出4'}, {value: 90, name: '支出5'}, {value: 230, name: '支出6'}, {value: 210, name: '支出7'}, {value: 110, name: '支出8'}, {value: 200, name: '支出9'}, {value: 230, name: '支出10'}, {value: 220, name: '其他支出'}]}
       }
     }
   },
@@ -125,149 +92,183 @@ export default {
     })
   },
   mounted: function () {
-    this.drawLine()
+    this.drawTotal()
+    this.drawIncome()
+    this.drawExpenditure()
   },
   methods: {
-    onSubmit: function () {
-      alert('这里需要添加修改部门名称的请求')
-    },
-    addDepartmentManagement: function (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('这里需要添加添加部门管理员的请求')
-        } else {
-          alert('请按照要求填写')
-        }
-      })
-    },
-    resetForm: function (formName) {
-      this.$refs[formName].resetFields()
-    },
-    handleCurrentChange: function (currentPage) {
-      this.currentPage = currentPage
-      axios.get('static/departmentList2.json', {
-        params: {
-          currentPage: this.currentPage,
-          pageSize: this.pageSize
-        }
-      }).then(res => {
-        this.departmentList = res.data.departmentList
-      }).catch(function (error) {
-        alert(error)
-      })
-    },
-    drawLine: function () {
+    drawTotal: function () {
       // to do fasong qingqiu
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
-      let colors = ['#5793f3', '#d14a61', '#675bba']
+      let myChart = this.$echarts.init(document.getElementById('showTotal'))
 
       let option = {
         title: {
-          text: this.financialData.financialPart.year + '收支状况'
+          text: this.name + '收支状况'
         },
-        color: colors,
         tooltip: {
-          trigger: 'none',
+          trigger: 'axis',
           axisPointer: {
-            type: 'cross'
+            type: 'shadow'
           }
         },
         legend: {
-          data: ['收入', '支出']
+          data: ['利润', '支出', '收入']
         },
-        grid: {
-          top: 70,
-          bottom: 50
+        dataZoom: [{
+          type: 'slider',
+          start: 50,
+          end: 70
+        }, {
+          type: 'inside',
+          start: 50,
+          end: 70
+        }],
+        xAxis: {
+          type: 'category',
+          axisTick: {show: false},
+          data: this.financialData.financialPart.month
         },
-        xAxis: [
-          {
-            type: 'category',
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              onZero: false,
-              lineStyle: {
-                color: colors[1]
-              }
-            },
-            axisPointer: {
-              label: {
-                formatter: function (params) {
-                  return '金额  ' + params.value +
-                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
-                }
-              }
-            },
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-          },
-          {
-            type: 'category',
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              onZero: false,
-              lineStyle: {
-                color: colors[0]
-              }
-            },
-            axisPointer: {
-              label: {
-                formatter: function (params) {
-                  return '金额  ' + params.value +
-                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
-                }
-              }
-            },
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value'
-          }
-        ],
+        yAxis: {
+          type: 'value'
+        },
         series: [
           {
+            name: '利润',
+            type: 'bar',
+            label: {
+              normal: {
+                show: true,
+                position: 'inside'
+              }
+            },
+            data: this.financialData.financialPart.profit
+          },
+          {
             name: '收入',
-            type: 'line',
-            xAxisIndex: 1,
-            smooth: true,
+            type: 'bar',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true
+              }
+            },
             data: this.financialData.financialPart.income
           },
           {
             name: '支出',
-            type: 'line',
-            smooth: true,
+            type: 'bar',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true,
+                position: 'inside'
+              }
+            },
             data: this.financialData.financialPart.expenditure
           }
         ]
       }
       myChart.setOption(option, true)
+    },
+    drawIncome: function () {
+      // to do fasong qingqiu
+      let showIncomeType = this.$echarts.init(document.getElementById('showIncomeType'))
+
+      let option = {
+        title: {
+          text: '项目收入对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '收入',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.incomePart.data
+          }
+        ]
+      }
+      showIncomeType.setOption(option, true)
+    },
+    drawExpenditure: function () {
+      // to do fasong qingqiu
+      let showExpenditureType = this.$echarts.init(document.getElementById('showExpenditureType'))
+
+      let option = {
+        title: {
+          text: '项目支出对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '支出',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.ProjectData.expenditurePart.data
+          }
+        ]
+      }
+      showExpenditureType.setOption(option, true)
     }
   }
 }
 </script>
 
 <style scoped>
-  .text {
-    font-size: 14px;
-  }
-
-  .item {
-    margin-bottom: 18px;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: ""
-  }
-  .clearfix:after {
-    clear: both
-  }
-
   .box-card {
     width: 480px;
     text-align: left;
