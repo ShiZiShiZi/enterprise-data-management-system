@@ -50,6 +50,12 @@ public class ProjectPeopleSearchService {
         if (sortOrder.equals(num2)) {
             sortColumn += " ASC";
         }
+        List<Byte> l = new ArrayList<>();
+        Byte b1 = 1;
+        Byte b3 = 3;
+        l.add(b1);
+        l.add(b3);
+        criteria.andPermissionsIn(l);
         projectPeopleExample.setOrderByClause(sortColumn);
         list = projectPeopleMapper.selectByExample(projectPeopleExample);
         for (int j = 0; j < list.size(); j++) {
