@@ -46,7 +46,7 @@
                         <el-button plain @click="jumpToStaffEditor(project.id, project.title)">人员编辑</el-button>
                     </el-col>
                     <el-col :span="2" :offset="1">
-                        <el-button plain>财务模型</el-button>
+                        <el-button plain @click="jumpToEditingFinancialModel(project.id, project.title)">财务模型</el-button>
                     </el-col>
                 </el-row>
             </el-collapse-item>
@@ -87,6 +87,9 @@ export default {
   methods: {
     jumpToStaffEditor: function (id, title) {
       this.$router.push('staffEditor/' + id + '/' + title)
+    },
+    jumpToEditingFinancialModel: function (id, title) {
+      this.$router.push('editingFinancialModel/' + id + '/' + title)
     },
     getProjectList: function () {
       axios.get('http://localhost:8080/static/projectList.json', { // URL:/projectSearch
