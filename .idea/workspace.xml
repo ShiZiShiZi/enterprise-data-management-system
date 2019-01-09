@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="537714b0-a940-4793-ba91-53ee65eef6b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/static/projectList.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/static/projectStateList.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/static/departmentPeopleList.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/static/projectLeaderList.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/static/projectPeopleList.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,19 +23,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/DataManage.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2755">
-              <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-646">
-              <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+            <state relative-caret-position="-836">
+              <caret line="7" column="21" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="7" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -44,28 +37,62 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/components/developer/OverallDeveloper.vue">
+        <entry file="file://$PROJECT_DIR$/frontend/static/projectPeopleList.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="61" column="14" lean-forward="true" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
+            <state relative-caret-position="38">
+              <caret line="2" column="45" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/frontend/src/App.vue">
+        <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="188">
+              <caret line="73" column="16" lean-forward="true" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+              <folding>
+                <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#1;n#el-row#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/package.json">
+        <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="532">
+              <caret line="157" column="6" lean-forward="true" selection-start-line="145" selection-start-column="4" selection-end-line="157" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/static/departmentPeopleList.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/static/projectLeaderList.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
-              <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+              <caret line="1" column="40" lean-forward="true" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/router/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="822">
+              <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -104,13 +131,17 @@
         <option value="$PROJECT_DIR$/frontend/src/views/superAdmin/BusinessManagement.vue" />
         <option value="$PROJECT_DIR$/frontend/src/views/developer/NewReceivable.vue" />
         <option value="$PROJECT_DIR$/frontend/package.json" />
-        <option value="$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue" />
-        <option value="$PROJECT_DIR$/frontend/src/router/index.js" />
-        <option value="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" />
         <option value="$PROJECT_DIR$/frontend/src/views/departmentManager/DataManage.vue" />
         <option value="$PROJECT_DIR$/frontend/static/closedProjectList.json" />
         <option value="$PROJECT_DIR$/frontend/src/components/developer/OverallDeveloper.vue" />
         <option value="$PROJECT_DIR$/frontend/src/App.vue" />
+        <option value="$PROJECT_DIR$/frontend/src/router/index.js" />
+        <option value="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" />
+        <option value="$PROJECT_DIR$/frontend/static/projectPeopleList.json" />
+        <option value="$PROJECT_DIR$/frontend/static/projectLeaderList.json" />
+        <option value="$PROJECT_DIR$/frontend/static/departmentPeopleList.json" />
+        <option value="$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue" />
+        <option value="$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue" />
       </list>
     </option>
   </component>
@@ -126,7 +157,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -157,8 +187,7 @@
               <item name="manage-system" type="462c0819:PsiDirectoryNode" />
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="developer" type="462c0819:PsiDirectoryNode" />
+              <item name="router" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="manage-system" type="b2602c69:ProjectViewProjectNode" />
@@ -179,18 +208,27 @@
               <item name="manage-system" type="b2602c69:ProjectViewProjectNode" />
               <item name="manage-system" type="462c0819:PsiDirectoryNode" />
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="superAdmin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="manage-system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="manage-system" type="462c0819:PsiDirectoryNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mytest2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -259,7 +297,9 @@
       <workItem from="1546852335236" duration="6874000" />
       <workItem from="1546862537924" duration="7407000" />
       <workItem from="1546913607045" duration="2604000" />
-      <workItem from="1546959436272" duration="762000" />
+      <workItem from="1546959436272" duration="1053000" />
+      <workItem from="1547007807496" duration="752000" />
+      <workItem from="1547016486085" duration="12194000" />
     </task>
     <task id="LOCAL-00001" summary="This submission is for the integration of administrator pages. Ref #84">
       <created>1546695770368</created>
@@ -310,11 +350,18 @@
       <option name="project" value="LOCAL" />
       <updated>1546915710670</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="This submission is intended to resolve branch conflicts. Ref #116">
+      <created>1546960350488</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1546960350488</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52076000" />
+    <option name="totallyTimeSpent" value="65313000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -326,13 +373,13 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32899022" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22905028" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22905028" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32952183" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3282123" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.3282123" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32848233" />
@@ -352,7 +399,8 @@
     <MESSAGE value="This submission is to update the code for both ports. Ref #113" />
     <MESSAGE value="This submission lays the groundwork for the next iteration. Ref #113" />
     <MESSAGE value="This submission is for building the page framework of department administrators. Ref #93" />
-    <option name="LAST_COMMIT_MESSAGE" value="This submission is for building the page framework of department administrators. Ref #93" />
+    <MESSAGE value="This submission is intended to resolve branch conflicts. Ref #116" />
+    <option name="LAST_COMMIT_MESSAGE" value="This submission is intended to resolve branch conflicts. Ref #116" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/frontend/static/businessList.json">
@@ -379,13 +427,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1731">
           <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/DepartmentManagement.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -463,36 +504,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="18" column="61" lean-forward="true" selection-start-line="18" selection-start-column="61" selection-end-line="18" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#1340#2616#0" />
-            <element signature="e#2622#3092#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="55" column="48" selection-start-line="55" selection-start-column="48" selection-end-line="55" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/DoingProjectManagement.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="82" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="279" lean-forward="true" selection-end-line="279" />
         </state>
       </provider>
     </entry>
@@ -515,39 +530,102 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
+        <state relative-caret-position="133">
           <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/developer/OverallDeveloper.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="61" column="14" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/DataManage.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2755">
+        <state relative-caret-position="38">
           <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue">
+    <entry file="file://$PROJECT_DIR$/frontend/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-646">
-          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        <state relative-caret-position="822">
+          <caret line="117" column="48" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/DepartmentManagement.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-142">
+          <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/components/departmentManager/OverallDepartment.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/static/projectLeaderList.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="40" lean-forward="true" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/static/departmentPeopleList.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/static/projectPeopleList.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="45" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/static/projectList.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/components/developer/OverallDeveloper.vue">
+    <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="61" column="14" lean-forward="true" selection-start-line="61" selection-start-column="14" selection-end-line="61" selection-end-column="14" />
+        <state relative-caret-position="-836">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="7" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/App.vue">
+    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="532">
+          <caret line="157" column="6" lean-forward="true" selection-start-line="145" selection-start-column="4" selection-end-line="157" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="73" column="16" lean-forward="true" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#1;n#el-row#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
