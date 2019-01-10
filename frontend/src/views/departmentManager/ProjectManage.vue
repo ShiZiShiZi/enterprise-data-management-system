@@ -40,7 +40,7 @@
                         <p v-if="projectStateList[project.id][2] === 1" class="warning">类别费用累计超出预算数</p>
                     </el-col>
                     <el-col :span="2" :offset="1">
-                        <el-button plain>编辑项目</el-button>
+                        <el-button plain @click="editProject(index)">编辑项目</el-button>
                     </el-col>
                     <el-col :span="2" :offset="1">
                         <el-button plain @click="jumpToStaffEditor(project.id, project.title)">人员编辑</el-button>
@@ -51,6 +51,25 @@
                 </el-row>
             </el-collapse-item>
         </el-collapse>
+        <el-dialog title="编辑项目" :visible.sync="dialogVisible" width="30%">
+            <el-form :model="dynamicValidateForm" ref="editProject" label-width="100px" class="demo-dynamic">
+                <el-form-item label="标题" prop="newTitle" :rules="dynamicValidateForm.rules.newTitle">
+                    <el-input v-model.number="dynamicValidateForm.newTitle"></el-input>
+                </el-form-item>
+                <el-form-item label="描述" prop="newDescription" :rules="dynamicValidateForm.rules.newDescription">
+                    <el-input v-model="dynamicValidateForm.newDescription"></el-input>
+                </el-form-item>
+                <el-form-item label="截至时间" prop="newFinishTime" :rules="dynamicValidateForm.rules.newFinishTime">
+                    <el-date-picker v-model="dynamicValidateForm.newFinishTime"
+                            value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitEditProject('editProject')">提交</el-button>
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </el-card>
 </template>
 
@@ -64,10 +83,22 @@ export default {
       pageSize: 10,
       maxPage: 1,
       projectTitle: '',
+      dialogVisible: false,
       startTime: [],
       projectList: [],
       projectIdList: [],
-      projectStateList: []
+      projectStateList: [],
+      dynamicValidateForm: {
+        id: '',
+        newTitle: '',
+        newFinishTime: '',
+        newDescription: '',
+        rules: {
+          newTitle: [{required: true, message: '请输入项目名称', trigger: 'blur'}],
+          newDescription: [{required: true, message: '请输入项目描述', trigger: 'blur'}],
+          newFinishTime: [{required: true, message: '请输入项目截至日期', trigger: 'blur'}]
+        }
+      }
     }
   },
   created: function () {
@@ -90,6 +121,34 @@ export default {
     },
     jumpToEditingFinancialModel: function (id, title) {
       this.$router.push('editingFinancialModel/' + id + '/' + title)
+    },
+    editProject: function (index) {
+      this.dialogVisible = true
+      this.dynamicValidateForm.newFinishTime = this.projectList[index].finishTime
+      this.dynamicValidateForm.id = this.projectList[index].id
+      this.dynamicValidateForm.newDescription = this.projectList[index].description
+      this.dynamicValidateForm.newTitle = this.projectList[index].title
+    },
+    submitEditProject: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL:/departmentManager/changeProject
+            params: {
+              projectId: this.dynamicValidateForm.id,
+              newTitle: this.dynamicValidateForm.newTitle,
+              newDescription: this.dynamicValidateForm.newDescription,
+              newFinishTime: this.dynamicValidateForm.newFinishTime
+            }
+          }).then(res => {
+          }).catch(function (error) {
+            alert(error)
+          })
+          this.getProjectList()
+          this.dialogVisible = false
+        } else {
+          alert('请按照要求填写')
+        }
+      })
     },
     getProjectList: function () {
       axios.get('http://localhost:8080/static/projectList.json', { // URL:/projectSearch
@@ -125,7 +184,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
