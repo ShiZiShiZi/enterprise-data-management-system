@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="537714b0-a940-4793-ba91-53ee65eef6b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/views/departmentManager/EditingFinancialModel.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/static/financialModelList.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="912">
               <caret line="48" column="76" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="76" />
             </state>
           </provider>
@@ -32,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
+            <state relative-caret-position="1767">
               <caret line="93" column="8" selection-start-line="79" selection-start-column="6" selection-end-line="93" selection-end-column="8" />
               <folding>
                 <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
@@ -45,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/EditingFinancialModel.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+            <state relative-caret-position="142">
+              <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
               <folding>
                 <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -57,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="69" column="19" lean-forward="true" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+            <state relative-caret-position="1311">
+              <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -146,7 +141,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -212,6 +206,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -289,7 +284,8 @@
       <workItem from="1546959436272" duration="1053000" />
       <workItem from="1547007807496" duration="752000" />
       <workItem from="1547016486085" duration="14684000" />
-      <workItem from="1547040102613" duration="10376000" />
+      <workItem from="1547040102613" duration="11028000" />
+      <workItem from="1547087248757" duration="1305000" />
     </task>
     <task id="LOCAL-00001" summary="This submission is for the integration of administrator pages. Ref #84">
       <created>1546695770368</created>
@@ -354,17 +350,23 @@
       <option name="project" value="LOCAL" />
       <updated>1547030453524</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Adding the financial function of department administrator's editing fee. Ref #111">
+      <created>1547051928064</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1547051928064</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78179000" />
+    <option name="totallyTimeSpent" value="80136000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49759614" visible="true" weight="0.17437252" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49759614" visible="true" weight="0.17437252" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50240386" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -376,7 +378,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3282123" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.3282123" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.3282123" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32848233" />
@@ -388,6 +390,16 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="This submission is for the integration of administrator pages. Ref #84" />
     <MESSAGE value="This submission is for uniform address configuration. Ref #84" />
@@ -398,7 +410,8 @@
     <MESSAGE value="This submission is for building the page framework of department administrators. Ref #93" />
     <MESSAGE value="This submission is intended to resolve branch conflicts. Ref #116" />
     <MESSAGE value="Added the function of department administrator to add department personnel to the project. Ref #127" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the function of department administrator to add department personnel to the project. Ref #127" />
+    <MESSAGE value="Adding the financial function of department administrator's editing fee. Ref #111" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding the financial function of department administrator's editing fee. Ref #111" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/frontend/static/businessList.json">
@@ -568,16 +581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2014">
-          <caret line="127" column="49" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/DepartmentManagement.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -595,16 +598,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/static/projectPeopleList.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="45" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/ProjectManage.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
+        <state relative-caret-position="912">
           <caret line="48" column="76" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/StaffEditor.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
+        <state relative-caret-position="1767">
           <caret line="93" column="8" selection-start-line="79" selection-start-column="6" selection-end-line="93" selection-end-column="8" />
           <folding>
             <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-col#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
@@ -613,10 +623,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/static/projectPeopleList.json">
+    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="45" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="45" />
+        <state relative-caret-position="1311">
+          <caret line="69" column="19" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -627,17 +637,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/views/superAdmin/SubDepartmentManagement.vue">
+    <entry file="file://$PROJECT_DIR$/frontend/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="69" column="19" lean-forward="true" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+        <state relative-caret-position="2014">
+          <caret line="127" column="49" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/views/departmentManager/EditingFinancialModel.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+        <state relative-caret-position="142">
+          <caret line="27" column="25" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
           <folding>
             <element signature="n#style#0;n#el-table#0;n#el-card#0;n#el-row#0;n#template#0;n#!!top" expanded="true" />
           </folding>
