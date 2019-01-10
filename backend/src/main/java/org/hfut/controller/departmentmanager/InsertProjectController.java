@@ -1,5 +1,6 @@
 package org.hfut.controller.departmentmanager;
 
+import org.hfut.annotation.Log;
 import org.hfut.service.departmentmanager.InsertProjectService;
 import org.hfut.tool.global.Token;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class InsertProjectController {
     @Autowired
     private InsertProjectService insertProjectService;
 
-    //@Log(needLog = false, serviceDescription = "创建项目", permission = 8)
+    @Log(needLog = false, serviceDescription = "创建项目", permission = 8)
     @RequestMapping(value = "/departmentManager/insertProject", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> addProject(HttpServletRequest request,

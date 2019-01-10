@@ -1,5 +1,6 @@
 package org.hfut.controller.departmentmanager;
 
+import org.hfut.annotation.Log;
 import org.hfut.service.departmentmanager.PeopleAuditService;
 import org.hfut.tool.global.Token;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class PeopleAuditController {
     @Autowired
     private PeopleAuditService peopleAuditService;
 
-    //@Log(needLog = false, serviceDescription = "审核人员请求", permission = 8)
+    @Log(needLog = false, serviceDescription = "审核人员请求", permission = 8)
     @RequestMapping(value = "/departmentManager/peopleAudit", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> auditPeople(HttpServletRequest request,
