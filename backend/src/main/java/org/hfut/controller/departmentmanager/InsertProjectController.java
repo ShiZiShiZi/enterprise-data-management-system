@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class InsertProjectController {
                                           @RequestParam(name = "title", required = false) String title,
                                           @RequestParam(name = "description", required = false) String description,
                                           @RequestParam(name = "startTime", required = false) String startTime,
-                                          @RequestParam(name = "finishTime", required = false) String finishTime) {
+                                          @RequestParam(name = "finishTime", required = false) String finishTime)throws ParseException {
         String token = request.getHeader("token");
         Integer projectPeopleId = Token.getProjectPeopleId(token);
         Map<String, Object> projectMap = new HashMap<>(1);
