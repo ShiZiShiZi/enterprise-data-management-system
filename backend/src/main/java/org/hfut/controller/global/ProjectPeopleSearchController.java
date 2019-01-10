@@ -2,7 +2,7 @@ package org.hfut.controller.global;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-//import org.hfut.annotation.Log;
+import org.hfut.annotation.Log;
 import org.hfut.pojo.ProjectPeople;
 import org.hfut.service.global.ProjectPeopleSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ProjectPeopleSearchController {
     @Autowired
     private ProjectPeopleSearchService projectPeopleSearchService;
 
-//    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 1)
+    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 1)
     @ResponseBody
     @RequestMapping(value = "/projectPeopleSearch", method = RequestMethod.GET)
     public Map<String, Object> selectProjectPeople(@RequestParam(name = "currentPage", required = false) Integer currentPage,
@@ -35,6 +35,7 @@ public class ProjectPeopleSearchController {
                                                    @RequestParam(name = "projectId", required = false) List<Integer> projectId,
                                                    @RequestParam(name = "name", required = false) String name,
                                                    @RequestParam(name = "isAcrossDepartment", required = false) Integer isAcrossDepartment,
+                                                   @RequestParam(name = "isDepartmentIdIn", required = false) Integer isDepartmentIdIn,
                                                    @RequestParam(name = "departmentId", required = false) Integer departmentId,
                                                    @RequestParam(name = "sortColumn", required = false) String sortColumn,
                                                    @RequestParam(name = "sortOrder", required = false) Integer sortOrder,
@@ -53,7 +54,10 @@ public class ProjectPeopleSearchController {
         if (departmentId == null) {
             departmentId = -1;
         }
-        list = projectPeopleSearchService.listProjectPeople(projectId, name, isAcrossDepartment, departmentId, sortColumn, sortOrder);
+        if (isDepartmentIdIn == null) {
+            isDepartmentIdIn = -1;
+        }
+        list = projectPeopleSearchService.listProjectPeople(projectId, name, isAcrossDepartment, isDepartmentIdIn, departmentId, sortColumn, sortOrder);
         PageHelper.startPage(currentPage, pageSize);
         PageInfo pageInfo = new PageInfo(list);
         int maxPage = pageInfo.getPages();

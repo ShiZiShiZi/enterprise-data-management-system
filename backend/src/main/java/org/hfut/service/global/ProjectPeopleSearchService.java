@@ -19,7 +19,8 @@ public class ProjectPeopleSearchService {
     private ProjectPeopleMapper projectPeopleMapper;
 
     public List<ProjectPeople> listProjectPeople(List<Integer> projectId, String name, Integer isAcrossDepartment,
-                                                 Integer departmentId, String sortColumn, Integer sortOrder) {
+                                                 Integer isDepartmentIdIn, Integer departmentId, String sortColumn,
+                                                 Integer sortOrder) {
         List<ProjectPeople> list = new ArrayList<>();
         String str = "0";
         Integer num = -1;
@@ -42,7 +43,11 @@ public class ProjectPeopleSearchService {
             criteria.andAcrossDepartmentEqualTo(true);
         }
         if (!departmentId.equals(num)) {
-            criteria.andDepartmentIdEqualTo(departmentId);
+            if (isDepartmentIdIn.equals(num2)) {
+                criteria.andDepartmentIdEqualTo(departmentId);
+            } else if (isDepartmentIdIn.equals(num1)) {
+                criteria.andDepartmentIdNotEqualTo(departmentId);
+            }
         }
         if (sortOrder.equals(num)) {
             sortColumn += " DESC";
