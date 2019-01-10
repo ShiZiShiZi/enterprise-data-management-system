@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     getProjectPeopleList: function () {
-      axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL: 待定
+      axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL: /getProjectMember
         params: {
           currentPage: this.currentPage1,
           pageSize: this.pageSize,
