@@ -1,0 +1,8 @@
+{
+  "expenditurePart": [{"value": 132, "name": "支出1"}, {"value": 123, "name": "支出2"},
+    {"value": 200, "name": "支出3"}, {"value": 120, "name": "支出4"},
+    {"value": 132, "name": "支出5"}, {"value": 400, "name": "支出6"},
+    {"value": 134, "name": "支出7"}, {"value": 290, "name": "支出8"},
+    {"value": 230, "name": "支出9"}, {"value": 340, "name": "支出10"},
+    {"value": 140, "name": "其他支出"}]
+}

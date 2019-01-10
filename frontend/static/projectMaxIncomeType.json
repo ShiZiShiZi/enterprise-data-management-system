@@ -1,0 +1,9 @@
+{
+  "incomePart": [{"value": 122, "name": "收入1"}, {"value": 123, "name": "收入2"},
+    {"value": 200, "name": "收入3"}, {"value": 120, "name": "收入4"},
+    {"value": 132, "name": "收入5"}, {"value": 400, "name": "收入6"},
+    {"value": 134, "name": "收入7"}, {"value": 90, "name": "收入8"},
+    {"value": 230, "name": "收入9"}, {"value": 40, "name": "收入10"},
+    {"value": 40, "name": "其他收入"}]
+}
+

@@ -1,6 +1,6 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="项目总览" class="finance" @change="drawTotal">
+    <el-tab-pane label="项目总览" class="finance" @tab-click="drawTotal">
       <el-card class="box-card">
         <el-row>
           <el-col :span="20">
@@ -28,7 +28,7 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -42,7 +42,7 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="ProjectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -56,40 +56,42 @@ export default {
   name: 'ProjectFinanceManage',
   data: function () {
     return {
-      id: 0,
+      projectId: 0,
       name: '',
       financialData: {
         totalInput: 0,
         totalOutput: 0,
         grossProfit: 0,
-        financialPart: {'month': ['2019.01', '2018.12', '2018.11', '2018.10', '2018.09', '2018.08', '2018.07', '2018.06', '2018.05', '2018.04', '2018.03', '2018.02'],
-          'income': [122, 123, 200, 120, 132, 400, 134, 90, 230, 210, 120, 340],
-          'expenditure': [-120, -132, -101, -134, -90, -230, -210, -110, -20, -23, -220, -219],
-          'profit': [2, -9, 99, -14, 42, 170, -76, -20, 210, 187, -100, 121]}
+        financialPart: {'month': [],
+          'income': [],
+          'expenditure': [],
+          'profit': []}
       },
-      ProjectData: {
-        chooseDate: '',
-        incomePart: {
-          'data': [{value: 122, name: '收入1'}, {value: 123, name: '收入2'}, {value: 200, name: '收入3'}, {value: 120, name: '收入4'}, {value: 132, name: '收入5'}, {value: 400, name: '收入6'}, {value: 134, name: '收入7'}, {value: 90, name: '收入8'}, {value: 230, name: '收入9'}, {value: 40, name: '收入10'}, {value: 40, name: '其他收入'}]},
-        expenditurePart: {
-          'data': [{value: 120, name: '支出1'}, {value: 132, name: '支出2'}, {value: 101, name: '支出3'}, {value: 134, name: '支出4'}, {value: 90, name: '支出5'}, {value: 230, name: '支出6'}, {value: 210, name: '支出7'}, {value: 110, name: '支出8'}, {value: 200, name: '支出9'}, {value: 230, name: '支出10'}, {value: 220, name: '其他支出'}]}
+      projectData: {
+        chooseDate: [],
+        incomePart: [],
+        expenditurePart: []
       }
     }
   },
   created: function () {
-    this.id = this.$route.params.id
+    this.projectId = this.$route.params.id
     this.name = this.$route.params.name
-    axios.get('http://localhost:8080/static/developerList.json', {
+    axios.get('http://localhost:8080/static/projectDataTotal.json', {
       params: {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
+        projectId: this.projectId
       }
     }).then(res => {
-      this.developerList = res.data.developerList
-      this.maxPage = res.data.maxPage
+      this.financialData.totalInput = res.data.financialData.totalInput
+      this.financialData.totalOutput = res.data.financialData.totalOutput
+      this.financialData.grossProfit = res.data.financialData.grossProfit
     }).catch(function (error) {
       alert(error)
     })
+    let myDate = new Date()
+    let lastMonth = new Date(new Date().setMonth(myDate.getMonth() - 1))
+    this.projectData.chooseDate.push(lastMonth.getFullYear().toString() + '-' + (lastMonth.getMonth() + 1).toString() + '-' + lastMonth.getDate().toString())
+    this.projectData.chooseDate.push(myDate.getFullYear().toString() + '-' + (myDate.getMonth() + 1).toString() + '-' + myDate.getDate().toString())
   },
   mounted: function () {
     this.drawTotal()
@@ -98,7 +100,21 @@ export default {
   },
   methods: {
     drawTotal: function () {
-      // to do fasong qingqiu
+      axios.get('http://localhost:8080/static/projectDataTotal.json', {
+        params: {
+          projectId: this.projectId
+        }
+      }).then(res => {
+        this.financialData.financialPart.month = res.data.financialData.financialPart.month
+        this.financialData.financialPart.income = res.data.financialData.financialPart.income
+        this.financialData.financialPart.expenditure = res.data.financialData.financialPart.expenditure
+        this.financialData.financialPart.profit = res.data.financialData.financialPart.profit
+        this.drawTotalChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawTotalChart: function () {
       let myChart = this.$echarts.init(document.getElementById('showTotal'))
 
       let option = {
@@ -171,12 +187,24 @@ export default {
       myChart.setOption(option, true)
     },
     drawIncome: function () {
-      // to do fasong qingqiu
+      axios.get('http://localhost:8080/static/projectMaxIncomeType.json', {
+        params: {
+          projectId: this.projectId,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.incomePart = res.data.incomePart
+        this.drawIncomeChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawIncomeChart: function () {
       let showIncomeType = this.$echarts.init(document.getElementById('showIncomeType'))
 
       let option = {
         title: {
-          text: '项目收入对比',
+          text: this.projectData.chooseDate + '项目收入对比',
           x: 'center'
         },
         tooltip: {
@@ -211,19 +239,31 @@ export default {
                 show: true
               }
             },
-            data: this.ProjectData.incomePart.data
+            data: this.projectData.incomePart
           }
         ]
       }
       showIncomeType.setOption(option, true)
     },
     drawExpenditure: function () {
-      // to do fasong qingqiu
+      axios.get('http://localhost:8080/static/projectMaxExpenditureType.json', {
+        params: {
+          projectId: this.projectId,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.expenditurePart = res.data.expenditurePart
+        this.drawExpenditureChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawExpenditureChart: function () {
       let showExpenditureType = this.$echarts.init(document.getElementById('showExpenditureType'))
 
       let option = {
         title: {
-          text: '项目支出对比',
+          text: this.projectData.chooseDate + '项目支出对比',
           x: 'center'
         },
         tooltip: {
@@ -258,7 +298,7 @@ export default {
                 show: true
               }
             },
-            data: this.ProjectData.expenditurePart.data
+            data: this.projectData.expenditurePart
           }
         ]
       }
@@ -278,3 +318,4 @@ export default {
     width: 1200px;
   }
 </style>
+
