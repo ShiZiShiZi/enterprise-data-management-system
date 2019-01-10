@@ -4,6 +4,7 @@ stages:
 job1:
   stage: compile
   script:
+    - if exist .idea (EXIT 1)
     - cd backend
     - mvn compile
   tags:
