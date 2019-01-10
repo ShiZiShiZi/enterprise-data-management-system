@@ -5,10 +5,12 @@ import org.hfut.mapper.ProjectPeopleMapper;
 import org.hfut.pojo.Project;
 import org.hfut.pojo.ProjectPeople;
 import org.hfut.pojo.ProjectPeopleExample;
-import org.hfut.tool.global.StringConvertToDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,15 +28,17 @@ public class InsertProjectService {
                                  String description,
                                  String startTime,
                                  Integer projectPeopleId,
-                                 String finishTime) {
+                                 String finishTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startTimeDate = sdf.parse(startTime);
+        Date finishTimeDate = sdf.parse(finishTime);
         Project project = new Project();
         project.setTitle(title);
         project.setDescription(description);
-        project.setStartTime(StringConvertToDate.getNewDate(startTime));
-        project.setFinishTime(StringConvertToDate.getNewDate(finishTime));
+        project.setStartTime(startTimeDate);
+        project.setFinishTime(finishTimeDate);
         project.setActive(true);
         project.setDepartmentId(getDepartmentId(projectPeopleId));
-        project.setCloseTime(StringConvertToDate.getNewDate(StringConvertToDate.initializedDateStr));
         projectMapper.insertSelective(project);
         return project.getId();
         //不知道为什么，插入项目到数据库后，数据库自动生成的id就更新到这个临时Project变量去了
