@@ -7,9 +7,9 @@ import org.hfut.service.financialstaff.FinancialCostConfirmService;
 import org.hfut.tool.global.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,15 +34,18 @@ public class FinancialCostConfirmController {
     }
 
     @Log(needLog = true, serviceDescription = "确认/驳回支出请求", permission = 4)
-    @RequestMapping(value = "/financial/costConfirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/financial/costConfirm", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> financialCostConfirm(@RequestParam(name = "financialDetailId") Integer financialDetailId,
-                                                    @RequestParam(name = "state") Integer state,
-                                                    @RequestParam(name = "description") String description,
-                                                    @RequestParam(name = "contractList") List<char[]> contracts,
-                                                    @RequestParam(name = "contractNameList") List<String> contractNameList,
+    public Map<String, Object> financialCostConfirm(@RequestBody Map<String, Object> parameters,
                                                     HttpServletRequest request) {
         final int accept = 1;
+
+        Integer financialDetailId = (Integer) parameters.get("financialDetailId");
+        Integer state = (Integer) parameters.get("state");
+        String description = (String) parameters.get("description");
+        List<char[]> contracts = (List<char[]>) parameters.get("contractList");
+        List<String> contractNameList = (List<String>) parameters.get("contractNameList");
+
         Map<String, Object> resultMap = new HashMap<>(1);
         FinancialDetail financialDetail = financialCostConfirmService.selectFinancialDetailById(financialDetailId);
         FinancialDetailFeedback financialDetailFeedback = financialCostConfirmService.selectFinancialDetailFeedbackByFinancialDetailId(financialDetailId);
