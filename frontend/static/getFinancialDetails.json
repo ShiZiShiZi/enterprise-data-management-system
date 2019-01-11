@@ -1,0 +1,36 @@
+{
+  "financialDetailList": [
+    {
+      "id": "1",
+      "title": "应收1",
+      "num": "3",
+      "time": "3",
+      "financialModelId": "3",
+      "type": "3"
+    },
+    {
+      "id": "2",
+      "title": "应收2",
+      "num": "3",
+      "time": "3",
+      "financialModelId": "3",
+      "type": "3"
+    },
+    {
+      "id": "3",
+      "title": "应收3",
+      "num": "3",
+      "time": "3",
+      "financialModelId": "3",
+      "type": "3"
+    },
+    {
+      "id": "4",
+      "title": "应收4",
+      "num": "3",
+      "time": "3",
+      "financialModelId": "3",
+      "type": "3"
+    }
+  ]
+}

@@ -21,6 +21,15 @@ import ProjectFinanceManage from '@/views/departmentManager/ProjectFinanceManage
 import StaffEditor from '@/views/departmentManager/StaffEditor'
 import EditingFinancialModel from '@/views/departmentManager/EditingFinancialModel'
 import PersonnelUseRequest from '@/views/departmentManager/PersonnelUseRequest'
+import OverallFinancial from '@/components/financial/OverallFinancial'
+import FinancialManagement from '@/views/financial/FinancialManagement'
+import ConfirmExpenditure from '@/views/financial/ConfirmExpenditure'
+import ConfirmReceivable from '@/views/financial/ConfirmReceivable'
+import RecordReceivable from '@/views/financial/RecordReceivable'
+import LinkToRecordReceivable from '@/views/financial/LinkToRecordReceivable'
+import LinkToConfirmReceivable from '@/views/financial/LinkToConfirmReceivable'
+import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure'
+import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
 
 Vue.use(Router)
 
@@ -135,6 +144,53 @@ export default new Router({
           path: 'personnelUseRequest',
           name: 'personnelUseRequest',
           component: PersonnelUseRequest
+        }
+      ]
+    },
+    {
+      path: '/financial',
+      name: 'OverallFinancial',
+      component: OverallFinancial,
+      children: [
+        {
+          path: 'financialMng',
+          name: 'FinancialManagement',
+          component: FinancialManagement
+        },
+        {
+          path: 'recordReceivable/:id/:name',
+          name: 'RecordReceivable',
+          component: RecordReceivable
+        },
+        {
+          path: 'confirmReceivable/:id/:name',
+          name: 'ConfirmReceivable',
+          component: ConfirmReceivable
+        },
+        {
+          path: 'confirmExpenditure/:id/:name',
+          name: 'ConfirmExpenditure',
+          component: ConfirmExpenditure
+        },
+        {
+          path: 'linkToRecordReceivable/:id',
+          name: 'LinkToRecordReceivable',
+          component: LinkToRecordReceivable
+        },
+        {
+          path: 'linkToConfirmReceivable/:id',
+          name: 'LinkToConfirmReceivable',
+          component: LinkToConfirmReceivable
+        },
+        {
+          path: 'linkToConfirmExpenditure/:id',
+          name: 'LinkToConfirmExpenditure',
+          component: LinkToConfirmExpenditure
+        },
+        {
+          path: 'linkToRefuseExpenditure/:id',
+          name: 'LinkToRefuseExpenditure',
+          component: LinkToRefuseExpenditure
         }
       ]
     }
