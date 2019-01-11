@@ -1,8 +1,8 @@
 {
   "projectPeopleList": [
-    { "id":"34" , "name":"zxk", "departmentId": "11"},
-    { "id":"11" , "name":"lxl", "departmentId": "12"},
-    { "id":"15" , "name":"qwe", "departmentId": "13"}
+    { "id":34 , "name":"zxk", "departmentId": "11"},
+    { "id":11 , "name":"lxl", "departmentId": "12"},
+    { "id":15 , "name":"qwe", "departmentId": "13"}
   ],
   "maxPage": 1
 }

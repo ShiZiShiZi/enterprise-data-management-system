@@ -1,12 +1,12 @@
 {
   "projectList": [
-    { "id":"34" , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
+    { "id":34 , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
       "finishTime": "2019-01-01"
     },
-    { "id":"11" , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
+    { "id":11 , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
       "finishTime": "2019-01-01"
     },
-    { "id":"15" , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
+    { "id":15 , "title":"Gates", "description": "zhe shi di er shi san ge", "startTime": "2018-11-01",
       "finishTime": "2019-01-01"
     }
   ],
