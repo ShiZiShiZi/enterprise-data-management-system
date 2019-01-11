@@ -1,61 +1,87 @@
 <template>
-<el-row>
-    <el-col :span="12">
-        <el-card class="box-card">
-            <span>项目已有人员</span>
-            <el-table :data="projectPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-                <el-table-column prop="departmentId" label="部门" width="100"></el-table-column>
-                <el-table-column label="职位" width="80">
-                    <template slot-scope="scope">
-                        <el-tag v-if="isProjectLeaderList[scope.$index] === '1'">负责人</el-tag>
-                        <el-tag v-else type="success">成员</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="120">
-                    <template slot-scope="scope">
-                        <el-button size="mini" type="warning"
-                          plain v-if="isProjectLeaderList[scope.$index] === '1'" @click="changeRoles(scope.$index)">贬为成员</el-button>
-                        <el-button size="mini" plain v-else @click="changeRoles(scope.$index)">设为负责人</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    layout="prev, pager, next"
-                    :total="maxPage1*10">
-            </el-pagination>
-        </el-card>
-    </el-col>
-    <el-col :span="10">
-        <el-card class="box-card">
-            <el-row>
-                <el-col :span="3">名字:</el-col>
-                <el-col :span="4">
-                    <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="name">
-                    </el-input>
-                </el-col>
-            </el-row>
-            <el-table :data="departmentPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="id" label="工号" width="180"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                <el-table-column prop="departmentId" label="部门"></el-table-column>
-                <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button size="mini" @click="handleEdit(scope.$index)" v-if="departmentPeopleListState[scope.$index] === '0'">添加</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange1"
-                    layout="prev, pager, next"
-                    :total="maxPage2*10">
-            </el-pagination>
-        </el-card>
-    </el-col>
-</el-row>
+    <el-row>
+        <el-col :span="10">
+            <el-card class="box-card">
+                <span>项目已有人员</span>
+                <el-table :data="projectPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
+                    <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+                    <el-table-column prop="departmentId" label="部门" width="100"></el-table-column>
+                    <el-table-column label="职位" width="80">
+                        <template slot-scope="scope">
+                            <el-tag v-if="isProjectLeaderList[scope.$index] === '1'">负责人</el-tag>
+                            <el-tag v-else type="success">成员</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="120">
+                        <template slot-scope="scope">
+                            <el-button size="mini" type="warning"
+                                       plain v-if="isProjectLeaderList[scope.$index] === '1'" @click="changeRoles(scope.$index)">贬为成员</el-button>
+                            <el-button size="mini" plain v-else @click="changeRoles(scope.$index)">设为负责人</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        layout="prev, pager, next"
+                        :total="maxPage1*10">
+                </el-pagination>
+            </el-card>
+        </el-col>
+        <el-col :span="6">
+            <el-card class="box-card1">
+                <el-row>
+                    <el-col :span="6">名字:</el-col>
+                    <el-col :span="18">
+                        <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="name">
+                        </el-input>
+                    </el-col>
+                </el-row>
+                <el-table :data="departmentPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
+                    <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template slot-scope="scope">
+                            <el-button size="mini" @click="handleEdit(scope.$index)" v-if="departmentPeopleListState[scope.$index] === '0'">添加</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange1"
+                        layout="prev, pager, next"
+                        :total="maxPage2*10">
+                </el-pagination>
+            </el-card>
+        </el-col>
+        <el-col :span="8">
+            <el-card class="box-card2">
+                <el-row>
+                    <el-col :span="6">名字:</el-col>
+                    <el-col :span="18">
+                        <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="name">
+                        </el-input>
+                    </el-col>
+                </el-row>
+                <el-table :data="personNotInDepartmentList" style="width: 100%" :row-class-name="tableRowClassName">
+                    <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+                    <el-table-column prop="departmentId" label="部门" width="100"></el-table-column>
+                    <el-table-column label="操作" width="100">
+                        <template slot-scope="scope">
+                            <el-tag v-if="personNotInDepartmentStateList[scope.$index] === 0">待审核</el-tag>
+                            <el-tag v-if="personNotInDepartmentStateList[scope.$index] === 1" type="danger">已拒绝</el-tag>
+                            <el-button size="mini" @click="handleSenderInvitation(scope.$index)" v-if="personNotInDepartmentStateList[scope.$index] === 2">添加</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange1"
+                        layout="prev, pager, next"
+                        :total="maxPage3*10">
+                </el-pagination>
+            </el-card>
+        </el-col>
+    </el-row>
 </template>
 
 <script>import axios from 'axios'
@@ -67,15 +93,21 @@ export default {
       title: '',
       currentPage1: 1,
       currentPage2: 1,
+      currentPage3: 1,
       pageSize: 10,
       maxPage1: 1,
       maxPage2: 1,
+      maxPage3: 1,
       name: '',
+      table2name: '',
       projectPeopleList: [],
       departmentPeopleList: [],
       departmentPeopleListState: [],
       projectLeaderList: [],
-      isProjectLeaderList: []
+      isProjectLeaderList: [],
+      personNotInDepartmentList: [],
+      personNotInDepartmentIdList: [],
+      personNotInDepartmentStateList: []
     }
   },
   created: function () {
@@ -84,10 +116,14 @@ export default {
     this.getProjectLeaderList()
     this.getProjectPeopleList()
     this.getDepartmentPeopleList()
+    this.getPersonNotInDepartmentList()
   },
   watch: {
     name (val) {
       this.getDepartmentPeopleList()
+    },
+    table2name (val) {
+      this.getPersonNotInDepartmentList()
     }
   },
   methods: {
@@ -156,6 +192,41 @@ export default {
         alert(error)
       })
     },
+    getPersonNotInDepartmentList: function () {
+      axios.get('http://localhost:8080/static/departmentPeopleList.json', { // URL:/projectPeopleSearch
+        params: {
+          currentPage: this.currentPage3,
+          pageSize: this.pageSize,
+          departmentId: localStorage.getItem('departmentId'),
+          sortColumn: 'id',
+          isDepartmentIdIn: 0,
+          sortOrder: 1,
+          name: this.table2name
+        }
+      }).then(res => {
+        this.personNotInDepartmentList = res.data.projectPeopleList
+        this.maxPage3 = res.data.maxPage
+        this.personNotInDepartmentIdList = []
+        for (let i = 0; i < this.personNotInDepartmentList.length; i++) {
+          this.personNotInDepartmentIdList.push(this.personNotInDepartmentList[i].id)
+        }
+        this.getPersonNotInDepartmentStateList()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    getPersonNotInDepartmentStateList: function () {
+      axios.get('http://localhost:8080/static/personNotInDepartmentStateList.json', { // URL:/projectPeopleSearch
+        params: {
+          projectId: this.id,
+          personNotInDepartmentIdList: this.personNotInDepartmentIdList
+        }
+      }).then(res => {
+        this.personNotInDepartmentStateList = res.data.personNotInDepartmentStateList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
     tableRowClassName ({row, rowIndex}) {
       if (rowIndex === 1) {
         return 'warning-row'
@@ -188,7 +259,7 @@ export default {
         alert(error)
       })
     },
-    changeRoles: function (index) {
+    changeRoles: function (index) { // 设置为部门负责人和撤销
       if (this.isProjectLeaderList[index] === '0') {
         this.projectLeaderList.push(this.projectPeopleList[index].id)
       } else {
@@ -209,20 +280,42 @@ export default {
       }).catch(function (error) {
         alert(error)
       })
+    },
+    handleSenderInvitation: function (index) { // 添加跨部门人员请求
+      let peopleIdList = []
+      peopleIdList.push(this.personNotInDepartmentIdList[index])
+      axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL:/departmentManager/addAcrossDepartmentPeople
+        params: {
+          projectId: this.id,
+          peopleIdList: peopleIdList,
+          departmentId: localStorage.getItem('departmentId')
+        }
+      }).then(res => {
+        alert('添加成功')
+        this.getPersonNotInDepartmentList()
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-.box-card {
-    width: 600px;
-}
-.el-table .warning-row {
-    background: oldlace;
-}
+    .box-card {
+        width: 500px;
+    }
+    .box-card1 {
+        width: 300px;
+    }
+    .box-card2 {
+        width: 400px;
+    }
+    .el-table .warning-row {
+        background: oldlace;
+    }
 
-.el-table .success-row {
-    background: #f0f9eb;
-}
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
 </style>
