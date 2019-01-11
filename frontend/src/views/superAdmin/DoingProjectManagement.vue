@@ -3,20 +3,25 @@
     <el-row>
       <el-col :span="2" class="text-left">搜索部门：</el-col>
       <el-col :span="3">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input v-model="departmentTitle" placeholder="请输入内容"></el-input>
       </el-col>
       <el-col :span="2" class="text-left">搜索项目：</el-col>
       <el-col :span="3">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input v-model="projectTitle" placeholder="请输入内容"></el-input>
       </el-col>
     </el-row>
     <el-table
       ref="singleTable"
-      :data="doingProjectList.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+      :data="doingProjectList"
       highlight-current-row>
       <el-table-column
         type="index"
         width="50">
+      </el-table-column>
+      <el-table-column
+        property="id"
+        label="项目代码"
+        width="120">
       </el-table-column>
       <el-table-column
         property="name"
@@ -40,7 +45,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="prev, pager, next"
-      :total="doingProjectList.length*10">
+      :total="maxPage*10">
     </el-pagination>
   </el-card>
 </template>
@@ -52,27 +57,49 @@ export default {
   name: 'DoingProjectManagement',
   data: function () {
     return {
+      departmentTitle: '',
+      projectTitle: '',
+      type: 'doing',
       doingProjectList: [],
       currentPage: 1,
-      pageSize: 3
+      pageSize: 3,
+      maxPage: 2
     }
   },
   created: function () {
-    axios.get('http://localhost:8080/static/doingProjectList.json').then(res => {
-      this.doingProjectList = res.data.doingProjectList
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.getDoingProjectList()
+  },
+  watch: {
+    departmentTitle (val) {
+      this.getDoingProjectList()
+    },
+    projectTitle (val) {
+      this.getDoingProjectList()
+    }
   },
   methods: {
-    handleSizeChange: function (size) {
-      this.pageSize = size
-    },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
+      this.getDoingProjectList()
     },
     handleClick: function (row) {
       this.$router.push('showDoingProject/' + row.id + '/' + row.name)
+    },
+    getDoingProjectList: function () {
+      axios.get('http://localhost:8080/static/doingProjectList.json', {
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+          departmentTitle: this.departmentTitle,
+          projectTitle: this.projectTitle,
+          type: this.type
+        }
+      }).then(res => {
+        this.doingProjectList = res.data.doingProjectList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }

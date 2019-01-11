@@ -83,6 +83,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   name: 'DataManage',
   data: function () {
@@ -91,7 +92,7 @@ export default {
       name: '',
       projectPeopleList: [],
       currentPage: 1,
-      pageSize: 8,
+      pageSize: 5,
       maxPage: 1,
       totalInput: 0,
       totalOutput: 0,
@@ -113,18 +114,7 @@ export default {
   created: function () {
     let myDate = new Date()
     this.year = myDate.getFullYear().toString()
-    axios.get('http://localhost:8080/static/developerList.json', {
-      params: {
-        departmentId: this.id,
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
-      }
-    }).then(res => {
-      this.projectPeopleList = res.data.projectPeopleList
-      this.maxPage = res.data.maxPage
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.getProjectPeopleList()
     axios.get('http://localhost:8080/static/departmentDataTotal.json', {
       params: {
         departmentId: this.id
@@ -198,8 +188,7 @@ export default {
             axisPointer: {
               label: {
                 formatter: function (params) {
-                  return '金额  ' + params.value +
-                      (params.seriesData.length ? '：' + params.seriesData[0].data : '')
+                  return '金额  ' + params.value + (params.seriesData.length ? '：' + params.seriesData[0].data : '')
                 }
               }
             },
@@ -220,7 +209,7 @@ export default {
               label: {
                 formatter: function (params) {
                   return '金额  ' + params.value +
-                      (params.seriesData.length ? '：' + params.seriesData[0].data : '')
+                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
                 }
               }
             },
@@ -457,6 +446,24 @@ export default {
         ]
       }
       showProfit.setOption(option, true)
+    },
+    handleCurrentChange: function (currentPage) {
+      this.currentPage = currentPage
+      this.getProjectPeopleList()
+    },
+    getProjectPeopleList: function () {
+      axios.get('http://localhost:8080/static/developerList.json', {
+        params: {
+          departmentId: this.id,
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+        }
+      }).then(res => {
+        this.projectPeopleList = res.data.projectPeopleList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }

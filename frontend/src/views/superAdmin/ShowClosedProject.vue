@@ -1,158 +1,308 @@
 <template>
-  <el-card class="box-card">
-    <el-row>
-      <el-col :span="20">
-        <div id="myChart" :style="{width: '1000px', height: '400px'}"></div>
-      </el-col>
-      <el-col :span="3">
-        <el-input-number v-model="financialData.financialPart.year" @change="drawLine" :min="2016" :max="2100" label="描述文字"></el-input-number>
-        <el-alert type="success" :closable="false">
-          总收入: {{financialData.totalInput}}
-        </el-alert>
-        <el-alert type="warning" :closable="false">
-          总支出: {{financialData.totalOutput}}
-        </el-alert>
-        <el-alert type="success" :closable="false">
-          毛利润: {{financialData.grossProfit}}
-        </el-alert>
-      </el-col>
-    </el-row>
-  </el-card>
+  <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane label="项目总览" class="finance" @tab-click="drawTotal">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="20">
+            <div id="showTotal" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="3">
+            <el-alert type="success" :closable="false">
+              总收入: {{financialData.totalInput}}
+            </el-alert>
+            <el-alert type="warning" :closable="false">
+              总支出: {{financialData.totalOutput}}
+            </el-alert>
+            <el-alert type="success" :closable="false">
+              总利润: {{financialData.grossProfit}}
+            </el-alert>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目收入类别" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showIncomeType" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目支出类别" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showExpenditureType" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>import axios from 'axios'
 export default {
-  name: 'SubDepartmentManagement',
+  name: 'ShowClosedProject',
   data: function () {
     return {
-      id: 0,
+      projectId: 0,
       name: '',
       financialData: {
         totalInput: 0,
         totalOutput: 0,
         grossProfit: 0,
-        financialPart: {'year': '2018',
-          'income': [122, 123, 200, 120, 132, 400, 134, 90, 230, 210, 120, 340],
-          'expenditure': [120, 132, 101, 134, 90, 230, 210, 110, 20, 23, 220, 219],
-          'grossprofit': [120, 132, 101, 134, 90, 230, 134, 90, 230, 210, 120, 340]}
+        financialPart: {'month': [],
+          'income': [],
+          'expenditure': [],
+          'profit': []}
+      },
+      projectData: {
+        chooseDate: [],
+        incomePart: [],
+        expenditurePart: []
       }
     }
   },
   created: function () {
-    this.id = this.$route.params.id
+    this.projectId = this.$route.params.id
     this.name = this.$route.params.name
-    axios.get('http://localhost:8080/static/developerList.json', {
+    axios.get('http://localhost:8080/static/projectDataTotal.json', {
       params: {
-        id: this.id,
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
+        projectId: this.projectId
       }
     }).then(res => {
-      this.developerList = res.data.developerList
-      this.maxPage = res.data.maxPage
+      this.financialData.totalInput = res.data.financialData.totalInput
+      this.financialData.totalOutput = res.data.financialData.totalOutput
+      this.financialData.grossProfit = res.data.financialData.grossProfit
     }).catch(function (error) {
       alert(error)
     })
+    let myDate = new Date()
+    let lastMonth = new Date(new Date().setMonth(myDate.getMonth() - 1))
+    this.projectData.chooseDate.push(lastMonth.getFullYear().toString() + '-' + (lastMonth.getMonth() + 1).toString() + '-' + lastMonth.getDate().toString())
+    this.projectData.chooseDate.push(myDate.getFullYear().toString() + '-' + (myDate.getMonth() + 1).toString() + '-' + myDate.getDate().toString())
   },
   mounted: function () {
-    this.drawLine()
+    this.drawTotal()
+    this.drawIncome()
+    this.drawExpenditure()
   },
   methods: {
-    drawLine: function () {
-      // to do fasong qingqiu
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
-      let colors = ['#5793f3', '#d14a61', '#675bba']
+    drawTotal: function () {
+      axios.get('http://localhost:8080/static/projectDataTotal.json', {
+        params: {
+          projectId: this.projectId
+        }
+      }).then(res => {
+        this.financialData.financialPart.month = res.data.financialData.financialPart.month
+        this.financialData.financialPart.income = res.data.financialData.financialPart.income
+        this.financialData.financialPart.expenditure = res.data.financialData.financialPart.expenditure
+        this.financialData.financialPart.profit = res.data.financialData.financialPart.profit
+        this.drawTotalChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawTotalChart: function () {
+      let myChart = this.$echarts.init(document.getElementById('showTotal'))
 
       let option = {
         title: {
-          text: this.financialData.financialPart.year + '收支状况'
+          text: this.name + '收支状况'
         },
-        color: colors,
         tooltip: {
-          trigger: 'none',
+          trigger: 'axis',
           axisPointer: {
-            type: 'cross'
+            type: 'shadow'
           }
         },
         legend: {
-          data: ['收入', '支出', '毛利润']
+          data: ['利润', '支出', '收入']
         },
-        grid: {
-          top: 70,
-          bottom: 50
+        dataZoom: [{
+          type: 'slider',
+          start: 50,
+          end: 70
+        }, {
+          type: 'inside',
+          start: 50,
+          end: 70
+        }],
+        xAxis: {
+          type: 'category',
+          axisTick: {show: false},
+          data: this.financialData.financialPart.month
         },
-        xAxis: [
-          {
-            type: 'category',
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              onZero: false,
-              lineStyle: {
-                color: colors[1]
-              }
-            },
-            axisPointer: {
-              label: {
-                formatter: function (params) {
-                  return '金额  ' + params.value +
-                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
-                }
-              }
-            },
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-          },
-          {
-            type: 'category',
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              onZero: false,
-              lineStyle: {
-                color: colors[0]
-              }
-            },
-            axisPointer: {
-              label: {
-                formatter: function (params) {
-                  return '金额  ' + params.value +
-                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
-                }
-              }
-            },
-            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value'
-          }
-        ],
+        yAxis: {
+          type: 'value'
+        },
         series: [
           {
+            name: '利润',
+            type: 'bar',
+            label: {
+              normal: {
+                show: true,
+                position: 'inside'
+              }
+            },
+            data: this.financialData.financialPart.profit
+          },
+          {
             name: '收入',
-            type: 'line',
-            xAxisIndex: 1,
-            smooth: true,
+            type: 'bar',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true
+              }
+            },
             data: this.financialData.financialPart.income
           },
           {
             name: '支出',
-            type: 'line',
-            smooth: true,
+            type: 'bar',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true,
+                position: 'inside'
+              }
+            },
             data: this.financialData.financialPart.expenditure
-          },
-          {
-            name: '毛利润',
-            type: 'line',
-            smooth: true,
-            data: this.financialData.financialPart.grossprofit
           }
         ]
       }
       myChart.setOption(option, true)
+    },
+    drawIncome: function () {
+      axios.get('http://localhost:8080/static/projectMaxIncomeType.json', {
+        params: {
+          projectId: this.projectId,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.incomePart = res.data.incomePart
+        this.drawIncomeChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawIncomeChart: function () {
+      let showIncomeType = this.$echarts.init(document.getElementById('showIncomeType'))
+
+      let option = {
+        title: {
+          text: this.projectData.chooseDate + '项目收入对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '收入',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.incomePart
+          }
+        ]
+      }
+      showIncomeType.setOption(option, true)
+    },
+    drawExpenditure: function () {
+      axios.get('http://localhost:8080/static/projectMaxExpenditureType.json', {
+        params: {
+          projectId: this.projectId,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.expenditurePart = res.data.expenditurePart
+        this.drawExpenditureChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawExpenditureChart: function () {
+      let showExpenditureType = this.$echarts.init(document.getElementById('showExpenditureType'))
+
+      let option = {
+        title: {
+          text: this.projectData.chooseDate + '项目支出对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '支出',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.expenditurePart
+          }
+        ]
+      }
+      showExpenditureType.setOption(option, true)
     }
   }
 }
@@ -160,8 +310,11 @@ export default {
 
 <style scoped>
   .box-card {
-    width: 1200px;
+    width: 480px;
     text-align: left;
     margin-top: 20px;
+  }
+  .finance .box-card {
+    width: 1200px;
   }
 </style>

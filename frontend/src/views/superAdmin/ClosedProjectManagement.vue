@@ -3,16 +3,22 @@
     <el-row>
       <el-col :span="2" class="text-left">搜索日期：</el-col>
       <el-col :span="3">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-date-picker
+          v-model="month"
+          type="month"
+          placeholder="选择月"
+          format="yyyy 年 MM 月"
+          value-format="yyyy-MM">
+        </el-date-picker>
       </el-col>
       <el-col :span="2" class="text-left">搜索项目：</el-col>
       <el-col :span="3">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input v-model="projectTitle" placeholder="请输入内容"></el-input>
       </el-col>
     </el-row>
     <el-table
       ref="singleTable"
-      :data="closedProjectList.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+      :data="closedProjectList"
       highlight-current-row>
       <el-table-column
         type="index"
@@ -45,7 +51,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="prev, pager, next"
-      :total="closedProjectList.length*10">
+      :total="maxPage*10">
     </el-pagination>
   </el-card>
 </template>
@@ -57,27 +63,49 @@ export default {
   name: 'ClosedProjectManagement',
   data: function () {
     return {
+      month: '',
+      projectTitle: '',
+      type: 'closed',
       closedProjectList: [],
       currentPage: 1,
-      pageSize: 3
+      pageSize: 3,
+      maxPage: 2
     }
   },
   created: function () {
-    axios.get('http://localhost:8080/static/closedProjectList.json').then(res => {
-      this.closedProjectList = res.data.closedProjectList
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.getClosedProjectList()
+  },
+  watch: {
+    month (val) {
+      this.getClosedProjectList()
+    },
+    projectTitle (val) {
+      this.getClosedProjectList()
+    }
   },
   methods: {
-    handleSizeChange: function (size) {
-      this.pageSize = size
-    },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
+      this.getClosedProjectList()
     },
     handleClick: function (row) {
       this.$router.push('showClosedProject/' + row.id + '/' + row.name)
+    },
+    getClosedProjectList: function () {
+      axios.get('http://localhost:8080/static/closedProjectList.json', {
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+          month: this.month,
+          projectTitle: this.projectTitle,
+          type: this.type
+        }
+      }).then(res => {
+        this.closedProjectList = res.data.closedProjectList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }

@@ -24,7 +24,8 @@ export default {
       ruleForm: {
         name: '',
         mail: '',
-        phoneNum: ''
+        phoneNum: '',
+        type: 'financial'
       },
       rules: {
         name: [
@@ -39,23 +40,26 @@ export default {
           { required: true, message: '请输入电话号码', trigger: 'blur' },
           { min: 7, max: 11, message: '请输入正确的电话号码', trigger: 'blur' }
         ]
-      }
+      },
+      msg: ''
     }
   },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.post('', {
+          axios.get('http://localhost:8080/static/newFinancial.json', {
             name: this.ruleForm.name,
             mail: this.ruleForm.mail,
-            phoneNum: this.ruleForm.phoneNum
+            phoneNum: this.ruleForm.phoneNum,
+            type: this.ruleForm.type
           }, {
             headers: {
               token: 'name'
             }
           }).then(res => {
-
+            this.msg = res.data.msg
+            alert(this.msg)
           })
         } else {
           alert('error submit!!')
