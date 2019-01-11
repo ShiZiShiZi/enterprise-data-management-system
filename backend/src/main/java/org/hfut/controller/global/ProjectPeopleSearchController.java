@@ -41,7 +41,7 @@ public class ProjectPeopleSearchController {
                                                    @RequestParam(name = "sortOrder", required = false) Integer sortOrder,
                                                    Model model) {
         Map<String, Object> map = new HashMap<>(10);
-        List<ProjectPeople> list = new ArrayList<>();
+        List<ProjectPeople> list;
         if (projectId == null) {
             projectId = new ArrayList<>();
         }
