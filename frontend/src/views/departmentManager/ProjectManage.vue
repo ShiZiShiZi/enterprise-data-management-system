@@ -13,7 +13,7 @@
                 </el-date-picker>
             </el-col>
             <el-col :span="3">
-                <el-button type="primary">新增项目</el-button>
+                <el-button type="primary" @click="addProjectVisible = true">新增项目</el-button>
             </el-col>
         </el-row>
         <el-row>
@@ -70,6 +70,30 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+        <el-dialog title="添加项目" :visible.sync="addProjectVisible" width="30%">
+            <el-form :model="addProjectForm" ref="addProject" label-width="100px" class="demo-dynamic">
+                <el-form-item label="标题" prop="title" :rules="addProjectForm.rules.title">
+                    <el-input v-model.number="addProjectForm.title"></el-input>
+                </el-form-item>
+                <el-form-item label="描述" prop="description" :rules="addProjectForm.rules.description">
+                    <el-input v-model="addProjectForm.description"></el-input>
+                </el-form-item>
+                <el-form-item label="开始时间" prop="startTime" :rules="addProjectForm.rules.startTime">
+                    <el-date-picker v-model="addProjectForm.startTime"
+                                    value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="截至时间" prop="finishTime" :rules="addProjectForm.rules.finishTime">
+                    <el-date-picker v-model="addProjectForm.finishTime"
+                                    value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitAddProject('addProject')">提交</el-button>
+                    <el-button @click="addProjectVisible = false">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </el-card>
 </template>
 
@@ -84,6 +108,7 @@ export default {
       maxPage: 1,
       projectTitle: '',
       dialogVisible: false,
+      addProjectVisible: false,
       startTime: [],
       projectList: [],
       projectIdList: [],
@@ -97,6 +122,18 @@ export default {
           newTitle: [{required: true, message: '请输入项目名称', trigger: 'blur'}],
           newDescription: [{required: true, message: '请输入项目描述', trigger: 'blur'}],
           newFinishTime: [{required: true, message: '请输入项目截至日期', trigger: 'blur'}]
+        }
+      },
+      addProjectForm: {
+        title: '',
+        finishTime: '',
+        startTime: '',
+        description: '',
+        rules: {
+          title: [{required: true, message: '请输入项目名称', trigger: 'blur'}],
+          description: [{required: true, message: '请输入项目描述', trigger: 'blur'}],
+          finishTime: [{required: true, message: '请输入项目截至日期', trigger: 'blur'}],
+          startTime: [{required: true, message: '请输入项目截至日期', trigger: 'blur'}]
         }
       }
     }
@@ -150,6 +187,26 @@ export default {
         }
       })
     },
+    submitAddProject: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          axios.get('http://localhost:8080/static/addProject.json', { // URL:/departmentManager/insertProject
+            params: {
+              title: this.addProjectForm.title,
+              description: this.addProjectForm.description,
+              startTime: this.addProjectForm.startTime,
+              finishTime: this.addProjectForm.finishTime
+            }
+          }).then(res => {
+            this.$router.push('staffEditor/' + res.data.id + '/' + this.addProjectForm.title)
+          }).catch(function (error) {
+            alert(error)
+          })
+        } else {
+          alert('请按照要求填写')
+        }
+      })
+    },
     getProjectList: function () {
       axios.get('http://localhost:8080/static/projectList.json', { // URL:/projectSearch
         params: {
@@ -181,6 +238,8 @@ export default {
       }).catch(function (error) {
         alert(error)
       })
+    },
+    handleAddProject: function () {
     }
   }
 }
