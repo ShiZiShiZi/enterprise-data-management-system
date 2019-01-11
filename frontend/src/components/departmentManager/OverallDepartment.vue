@@ -28,10 +28,6 @@
             <i class="el-icon-menu"></i>
             <span slot="title" @click="jumpToDataManage">部门数据分析</span>
           </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-document"></i>
-            <span slot="title" @click="jumpToNewCost">添加本部门人员</span>
-          </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-document"></i>
             <span slot="title" @click="jumpToNewCost">人员使用请求</span>
