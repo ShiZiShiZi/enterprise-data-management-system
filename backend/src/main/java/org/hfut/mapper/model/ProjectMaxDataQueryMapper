@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hfut.mapper.model.ProjectMaxDataQueryMapper">
+    <resultMap id="resultMap" type="org.hfut.model.ProjectData">
+        <result property="name" column="title"/>
+        <result property="value" column="data"/>
+    </resultMap>
+
+    <select id="selectProjectMaxData" parameterType="map" resultMap="resultMap">
+        select project.title,sum(financial_log.num) as `data`
+        from department,
+             project,
+             financial_log,
+             financial_model,
+             financial_detail
+        where project.department_id = #{departmentId}
+          and
+          project.id = financial_model.project_Id
+          and
+          financial_model.id = financial_detail.financial_model_id
+          and
+          financial_detail.id = financial_log.financial_detail_id
+          and
+          financial_model.active = 1
+          and 
+          financial_log.time between #{startTime} and #{finishTime}
+          and financial_log.type = #{dataType}
+        group by project.id
+        order by data desc
+        limit 15
+    </select>
+</mapper>
