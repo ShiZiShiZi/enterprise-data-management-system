@@ -4,9 +4,21 @@
         <el-card class="box-card">
             <span>项目已有人员</span>
             <el-table :data="projectPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="id" label="工号" width="180"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                <el-table-column prop="departmentId" label="部门"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+                <el-table-column prop="departmentId" label="部门" width="100"></el-table-column>
+                <el-table-column label="职位" width="80">
+                    <template slot-scope="scope">
+                        <el-tag v-if="isProjectLeaderList[scope.$index] === '1'">负责人</el-tag>
+                        <el-tag v-else type="success">成员</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="120">
+                    <template slot-scope="scope">
+                        <el-button size="mini" type="warning"
+                          plain v-if="isProjectLeaderList[scope.$index] === '1'" @click="changeRoles(scope.$index)">贬为成员</el-button>
+                        <el-button size="mini" plain v-else @click="changeRoles(scope.$index)">设为负责人</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <el-pagination
                     @size-change="handleSizeChange"
@@ -61,12 +73,15 @@ export default {
       name: '',
       projectPeopleList: [],
       departmentPeopleList: [],
-      departmentPeopleListState: []
+      departmentPeopleListState: [],
+      projectLeaderList: [],
+      isProjectLeaderList: []
     }
   },
   created: function () {
     this.id = this.$route.params.id
     this.title = this.$route.params.title
+    this.getProjectLeaderList()
     this.getProjectPeopleList()
     this.getDepartmentPeopleList()
   },
@@ -76,6 +91,17 @@ export default {
     }
   },
   methods: {
+    getProjectLeaderList: function () {
+      axios.get('http://localhost:8080/static/projectLeaderList.json', { // URL:/departmentManager/getProjectManager
+        params: {
+          projectID: this.id
+        }
+      }).then(res => {
+        this.projectLeaderList = res.data.projectManagerList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
     getProjectPeopleList: function () {
       axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL: /getProjectMember
         params: {
@@ -89,6 +115,16 @@ export default {
       }).then(res => {
         this.projectPeopleList = res.data.projectPeopleList
         this.maxPage1 = res.data.maxPage
+        for (let i = 0; i < this.projectPeopleList.length; i++) {
+          let flag = true
+          for (let j = 0; j < this.projectLeaderList.length; j++) {
+            if (this.projectLeaderList[j] === this.projectPeopleList[i].id) {
+              this.isProjectLeaderList.push('1')
+              flag = false
+            }
+          }
+          if (flag === true) { this.isProjectLeaderList.push('0') }
+        }
       }).catch(function (error) {
         alert(error)
       })
@@ -148,6 +184,28 @@ export default {
       }).then(res => {
         this.getProjectPeopleList()
         this.getDepartmentPeopleList()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    changeRoles: function (index) {
+      if (this.isProjectLeaderList[index] === '0') {
+        this.projectLeaderList.push(this.projectPeopleList[index].id)
+      } else {
+        for (let i = 0; i < this.projectLeaderList.length; i++) {
+          if (this.projectLeaderList[i] === this.projectPeopleList[index].id) {
+            this.projectLeaderList.splice(i, 1)
+          }
+        }
+      }
+      axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL:/departmentManager/addProjectManager
+        params: {
+          projectId: this.id,
+          projectPeopleId: this.projectLeaderList
+        }
+      }).then(res => {
+        this.isProjectLeaderList = []
+        this.getProjectPeopleList()
       }).catch(function (error) {
         alert(error)
       })
