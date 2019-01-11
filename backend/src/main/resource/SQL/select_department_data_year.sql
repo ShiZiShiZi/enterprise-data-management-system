@@ -35,7 +35,7 @@ FROM
 WHERE
 	(
 		(
-			`financial_detail`.`id` = `financial_detail`.`id`
+			`financial_log`.`financial_detail_id` = `financial_detail`.`id`
 		)
 		AND (
 			`financial_detail`.`financial_model_id` = `financial_model`.`id`
