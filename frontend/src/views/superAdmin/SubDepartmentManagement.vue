@@ -39,7 +39,7 @@
       <el-card class="box-card">
         <el-table ref="singleTable" :data="developerList" highlight-current-row>
           <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
+          <el-table-column property="id" label="工号" width="120"></el-table-column>
           <el-table-column property="name" label="姓名" width="120"></el-table-column>
         </el-table>
         <el-pagination
@@ -54,21 +54,63 @@
       <el-card class="box-card">
         <el-row>
           <el-col :span="20">
-          <div id="myChart" :style="{width: '1000px', height: '400px'}"></div>
+            <div id="showTotal" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
           <el-col :span="3">
-            <el-input-number v-model="financialData.financialPart.year" @change="drawLine" :min="2016" :max="2100" label="描述文字"></el-input-number>
+            <el-input-number v-model="year" @change="drawTotal" :min="2000" :max="new Date().getFullYear()" label="描述文字"></el-input-number>
             <el-alert type="success" :closable="false">
-              总收入: {{financialData.totalInput}}
+              总收入: {{totalInput}}
             </el-alert>
             <el-alert type="warning" :closable="false">
-              总支出: {{financialData.totalOutput}}
+              总支出: {{totalOutput}}
             </el-alert>
             <el-alert type="success" :closable="false">
-              毛利润: {{financialData.grossProfit}}
+              毛利润: {{grossProfit}}
             </el-alert>
           </el-col>
-      </el-row>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目收入" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showIncome" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目支出" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showExpenditure" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目利润" class="finance">
+      <el-card class="box-card">
+        <el-row>
+          <el-col :span="16">
+            <div id="showProfit" :style="{width: '1000px', height: '400px'}"></div>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+        </el-row>
       </el-card>
     </el-tab-pane>
   </el-tabs>
@@ -81,10 +123,12 @@ export default {
     return {
       id: 0,
       name: '',
+      msg: '',
       dynamicValidateForm: {
         name: '',
         email: '',
         phone: '',
+        type: 'departmentManager',
         rules: {
           name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
           email: [
@@ -99,42 +143,83 @@ export default {
       currentPage: 1,
       pageSize: 8,
       maxPage: 1,
+      totalInput: 0,
+      totalOutput: 0,
+      grossProfit: 0,
+      year: '',
       financialData: {
-        totalInput: 0,
-        totalOutput: 0,
-        grossProfit: 0,
-        financialPart: {'year': '2018',
-          'income': [122, 123, 200, 120, 132, 400, 134, 90, 230, 210, 120, 340],
-          'expenditure': [120, 132, 101, 134, 90, 230, 210, 110, 20, 23, 220, 219]}
+        'income': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        'expenditure': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        'profit': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      projectData: {
+        chooseDate: [],
+        incomePart: [],
+        expenditurePart: [],
+        profitPart: {}
       }
     }
   },
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    axios.get('http://localhost:8080/static/developerList.json', {
+    this.getDepartmenterList()
+    let myDate = new Date()
+    this.year = myDate.getFullYear().toString()
+    this.getProjectPeopleList()
+    axios.get('http://localhost:8080/static/departmentDataTotal.json', {
       params: {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
+        departmentId: this.id
       }
     }).then(res => {
-      this.developerList = res.data.developerList
-      this.maxPage = res.data.maxPage
+      this.totalInput = res.data.totalInput
+      this.totalOutput = res.data.totalOutput
+      this.grossProfit = res.data.grossProfit
     }).catch(function (error) {
       alert(error)
     })
+    let lastMonth = new Date(new Date().setMonth(myDate.getMonth() - 1))
+    this.projectData.chooseDate.push(lastMonth.getFullYear().toString() + '-' + (lastMonth.getMonth() + 1).toString() + '-' + lastMonth.getDate().toString())
+    this.projectData.chooseDate.push(myDate.getFullYear().toString() + '-' + (myDate.getMonth() + 1).toString() + '-' + myDate.getDate().toString())
   },
   mounted: function () {
-    this.drawLine()
+    this.drawTotal()
+    this.drawIncome()
+    this.drawExpenditure()
+    this.drawProfit()
   },
   methods: {
     onSubmit: function () {
-      alert('这里需要添加修改部门名称的请求')
+      axios.get('http://localhost:8080/static/changeDepartmentTitle.json', {
+        params: {
+          departmentId: this.id,
+          departmentTitle: this.name
+        }
+      }).then(res => {
+        this.msg = res.data.msg
+        alert(this.msg)
+      }).catch(function (error) {
+        alert(error)
+      })
     },
     addDepartmentManagement: function (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('这里需要添加添加部门管理员的请求')
+          axios.get('http://localhost:8080/static/newDaepartmentManager.json', {
+            params: {
+              departmentId: this.id,
+              departmentTitle: this.name,
+              name: this.dynamicValidateForm.name,
+              mail: this.dynamicValidateForm.mail,
+              phoneNum: this.dynamicValidateForm.phoneNum,
+              type: this.dynamicValidateForm.type
+            }
+          }).then(res => {
+            this.msg = res.data.msg
+            alert(this.msg)
+          }).catch(function (error) {
+            alert(error)
+          })
         } else {
           alert('请按照要求填写')
         }
@@ -145,25 +230,42 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('static/departmentList2.json', {
+      this.getDepartmenterList()
+    },
+    getDepartmenterList: function () {
+      axios.get('http://localhost:8080/static/developerList.json', {
         params: {
           currentPage: this.currentPage,
           pageSize: this.pageSize
         }
       }).then(res => {
-        this.departmentList = res.data.departmentList
+        this.developerList = res.data.projectPeopleList
+        this.maxPage = res.data.maxPage
       }).catch(function (error) {
         alert(error)
       })
     },
-    drawLine: function () {
-      // to do fasong qingqiu
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
+    drawTotal: function () {
+      axios.get('http://localhost:8080/static/departmentDataYear.json', {
+        params: {
+          departmentId: this.id,
+          year: this.year
+        }
+      }).then(res => {
+        this.financialData.income = res.data.income
+        this.financialData.expenditure = res.data.expenditure
+        this.financialData.profit = res.data.profit
+        this.drawTotalChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawTotalChart: function () {
+      let myChart = this.$echarts.init(document.getElementById('showTotal'))
       let colors = ['#5793f3', '#d14a61', '#675bba']
-
       let option = {
         title: {
-          text: this.financialData.financialPart.year + '收支状况'
+          text: this.year + '收支状况'
         },
         color: colors,
         tooltip: {
@@ -173,7 +275,7 @@ export default {
           }
         },
         legend: {
-          data: ['收入', '支出']
+          data: ['收入', '支出', '利润']
         },
         grid: {
           top: 70,
@@ -194,8 +296,7 @@ export default {
             axisPointer: {
               label: {
                 formatter: function (params) {
-                  return '金额  ' + params.value +
-                    (params.seriesData.length ? '：' + params.seriesData[0].data : '')
+                  return '金额  ' + params.value + (params.seriesData.length ? '：' + params.seriesData[0].data : '')
                 }
               }
             },
@@ -234,31 +335,231 @@ export default {
             type: 'line',
             xAxisIndex: 1,
             smooth: true,
-            data: this.financialData.financialPart.income
+            data: this.financialData.income
           },
           {
             name: '支出',
             type: 'line',
             smooth: true,
-            data: this.financialData.financialPart.expenditure
+            data: this.financialData.expenditure
+          },
+          {
+            name: '利润',
+            type: 'line',
+            smooth: true,
+            data: this.financialData.profit
           }
         ]
       }
       myChart.setOption(option, true)
+    },
+    drawIncome: function () {
+      axios.get('http://localhost:8080/static/departmentMaxIncomeProject.json', {
+        params: {
+          departmentId: this.id,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.incomePart = res.data.incomePart
+        this.drawIncomeChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawIncomeChart: function () {
+      let showIncome = this.$echarts.init(document.getElementById('showIncome'))
+
+      let option = {
+        title: {
+          text: this.projectData.chooseDate + '项目收入对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '收入',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.incomePart
+          }
+        ]
+      }
+      showIncome.setOption(option, true)
+    },
+    drawExpenditure: function () {
+      axios.get('http://localhost:8080/static/departmentMaxExpenditureProject.json', {
+        params: {
+          departmentId: this.id,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.expenditurePart = res.data.expenditurePart
+        this.drawExpenditureChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawExpenditureChart: function () {
+      let showExpenditure = this.$echarts.init(document.getElementById('showExpenditure'))
+
+      let option = {
+        title: {
+          text: this.projectData.chooseDate + '项目支出对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '支出',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.expenditurePart
+          }
+        ]
+      }
+      showExpenditure.setOption(option, true)
+    },
+    drawProfit: function () {
+      axios.get('http://localhost:8080/static/departmentMaxProfitProject.json', {
+        params: {
+          departmentId: this.id,
+          chooseDate: this.projectData.chooseDate
+        }
+      }).then(res => {
+        this.projectData.profitPart.profit = res.data.profitPart.profit
+        this.projectData.profitPart.profitRate = res.data.profitPart.profitRate
+        this.drawProfitChart()
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    drawProfitChart: function () {
+      let showProfit = this.$echarts.init(document.getElementById('showProfit'))
+
+      let option = {
+        title: {
+          text: this.projectData.chooseDate + '项目利润对比与项目利润率对比',
+          x: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}{a} : {c} ({d}%)'
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom'
+        },
+        calculable: true,
+        series: [
+          {
+            name: '利润',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['25%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.profitPart.profit
+          },
+          {
+            name: '利润率',
+            type: 'pie',
+            radius: [10, 120],
+            center: ['75%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            lableLine: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            data: this.projectData.profitPart.profitRate
+          }
+        ]
+      }
+      showProfit.setOption(option, true)
     }
   }
 }
 </script>
 
 <style scoped>
-  .text {
-    font-size: 14px;
-  }
-
-  .item {
-    margin-bottom: 18px;
-  }
-
   .clearfix:before,
   .clearfix:after {
     display: table;

@@ -3,5 +3,6 @@
     { "id":"34" , "name":"Gates" },
     { "id":"2" , "name":"Bush" },
     { "id":"3" , "name":"Carter" }
-  ]
+  ],
+  "maxPage": 2
 }

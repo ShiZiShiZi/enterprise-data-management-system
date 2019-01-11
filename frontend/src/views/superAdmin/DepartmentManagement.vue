@@ -1,9 +1,9 @@
 <template>
   <el-card class="box-card">
     <el-row>
-      <el-col :span="3" class="text-left">属性方式：</el-col>
+      <el-col :span="3" class="text-left">搜索部门名称：</el-col>
       <el-col :span="7">
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-input v-model="name" placeholder="请输入内容"></el-input>
       </el-col>
     </el-row>
     <el-table
@@ -16,12 +16,12 @@
       </el-table-column>
       <el-table-column
         property="id"
-        label="部门id"
+        label="部门代码"
         width="120">
       </el-table-column>
       <el-table-column
         property="name"
-        label="姓名"
+        label="部门名称"
         width="120">
       </el-table-column>
       <el-table-column
@@ -51,20 +51,18 @@ export default {
       departmentList: [],
       currentPage: 1,
       pageSize: 2,
-      maxPage: 1
+      maxPage: 2,
+      name: ''
     }
   },
   created: function () {
-    axios.get('http://localhost:8080/static/departmentList.json', {
-      params: {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
-      }
-    }).then(res => {
-      this.departmentList = res.data.departmentList
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.getDepartmentList()
+  },
+  watch: {
+    name (val) {
+      this.currentPage = 1
+      this.getDepartmentList()
+    }
   },
   methods: {
     handleSizeChange: function (size) {
@@ -86,6 +84,20 @@ export default {
     },
     handleClick: function (row) {
       this.$router.push('subDepartment/' + row.id + '/' + row.name)
+    },
+    getDepartmentList: function () {
+      axios.get('http://localhost:8080/static/departmentList.json', {
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+          departmentTitle: this.name
+        }
+      }).then(res => {
+        this.departmentList = res.data.departmentList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }
