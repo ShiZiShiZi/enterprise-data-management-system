@@ -1,8 +1,6 @@
 package org.hfut.service.global;
 
 import org.hfut.mapper.model.ProjectMaxDataQueryMapper;
-import org.hfut.model.ProjectData;
-import org.hfut.tool.global.DataTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +31,9 @@ public class MaxProjectDataService {
                              Map<String, Object> resultMap) throws ParseException {
         final int incomeQuery = 0;
         final int expenditureQuery = 1;
-        final int profitQuery = 2;
 
         Date startTime;
         Date endTime;
-        List<ProjectData> incomeData;
-        List<ProjectData> expenditureData;
-        Map<String, Object> profitMap;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
         Map<String, Object> exampleMap = new HashMap<>(4);
 
@@ -57,13 +51,6 @@ public class MaxProjectDataService {
             case expenditureQuery:
                 exampleMap.put("dataType", 2);
                 resultMap.put("expenditurePart", projectMaxDataQueryMapper.selectProjectMaxData(exampleMap));
-                return;
-            case profitQuery:
-                exampleMap.put("dataType", 1);
-                incomeData = projectMaxDataQueryMapper.selectProjectMaxData(exampleMap);
-                exampleMap.put("dataType", 2);
-                expenditureData = projectMaxDataQueryMapper.selectProjectMaxData(exampleMap);
-                resultMap.put("profitPart", DataTool.getProjectExpenditure(incomeData, expenditureData));
                 return;
             default:
                 throw new RuntimeException("MaxDataQueryTypeError");

@@ -33,9 +33,21 @@ public class MaxDataQueryController {
     @Log(needLog = false, serviceDescription = "获取部门15个最高收入项目", permission = 10)
     @RequestMapping(value = "/departmentMaxIncomeProject", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> MaxIncomeDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
-                                                  @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
+    public Map<String, Object> maxIncomeDataQuery(@RequestParam(name = "departmentId") Integer departmentId, @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
         final int incomeQuery = 0;
+        Map<String, Object> resultMap = new HashMap<>(1);
+
+        maxProjectDataService.maxDataQuery(departmentId, queryDate, incomeQuery, resultMap);
+
+        return resultMap;
+    }
+
+    @Log(needLog = false, serviceDescription = "获取部门15个支出收入项目", permission = 10)
+    @RequestMapping(value = "/departmentMaxExpenditureProject", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> maxExpenditureDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
+                                                       @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
+        final int incomeQuery = 1;
         Map<String, Object> resultMap = new HashMap<>(1);
 
         maxProjectDataService.maxDataQuery(departmentId, queryDate, incomeQuery, resultMap);
