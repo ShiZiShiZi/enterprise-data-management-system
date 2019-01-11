@@ -18,7 +18,7 @@ public interface ProjectMaxDataQueryMapper {
      *
      * @param exampleMap 参数字典，包括部门id，起止时间，数据类别
      *
-     * @return List<ProjectData>：数据列表，包含两个字段，值和项目标题
+     * @return List<ProjectData> 数据列表，包含两个字段，值和项目标题
      */
     List<ProjectData> selectProjectMaxData(Map<String, Object> exampleMap);
 }

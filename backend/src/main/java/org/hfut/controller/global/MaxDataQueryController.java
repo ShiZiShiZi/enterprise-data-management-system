@@ -33,12 +33,38 @@ public class MaxDataQueryController {
     @Log(needLog = false, serviceDescription = "获取部门15个最高收入项目", permission = 10)
     @RequestMapping(value = "/departmentMaxIncomeProject", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> MaxIncomeDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
+    public Map<String, Object> maxIncomeDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
                                                   @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
         final int incomeQuery = 0;
         Map<String, Object> resultMap = new HashMap<>(1);
 
         maxProjectDataService.maxDataQuery(departmentId, queryDate, incomeQuery, resultMap);
+
+        return resultMap;
+    }
+
+    @Log(needLog = false, serviceDescription = "获取部门15个最高支出项目", permission = 10)
+    @RequestMapping(value = "/departmentMaxExpenditureProject", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> maxExpenditureDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
+                                                       @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
+        final int expenditureQuery = 1;
+        Map<String, Object> resultMap = new HashMap<>(1);
+
+        maxProjectDataService.maxDataQuery(departmentId, queryDate, expenditureQuery, resultMap);
+
+        return resultMap;
+    }
+
+    @Log(needLog = false, serviceDescription = "获取部门15个最高利润项目", permission = 10)
+    @RequestMapping(value = "/departmentMaxProfitProject", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> maxProfitDataQuery(@RequestParam(name = "departmentId") Integer departmentId,
+                                                  @RequestParam(name = "selectDate") List<String> queryDate) throws ParseException {
+        final int profitQuery = 2;
+        Map<String, Object> resultMap = new HashMap<>(1);
+
+        maxProjectDataService.maxDataQuery(departmentId, queryDate, profitQuery, resultMap);
 
         return resultMap;
     }

@@ -1,17 +1,15 @@
 package org.hfut.service.global;
 
+import org.hfut.mapper.model.MaxProjectProfitQueryMapper;
 import org.hfut.mapper.model.ProjectMaxDataQueryMapper;
 import org.hfut.model.ProjectData;
-import org.hfut.tool.global.DataTool;
+import org.hfut.model.ProjectProfitData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ProjectMaxDataService
@@ -23,10 +21,13 @@ import java.util.Map;
 public class MaxProjectDataService {
 
     private ProjectMaxDataQueryMapper projectMaxDataQueryMapper;
+    private MaxProjectProfitQueryMapper maxProjectProfitQueryMapper;
 
     @Autowired
-    public MaxProjectDataService(ProjectMaxDataQueryMapper projectMaxDataQueryMapper) {
+    public MaxProjectDataService(ProjectMaxDataQueryMapper projectMaxDataQueryMapper,
+                                 MaxProjectProfitQueryMapper maxProjectProfitQueryMapper) {
         this.projectMaxDataQueryMapper = projectMaxDataQueryMapper;
+        this.maxProjectProfitQueryMapper = maxProjectProfitQueryMapper;
     }
 
     public void maxDataQuery(Integer departmentId, List<String> queryTimes, int queryType,
@@ -37,9 +38,6 @@ public class MaxProjectDataService {
 
         Date startTime;
         Date endTime;
-        List<ProjectData> incomeData;
-        List<ProjectData> expenditureData;
-        Map<String, Object> profitMap;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
         Map<String, Object> exampleMap = new HashMap<>(4);
 
@@ -59,14 +57,34 @@ public class MaxProjectDataService {
                 resultMap.put("expenditurePart", projectMaxDataQueryMapper.selectProjectMaxData(exampleMap));
                 return;
             case profitQuery:
-                exampleMap.put("dataType", 1);
-                incomeData = projectMaxDataQueryMapper.selectProjectMaxData(exampleMap);
-                exampleMap.put("dataType", 2);
-                expenditureData = projectMaxDataQueryMapper.selectProjectMaxData(exampleMap);
-                resultMap.put("profitPart", DataTool.getProjectExpenditure(incomeData, expenditureData));
+                maxProfitDataQuery(exampleMap, resultMap);
                 return;
             default:
                 throw new RuntimeException("MaxDataQueryTypeError");
         }
     }
+
+    public void maxProfitDataQuery(Map<String, Object> exampleMap, Map<String, Object> resultMap) {
+        ProjectData projectData;
+        String projectName;
+        List<ProjectProfitData> projectProfitDataList = maxProjectProfitQueryMapper.selectProjectMaxProfitData(exampleMap);
+        Integer projectNum = projectProfitDataList.size();
+        Map<String, Object> profitMap = new HashMap<>(2);
+        List<ProjectData> profitList = new ArrayList<>(projectNum);
+        List<ProjectData> profitRateList = new ArrayList<>(projectNum);
+
+        for(ProjectProfitData projectProfitData : projectProfitDataList) {
+            projectName = projectProfitData.getTitle();
+
+            projectData = new ProjectData(projectName, projectProfitData.getProfit());
+            profitList.add(projectData);
+
+            projectData = new ProjectData(projectName, projectProfitData.getProfitRate());
+            profitRateList.add(projectData);
+        }
+        profitMap.put("profit", profitList);
+        profitMap.put("profitRate", profitRateList);
+        resultMap.put("profitPart", profitMap);
+    }
+
 }

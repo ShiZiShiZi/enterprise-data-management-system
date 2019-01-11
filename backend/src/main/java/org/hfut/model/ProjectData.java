@@ -11,6 +11,13 @@ public class ProjectData {
     private String name;
     private Double value;
 
+    public ProjectData() {}
+
+    public ProjectData(String name, Double value) {
+        this.name = name;
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }
