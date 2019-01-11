@@ -20,6 +20,8 @@ import DataManage from '@/views/departmentManager/DataManage'
 import ProjectFinanceManage from '@/views/departmentManager/ProjectFinanceManage'
 import StaffEditor from '@/views/departmentManager/StaffEditor'
 import EditingFinancialModel from '@/views/departmentManager/EditingFinancialModel'
+import PersonnelUseRequest from '@/views/departmentManager/PersonnelUseRequest'
+
 Vue.use(Router)
 
 export default new Router({
@@ -128,6 +130,11 @@ export default new Router({
           path: 'editingFinancialModel/:id/:title',
           name: 'editingFinancialModel',
           component: EditingFinancialModel
+        },
+        {
+          path: 'personnelUseRequest',
+          name: 'personnelUseRequest',
+          component: PersonnelUseRequest
         }
       ]
     }
