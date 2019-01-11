@@ -30,7 +30,7 @@
           </el-menu-item>
           <el-menu-item index="4">
             <i class="el-icon-document"></i>
-            <span slot="title" @click="jumpToNewCost">人员使用请求</span>
+            <span slot="title" @click="jumpToPersonnelUseRequest">人员使用请求</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -51,11 +51,8 @@ export default {
     jumpToDataManage: function () {
       this.$router.push('/departmentManager/dataManage')
     },
-    jumpToNewReceivable: function () {
-      this.$router.push('/developer/newReceivable')
-    },
-    jumpToNewCost: function () {
-      this.$router.push('/developer/newCost')
+    jumpToPersonnelUseRequest: function () {
+      this.$router.push('/departmentManager/personnelUseRequest')
     }
   }
 
