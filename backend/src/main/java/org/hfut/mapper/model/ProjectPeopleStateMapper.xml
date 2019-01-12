@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hfut.mapper.model.ProjectPeopleStateMapper">
+    <resultMap id="baseResultMap" type="org.hfut.model.ProjectPeopleState">
+        <result column="id" property="projectPeopleId"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <select id="selectByTargetPeopleId" parameterType="java.util.Map" resultMap="baseResultMap">
+        select project_people.id,project_people_feedback.state
+        from project_people
+        left outer join project_people_feedback
+        on project_people.id = project_people_feedback.target_people_id
+        where project_people.id in
+        <foreach collection="projectPeopleIds" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and
+        project_people_feedback.target_project_id = #{projectId}
+    </select>
+</mapper>
