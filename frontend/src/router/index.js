@@ -30,6 +30,7 @@ import LinkToRecordReceivable from '@/views/financial/LinkToRecordReceivable'
 import LinkToConfirmReceivable from '@/views/financial/LinkToConfirmReceivable'
 import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure'
 import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
+import LoginRegister from '@/components/LoginRegister'
 
 Vue.use(Router)
 
@@ -193,6 +194,11 @@ export default new Router({
           component: LinkToRefuseExpenditure
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'loginRegister',
+      component: LoginRegister
     }
   ]
 })
