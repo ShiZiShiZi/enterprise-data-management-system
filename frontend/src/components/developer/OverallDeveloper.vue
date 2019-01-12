@@ -15,22 +15,20 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#303133"
           text-color="#fff"
           active-text-color="#ffd04b">
           <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title" @click="jumpToViewFeedback">查看反馈</span>
-          </el-menu-item>
-          <el-menu-item index="2">
               <i class="el-icon-location"></i>
               <span slot="title" @click="jumpToNewReceivable">新建应收</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="2">
             <i class="el-icon-document"></i>
             <span slot="title" @click="jumpToNewCost">新建费用</span>
+          </el-menu-item>
+          <el-menu-item index="3">
+            <i class="el-icon-menu"></i>
+            <span slot="title" @click="jumpToViewFeedback">查看反馈</span>
           </el-menu-item>
         </el-menu>
       </el-aside>

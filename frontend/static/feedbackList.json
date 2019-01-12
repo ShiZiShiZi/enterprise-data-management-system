@@ -1,31 +1,28 @@
 {
   "feedbackList": [{
-    "projectName": "项目一",
-    "type": "应收",
-    "name": "666",
-    "time": "2018.9.10",
-    "status": "待审核",
-    "remark": "777"
+    "projectTitle": "项目一",
+    "title": "打车",
+    "requestTime": "2018-09-10",
+    "state": 1,
+    "description": ""
   }, {
-    "projectName": "项目二",
-    "type": "应收",
-    "name": "666",
-    "time": "2018.9.10",
-    "status": "驳回",
-    "remark": "777"
+    "projectTitle": "项目二",
+    "title": "吃饭的钱",
+    "requestTime": "2018-09-09",
+    "state": 2,
+    "description": "不给报销就是这么霸道"
   }, {
-    "projectName": "项目三",
-    "type": "应收",
-    "name": "666",
-    "time": "2018.9.10",
-    "status": "通过",
-    "remark": "777"
+    "projectTitle": "项目三",
+    "title": "劳务",
+    "requestTime": "2018-09-01",
+    "state": 0,
+    "description": ""
   }, {
-    "projectName": "项目四",
-    "type": "应收",
-    "name": "666",
-    "time": "2018.9.10",
-    "status": "通过",
-    "remark": "777"
-  }]
+    "projectTitle": "项目四",
+    "title": "花了不讲道理",
+    "requestTime": "2018-08-01",
+    "state": 2,
+    "description": "画的太多了"
+  }],
+  "maxPage": 3
 }
