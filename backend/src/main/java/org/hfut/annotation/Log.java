@@ -13,5 +13,5 @@ public @interface Log {
 
     String serviceDescription();
 
-    int permission();
+    byte permission();
 }

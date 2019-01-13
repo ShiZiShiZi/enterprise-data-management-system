@@ -42,7 +42,7 @@ public class AlertFinancialModelController {
         alertFinancialModelService.alertName(financialModel, name);
         alertFinancialModelService.alertAmount(financialModel, amount);
         alertFinancialModelService.alertActive(financialModel, isClose);
-        alertFinancialModelService.alertFinancialmodel(financialModel);
+        alertFinancialModelService.alertFinancialModel(financialModel);
 
         resultMap.put("msg", "修改完成");
         return resultMap;
