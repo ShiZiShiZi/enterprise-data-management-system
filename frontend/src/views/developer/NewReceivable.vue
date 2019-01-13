@@ -1,40 +1,64 @@
 <template>
   <el-card class="box-card">
-  <div  class="text item">
-    选择项目：<el-select v-model="projectID" @change="selectProject" placeholder="请选择项目">
-      <el-option
-        v-for="project in projectList"
-        :key="project.id"
-        :label="project.label"
-        :value="project.id">
-      </el-option>
-    </el-select><br><br>
-    选择类别：<el-select v-model="costTypeID" placeholder="请选择类别">
-      <el-option
-        v-for="costType in costTypeList"
-        :key="costType.id"
-        :label="costType.label"
-        :value="costType.value">
-      </el-option>
-    </el-select><br><br>
-    描述：<el-input v-model="content" placeholder="请输入描述"></el-input><br><br>
-    填写金额：<el-input v-model="account" placeholder="请输入金额"></el-input><br><br>
-  </div>
-    <el-upload
-            class="upload-demo"
-            action=""
-            :http-request="fileList"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            :on-change="setFileList"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed">
-      <el-button size="small" type="primary">选择文件</el-button>
-      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-    </el-upload><br><br>
-    <el-button type="success" @click="uploading">提交</el-button>
+    <el-row>
+      <el-col :span="2">选择部门：</el-col>
+      <el-col :span="4">
+        <el-select v-model="selectedDepartmentId" @change="handleSelectDepartment" placeholder="请选择部门">
+          <el-option v-for="department in departmentList"
+                  :key="department.id"
+                  :label="department.name"
+                  :value="department.id">
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="2">选择项目：</el-col>
+      <el-col :span="4">
+        <el-select v-model="selectedProjectID" @change="handleSelectProject" placeholder="请选择项目">
+          <el-option v-for="project in projectList"
+                  :key="project.id"
+                  :label="project.title"
+                  :value="project.id">
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="2">选择类别：</el-col>
+      <el-col :span="4">
+        <el-select v-model="selectedModelId" placeholder="请选择类别">
+          <el-option v-for="financial in financialModelList"
+            :key="financial.id"
+            :label="financial.name"
+            :value="financial.id">
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-form :model="addReceivableForm" ref="addReceivableForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="应收项标题" prop="title" :rules= addReceivableForm.rules.title>
+        <el-input v-model.number="addReceivableForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="金额" prop="num" :rules= addReceivableForm.rules.num>
+        <el-input v-model="addReceivableForm.num"></el-input>
+      </el-form-item>合同凭证
+      <el-upload
+              class="upload-demo"
+              action=""
+              :http-request="fileList"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              :on-change="setFileList"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed">
+        <el-button size="small" type="primary">选择文件</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传pdf文件，且不超过500kb</div>
+      </el-upload>
+      <el-button type="primary" @click="submitForm('addReceivableForm')">提交</el-button>
+    </el-form>
   </el-card>
 </template>
 
@@ -44,66 +68,113 @@ export default {
   name: 'NewReceivable',
   data () {
     return {
+      departmentList: [],
+      selectedDepartmentId: '',
       projectList: [],
-      costTypeList: [],
+      selectedProjectID: '',
+      financialModelList: [],
+      selectedModelId: '',
+      addReceivableForm: {
+        title: '',
+        num: '',
+        rules: {
+          title: [{required: true, message: '不能为空', trigger: 'blur'}],
+          num: [{required: true, message: '请输入数额', trigger: 'blur'},
+            { pattern: /^\d{1,10}$/, message: '请正确填写数额' }]
+        }
+      },
       fileList: [],
       fileByteList: [],
-      projectID: '',
-      costTypeID: '',
-      content: '',
-      account: ''
+      fileNameList: []
     }
   },
-  created: function () {
-    axios.get('http://localhost:8080/static/receivableList.json').then(res => {
-      this.projectList = res.data.projectList
-    }).catch(function (error) {
-      alert(error)
-    })
+  mounted: function () {
+    this.getDepartmentList()
   },
   methods: {
-    selectProject: function () {
+    getDepartmentList: function () {
+      // url: developer/getDepartmentList
       axios.get('http://localhost:8080/static/receivableList.json').then(res => {
-        this.costTypeList = res.data.costTypeList
+        this.departmentList = res.data.departmentList
       }).catch(function (error) {
         alert(error)
       })
     },
-    uploadContract: function () {
+    getProjectList: function () {
+      axios.get('http://localhost:8080/static/receivableList.json', { // URL:/projectSearch
+        params: {
+          departmentId: this.selectedDepartmentId,
+          currentPage: 1,
+          PageSize: 100,
+          active: 1,
+          sortColumn: 'start_time',
+          sortOrder: 1
+        }
+      }).then(res => {
+        this.projectList = res.data.projectList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    getFinancialModelList: function () {
+      axios.get('http://localhost:8080/static/receivableList.json', { // URL:/financialModelSearch
+        params: {
+          projectId: this.selectedProjectID,
+          type: 1,
+          isActive: 1
+        }
+      }).then(res => {
+        this.financialModelList = res.data.financialModelList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    handleSelectDepartment: function () {
+      this.getProjectList()
+    },
+    handleSelectProject: function () {
+      this.getFinancialModelList()
     },
     setFileList: function (file, fileList) {
       this.fileList = fileList
     },
     uploading: function () {
       let that = this
+      this.fileNameList = []
+      this.fileByteList = []
       for (let i = 0; i < this.fileList.length; i++) {
-        var reader = new FileReader()
+        let reader = new FileReader()
         reader.readAsArrayBuffer(this.fileList[i].raw)
+        this.fileNameList.push(this.fileList[i].name)
         reader.onload = function (e) {
           let buffer = e.target.result
           that.fileByteList.push(conversionToBinaryStream(buffer))
         }
       }
-      // 还需要校验填写的数据
-      axios.post('/need to be done', {
-        projectID: this.projectID,
-        costTypeID: this.costTypeID,
-        content: this.content,
-        account: this.account,
-        fileByteList: this.fileByteList
-      })
-        .then(function (response) {
-          alert('需要添加弹窗和重定向')
-        })
-    },
-    submit: function () {
-
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     beforeRemove (file) {
       return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    submitForm: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid && this.selectedModelId !== '' && this.fileList.length !== 0) {
+          this.uploading()
+          axios.post('/need to be done', { // URL:/developer/addFinancialDetail
+            financialDetailId: this.selectedModelId,
+            title: this.addReceivableForm.title,
+            num: this.addReceivableForm.num,
+            fileByteList: this.fileByteList,
+            fileNameList: this.fileNameList
+          }).then(res => {
+            alert(res.data.msg)
+          })
+        } else {
+          alert('请完成完整的上传流程')
+        }
+      })
     }
   }
 }
