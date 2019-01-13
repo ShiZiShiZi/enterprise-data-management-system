@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  * ProjectMaxDataQueryMapper
  *
- * @author weixin
- * @date 2019/01/11
+ * @author WeiXin
+ * @date 2019/1/11
  */
 public interface ProjectMaxDataQueryMapper {
 
