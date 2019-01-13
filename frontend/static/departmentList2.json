@@ -1,8 +1,8 @@
 {
   "departmentList": [
-    { "id":"22" , "name":"dev" },
-    { "id":"23" , "name":"npm" },
-    { "id":"34" , "name":"git" }
+    { "id":22 , "name":"dev" },
+    { "id":23 , "name":"npm" },
+    { "id":34 , "name":"git" }
   ],
   "maxPage": 2
 }

@@ -1,14 +1,15 @@
 {
   "projectPeopleList": [
-    { "id":"1" , "name":"赵云" },
-    { "id":"2" , "name":"Bush" },
-    { "id":"3" , "name":"Carter" },
-    { "id":"1" , "name":"赵云" },
-    { "id":"2" , "name":"Bush" },
-    { "id":"3" , "name":"Carter" },
-    { "id":"1" , "name":"赵云" },
-    { "id":"2" , "name":"Bush" },
-    { "id":"3" , "name":"Carter" }
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"},
+    { "id":"1" , "name":"赵云", "phoneNum": "17343432828", "email": "8092348902@qq.com"}
   ],
   "maxPage": 2
 }

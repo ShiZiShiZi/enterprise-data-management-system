@@ -6,34 +6,18 @@
         <el-input v-model="name" placeholder="请输入内容"></el-input>
       </el-col>
     </el-row>
-    <el-table
-      ref="singleTable"
-      :data="departmentList"
-      highlight-current-row>
-      <el-table-column
-        type="index"
-        width="50">
+    <el-table ref="singleTable" :data="departmentList" highlight-current-row>
+      <el-table-column type="index" width="50">
       </el-table-column>
-      <el-table-column
-        property="id"
-        label="部门代码"
-        width="120">
+      <el-table-column property="name" label="部门名称" width="120">
       </el-table-column>
-      <el-table-column
-        property="name"
-        label="部门名称"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        label="操作"
-        width="120">
+      <el-table-column label="操作" width="120">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="prev, pager, next"
       :total="maxPage*10">
@@ -43,19 +27,18 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   name: 'DepartmentManagement',
   data: function () {
     return {
       departmentList: [],
       currentPage: 1,
-      pageSize: 2,
-      maxPage: 2,
+      pageSize: 10,
+      maxPage: 1,
       name: ''
     }
   },
-  created: function () {
+  mounted: function () {
     this.getDepartmentList()
   },
   watch: {
@@ -70,10 +53,13 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('http://localhost:8080/static/departmentList2.json', {
+      axios.get('http://localhost:8080/static/departmentList2.json', { // URL:/departmentSearch
         params: {
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          name: this.name,
+          sortColumn: 'id',
+          sortOrder: 1
         }
       }).then(res => {
         this.departmentList = res.data.departmentList
