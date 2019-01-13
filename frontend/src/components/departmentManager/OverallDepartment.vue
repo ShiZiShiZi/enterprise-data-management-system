@@ -2,12 +2,7 @@
   <el-container>
     <el-header>
       <el-row>
-        <el-col :span="2">
-          <div class="grid-content bg-purple">
-            <img src="@/assets/logo.png" class="image" alt="logo">
-          </div>
-        </el-col>
-        <el-col :span="8"><div class="grid-content bg-purple-light">企业项目信息管理系统</div></el-col>
+        <div class="grid-content bg-purple-light">企业项目信息管理系统</div>
       </el-row>
     </el-header>
     <el-container>
@@ -17,9 +12,10 @@
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
-          background-color="#303133"
-          text-color="#fff"
-          active-text-color="#ffd04b">
+          background-color="#e5e9f2"
+          text-color="#000000"
+          active-text-color="#006014"
+          heigth="500px">
           <el-menu-item index="1">
             <i class="el-icon-location"></i>
             <span slot="title" @click="jumpToProjectManage">项目管理</span>
@@ -55,25 +51,21 @@ export default {
       this.$router.push('/departmentManager/personnelUseRequest')
     }
   }
-
 }
 </script>
 
 <style scoped>
-  .image {
-    width: 60px;
-    border: 1px solid #09C;
-    border-radius: 60px;
+  .el-row {
+    width: 1200px;
   }
-  .el-header, .el-footer {
+  .el-header {
     background-color: #DCDFE6;
     color: #333;
     text-align: center;
     line-height: 60px;
   }
-
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: #e5e9f2;
     color: #333;
     text-align: center;
     height: 700px
@@ -92,13 +84,13 @@ export default {
     line-height: 320px;
   }
   .bg-purple {
-    background: #d3dce6;
+    background: #DCDFE6;
   }
   .bg-purple-light {
-    background: #e5e9f2;
+    background: #DCDFE6;
   }
   .grid-content {
     border-radius: 4px;
-    min-height: 40px;
+    min-height: 60px;
   }
 </style>
