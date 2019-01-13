@@ -53,6 +53,12 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
+      this.getDepartmentList()
+    },
+    handleClick: function (row) {
+      this.$router.push('subDepartment/' + row.id + '/' + row.name)
+    },
+    getDepartmentList: function () {
       axios.get('http://localhost:8080/static/departmentList2.json', { // URL:/departmentSearch
         params: {
           currentPage: this.currentPage,
@@ -60,23 +66,6 @@ export default {
           name: this.name,
           sortColumn: 'id',
           sortOrder: 1
-        }
-      }).then(res => {
-        this.departmentList = res.data.departmentList
-        this.maxPage = res.data.maxPage
-      }).catch(function (error) {
-        alert(error)
-      })
-    },
-    handleClick: function (row) {
-      this.$router.push('subDepartment/' + row.id + '/' + row.name)
-    },
-    getDepartmentList: function () {
-      axios.get('http://localhost:8080/static/departmentList.json', {
-        params: {
-          currentPage: this.currentPage,
-          pageSize: this.pageSize,
-          departmentTitle: this.name
         }
       }).then(res => {
         this.departmentList = res.data.departmentList
