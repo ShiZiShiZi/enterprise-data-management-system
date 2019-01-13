@@ -5,12 +5,12 @@
         <div slot="header" class="clearfix">
           <span>修改部门名称</span>
         </div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" class="demo-form-inline">
           <el-form-item label="部门名称">
             <el-input v-model="name"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">修改</el-button>
+            <el-button type="primary" @click="handleRenameDepartment">修改</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -38,9 +38,10 @@
     <el-tab-pane label="人员信息"><el-col :span="11">
       <el-card class="box-card">
         <el-table ref="singleTable" :data="developerList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
           <el-table-column property="id" label="工号" width="120"></el-table-column>
           <el-table-column property="name" label="姓名" width="120"></el-table-column>
+          <el-table-column property="phoneNum" label="电话" width="200"></el-table-column>
+          <el-table-column property="email" label="邮箱" width="200"></el-table-column>
         </el-table>
         <el-pagination
           @size-change="handleSizeChange"
@@ -128,7 +129,7 @@ export default {
         name: '',
         email: '',
         phone: '',
-        type: 'departmentManager',
+        type: 2,
         rules: {
           name: [{required: true, message: '请输入姓名', trigger: 'blur'}],
           email: [
@@ -141,7 +142,7 @@ export default {
       },
       developerList: [],
       currentPage: 1,
-      pageSize: 8,
+      pageSize: 10,
       maxPage: 1,
       totalInput: 0,
       totalOutput: 0,
@@ -163,7 +164,7 @@ export default {
   created: function () {
     this.id = this.$route.params.id
     this.name = this.$route.params.name
-    this.getDepartmenterList()
+    this.getDeveloperList()
     let myDate = new Date()
     this.year = myDate.getFullYear().toString()
     this.getProjectPeopleList()
@@ -189,11 +190,11 @@ export default {
     this.drawProfit()
   },
   methods: {
-    onSubmit: function () {
-      axios.get('http://localhost:8080/static/changeDepartmentTitle.json', {
+    handleRenameDepartment: function () {
+      axios.get('http://localhost:8080/static/changeDepartmentTitle.json', { // URL: /superAdmin/renameDepartment
         params: {
-          departmentId: this.id,
-          departmentTitle: this.name
+          id: this.id,
+          name: this.name
         }
       }).then(res => {
         this.msg = res.data.msg
@@ -205,12 +206,11 @@ export default {
     addDepartmentManagement: function (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.get('http://localhost:8080/static/newDaepartmentManager.json', {
+          axios.get('http://localhost:8080/static/newDaepartmentManager.json', { // URL: /addUser
             params: {
               departmentId: this.id,
-              departmentTitle: this.name,
               name: this.dynamicValidateForm.name,
-              mail: this.dynamicValidateForm.mail,
+              email: this.dynamicValidateForm.mail,
               phoneNum: this.dynamicValidateForm.phoneNum,
               type: this.dynamicValidateForm.type
             }
@@ -230,13 +230,16 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      this.getDepartmenterList()
+      this.getDeveloperList()
     },
-    getDepartmenterList: function () {
-      axios.get('http://localhost:8080/static/developerList.json', {
+    getDeveloperList: function () {
+      axios.get('http://localhost:8080/static/developerList.json', { // URL:/projectPeopleSearch
         params: {
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          departmentId: this.id,
+          sortColumn: 'id',
+          sortOrder: 1
         }
       }).then(res => {
         this.developerList = res.data.projectPeopleList
@@ -570,7 +573,7 @@ export default {
   }
 
   .box-card {
-    width: 480px;
+    width: 1000px;
     text-align: left;
     margin-top: 20px;
   }
