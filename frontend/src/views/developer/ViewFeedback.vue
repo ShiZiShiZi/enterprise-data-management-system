@@ -21,9 +21,7 @@
     </div>
     <el-pagination @current-change="handleCurrentChange" align="center"
             layout="prev, pager, next" :total="maxPage*10"></el-pagination>
-
   </el-card>
-
 </template>
 
 <script>
