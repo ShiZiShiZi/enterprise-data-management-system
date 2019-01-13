@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hfut.mapper.SelectGetFeedbackListMapper">
+  <resultMap id="BaseResultMap" type="org.hfut.pojo.SelectGetFeedbackList">
+    <result column="project_title" jdbcType="VARCHAR" property="projectTitle" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="request_time" jdbcType="TIMESTAMP" property="requestTime" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="project_people_id" jdbcType="INTEGER" property="projectPeopleId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    project_title, title, request_time, state, description, project_people_id
+  </sql>
+  <select id="selectByExample" parameterType="org.hfut.pojo.SelectGetFeedbackListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from select_get_feedback_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="org.hfut.pojo.SelectGetFeedbackListExample">
+    delete from select_get_feedback_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.hfut.pojo.SelectGetFeedbackList">
+    insert into select_get_feedback_list (project_title, title, request_time, 
+      state, description, project_people_id
+      )
+    values (#{projectTitle,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{requestTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{projectPeopleId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.hfut.pojo.SelectGetFeedbackList">
+    insert into select_get_feedback_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectTitle != null">
+        project_title,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="requestTime != null">
+        request_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="projectPeopleId != null">
+        project_people_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectTitle != null">
+        #{projectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null">
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPeopleId != null">
+        #{projectPeopleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.hfut.pojo.SelectGetFeedbackListExample" resultType="java.lang.Long">
+    select count(*) from select_get_feedback_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update select_get_feedback_list
+    <set>
+      <if test="record.projectTitle != null">
+        project_title = #{record.projectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestTime != null">
+        request_time = #{record.requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectPeopleId != null">
+        project_people_id = #{record.projectPeopleId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update select_get_feedback_list
+    set project_title = #{record.projectTitle,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      request_time = #{record.requestTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=TINYINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      project_people_id = #{record.projectPeopleId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
