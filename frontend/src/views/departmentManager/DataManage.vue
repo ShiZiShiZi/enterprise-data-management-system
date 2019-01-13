@@ -1,11 +1,10 @@
 <template>
-  <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="人员信息"><el-col :span="11">
-      <el-card class="box-card">
-        <el-table ref="singleTable" :data="projectPeopleList" highlight-current-row>
-          <el-table-column type="index" width="50"></el-table-column>
-          <el-table-column property="id" label="人员id" width="120"></el-table-column>
-          <el-table-column property="name" label="姓名" width="120"></el-table-column>
+  <el-tabs v-model="activeName" @tab-click="handleClick" width="800px" type="card">
+    <el-tab-pane label="人员信息">
+        <el-table ref="singleTable" :data="projectPeopleList" highlight-current-row width="500px" stripe="true">
+          <el-table-column type="index" width="100px" text-align="center"></el-table-column>
+          <el-table-column property="id" label="人员id" width="200px" text-align="center"></el-table-column>
+          <el-table-column property="name" label="姓名" width="200px" text-align="center"></el-table-column>
         </el-table>
         <el-pagination
           @size-change="handleSizeChange"
@@ -13,70 +12,69 @@
           layout="prev, pager, next"
           :total="maxPage*10">
         </el-pagination>
-      </el-card>
-    </el-col></el-tab-pane>
+    </el-tab-pane>
     <el-tab-pane label="财务信息" class="finance">
-      <el-card class="box-card">
-        <el-row>
-          <el-col :span="20">
-            <div id="showTotal" :style="{width: '1000px', height: '400px'}"></div>
+        <el-row :gutter="2">
+          <el-col :span="19">
+            <div id="showTotal" :style="{width: '1000px', height: '600px'}"></div>
           </el-col>
           <el-col :span="3">
-            <el-input-number v-model="year" @change="drawTotal" :min="2000" :max="new Date().getFullYear()" label="描述文字"></el-input-number>
-            <el-alert type="success" :closable="false">
-              总收入: {{totalInput}}
-            </el-alert>
-            <el-alert type="warning" :closable="false">
-              总支出: {{totalOutput}}
-            </el-alert>
-            <el-alert type="success" :closable="false">
-              毛利润: {{grossProfit}}
-            </el-alert>
+            <el-row>
+              <el-input-number v-model="year" @change="drawTotal" :min="2000" :max="new Date().getFullYear()" label="描述文字"></el-input-number>
+            </el-row>
+            <el-row>
+              <el-alert type="success" :closable="false">
+                总收入: {{totalInput}}
+              </el-alert>
+            </el-row>
+            <el-row>
+              <el-alert type="error" :closable="false">
+                总支出: {{totalOutput}}
+              </el-alert>
+            </el-row>
+            <el-row>
+              <el-alert type="warning" :closable="false">
+                毛利润: {{grossProfit}}
+              </el-alert>
+            </el-row>
           </el-col>
         </el-row>
-      </el-card>
     </el-tab-pane>
     <el-tab-pane label="项目收入" class="finance">
-      <el-card class="box-card">
         <el-row>
           <el-col :span="16">
             <div id="showIncome" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="8">
             <el-date-picker
               v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
-      </el-card>
     </el-tab-pane>
     <el-tab-pane label="项目支出" class="finance">
-      <el-card class="box-card">
         <el-row>
           <el-col :span="16">
             <div id="showExpenditure" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="8">
             <el-date-picker
               v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
-      </el-card>
     </el-tab-pane>
     <el-tab-pane label="项目利润" class="finance">
-      <el-card class="box-card">
         <el-row>
           <el-col :span="16">
             <div id="showProfit" :style="{width: '1000px', height: '400px'}"></div>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="8">
             <el-date-picker
               v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
-      </el-card>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -154,7 +152,7 @@ export default {
     },
     drawTotalChart: function () {
       let myChart = this.$echarts.init(document.getElementById('showTotal'))
-      let colors = ['#5793f3', '#d14a61', '#675bba']
+      let colors = ['#5793f3', '#f56c6c', '#e6a23c']
       let option = {
         title: {
           text: this.year + '收支状况'
@@ -279,7 +277,7 @@ export default {
           {
             name: '收入',
             type: 'pie',
-            radius: [10, 120],
+            radius: [10, 150],
             center: ['50%', '50%'],
             roseType: 'radius',
             label: {
@@ -338,7 +336,7 @@ export default {
           {
             name: '支出',
             type: 'pie',
-            radius: [10, 120],
+            radius: [10, 150],
             center: ['50%', '50%'],
             roseType: 'radius',
             label: {
@@ -398,7 +396,7 @@ export default {
           {
             name: '利润',
             type: 'pie',
-            radius: [10, 120],
+            radius: [10, 150],
             center: ['25%', '50%'],
             roseType: 'radius',
             label: {
@@ -422,7 +420,7 @@ export default {
           {
             name: '利润率',
             type: 'pie',
-            radius: [10, 120],
+            radius: [10, 150],
             center: ['75%', '50%'],
             roseType: 'radius',
             label: {
@@ -470,12 +468,31 @@ export default {
 </script>
 
 <style scoped>
-  .box-card {
-    width: 480px;
-    text-align: left;
-    margin-top: 20px;
+  .el-pagination {
+    text-align: center;
   }
-  .finance .box-card {
-    width: 1200px;
+  .el-row {
+    margin-bottom: 20px;
   }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
 </style>

@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
   .el-row {
-    width: 1200px;
+    width: 1000px;
   }
   .el-header {
     background-color: #DCDFE6;
@@ -68,7 +68,7 @@ export default {
     background-color: #e5e9f2;
     color: #333;
     text-align: center;
-    height: 700px
+    height: 800px
   }
 
   body > .el-container {
