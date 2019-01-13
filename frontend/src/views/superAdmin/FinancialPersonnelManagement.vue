@@ -24,8 +24,7 @@ export default {
       ruleForm: {
         name: '',
         mail: '',
-        phoneNum: '',
-        type: 'financial'
+        phoneNum: ''
       },
       rules: {
         name: [
@@ -48,22 +47,19 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.get('http://localhost:8080/static/newFinancial.json', {
-            name: this.ruleForm.name,
-            mail: this.ruleForm.mail,
-            phoneNum: this.ruleForm.phoneNum,
-            type: this.ruleForm.type
-          }, {
-            headers: {
-              token: 'name'
+          axios.get('http://localhost:8080/static/projectList.json', { // URL: /addUser
+            params: {
+              name: this.ruleForm.name,
+              email: this.ruleForm.mail,
+              phoneNum: this.ruleForm.phoneNum,
+              type: 3
             }
           }).then(res => {
             this.msg = res.data.msg
             alert(this.msg)
           })
         } else {
-          alert('error submit!!')
-          return false
+          alert('请按照要求填写')
         }
       })
     },
