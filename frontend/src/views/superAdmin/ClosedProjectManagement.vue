@@ -14,23 +14,23 @@
       </el-col>
     </el-row>
     <el-table ref="singleTable" :data="closedProjectList" highlight-current-row>
-      <el-table-column type="index" width="50">
-      </el-table-column>
-      <el-table-column property="name" label="项目名称" width="120">
-      </el-table-column>
-      <el-table-column label="部门名称" width="120">
-        <template slot-scope="scope">
-          {{ departmentList[scope.$index].name }}
-        </template>
-      </el-table-column>
-      <el-table-column property="startTime" label="开始时间" width="120">
-      </el-table-column>
-      <el-table-column property="finishTime" label="结束时间" width="120">
-      </el-table-column>
-      <el-table-column property="closeTime" label="关闭时间" width="120">
-      </el-table-column>
-      <el-table-column label=" " width="100">
-        <template slot-scope="scope">
+          <el-table-column type="index" width="50">
+          </el-table-column>
+          <el-table-column property="title" label="项目名称" width="120">
+          </el-table-column>
+          <el-table-column label="部门名称" width="120">
+              <template slot-scope="scope">
+                  {{ departmentList[scope.$index].name }}
+              </template>
+          </el-table-column>
+          <el-table-column property="startTime" label="开始时间" width="120">
+          </el-table-column>
+          <el-table-column property="finishTime" label="结束时间" width="120">
+          </el-table-column>
+          <el-table-column property="closeTime" label="关闭时间" width="120">
+          </el-table-column>
+          <el-table-column label=" " width="100">
+              <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>

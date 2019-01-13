@@ -31,6 +31,7 @@ import LinkToConfirmReceivable from '@/views/financial/LinkToConfirmReceivable'
 import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure'
 import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
 import LoginRegister from '@/components/LoginRegister'
+import DoingProjectDepartment from '@/views/superAdmin/DoingProjectDepartment'
 
 Vue.use(Router)
 
@@ -58,7 +59,7 @@ export default new Router({
           component: ClosedProjectManagement
         },
         {
-          path: 'doingProjectMng',
+          path: 'doingProjectMng/:id',
           name: 'DoingProjectManagement',
           component: DoingProjectManagement
         },
@@ -86,6 +87,11 @@ export default new Router({
           path: 'showClosedProject/:id/:name',
           name: 'ShowClosedProject',
           component: ShowClosedProject
+        },
+        {
+          path: 'doingProjectDepartment',
+          name: 'DoingProjectDepartment',
+          component: DoingProjectDepartment
         }
       ]
     },

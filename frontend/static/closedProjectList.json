@@ -1,14 +1,14 @@
 {
   "closedProjectList": [
-    { "id":5 , "name":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
+    { "id":5 , "title":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
       "closeTime": "2019-01-01"
-    }, { "id":4 , "name":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
+    }, { "id":4 , "title":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
       "closeTime": "2019-01-01"
-    }, { "id":3 , "name":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
+    }, { "id":3 , "title":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
       "closeTime": "2019-01-01"
-    }, { "id":2 , "name":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
+    }, { "id":2 , "title":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
       "closeTime": "2019-01-01"
-    }, { "id":1 , "name":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
+    }, { "id":1 , "title":"alpha","departmentId": "1","startTime": "2018-12-17", "finishTime": "2018-12-17" ,
       "closeTime": "2019-01-01"
     }
   ],

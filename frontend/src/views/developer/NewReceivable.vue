@@ -163,7 +163,8 @@ export default {
         if (valid && this.selectedModelId !== '' && this.fileList.length !== 0) {
           this.uploading()
           axios.post('/need to be done', { // URL:/developer/addFinancialDetail
-            financialDetailId: this.selectedModelId,
+            financialModelId: this.selectedModelId,
+            type: 1,
             title: this.addReceivableForm.title,
             num: this.addReceivableForm.num,
             fileByteList: this.fileByteList,
