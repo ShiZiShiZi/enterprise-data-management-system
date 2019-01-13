@@ -56,7 +56,7 @@ export default {
       this.getDepartmentList()
     },
     handleClick: function (row) {
-      this.$router.push('subDepartment/' + row.id + '/' + row.name)
+      this.$router.push('doingProjectMng/' + row.id)
     },
     getDepartmentList: function () {
       axios.get('http://localhost:8080/static/departmentList.json', { // URL:/departmentSearch

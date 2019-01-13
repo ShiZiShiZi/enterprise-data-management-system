@@ -66,7 +66,7 @@ export default {
       this.$router.push('/superAdmin/closedProjectMng')
     },
     jumpToDoingProject: function () {
-      this.$router.push('/superAdmin/doingProjectMng')
+      this.$router.push('/superAdmin/doingProjectDepartment')
     },
     jumpToDepartment: function () {
       this.$router.push('/superAdmin/departmentMng')
