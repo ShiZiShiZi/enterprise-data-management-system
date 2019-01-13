@@ -18,33 +18,33 @@ import java.util.Map;
  **/
 public class Token {
 
-    public static final String SECRET = "*>*$)$_NOT_FOUND*>*";
+    private static final String SECRET = "*>*$)$_NOT_FOUND*>*";
 
-    public static String getToken(Integer projectPeopleId) {
+    public static String getToken(Integer projectPeopleId, Integer permissions) {
         Date iatDate = new Date();
-        Date expiresDate = new Date(iatDate.getTime() + 90 * 60 * 1000);
+        Date expiresDate = new Date(iatDate.getTime() + (long) 1000 * 60 * 60 * 12);
 
         Map<String, Object> map = new HashMap<>(2);
         map.put("alg", "HS256");
         map.put("typ", "Token");
 
-        String token = JWT.create().withHeader(map).withClaim("iss", "org.htut.404NotFound").withClaim("aud", "EDMS_APP").withClaim("projectPeopleId", projectPeopleId.toString()).withIssuedAt(iatDate).withExpiresAt(expiresDate).sign(Algorithm.HMAC256(SECRET));
+        String token = JWT.create().withHeader(map).withClaim("iss", "org.htut.404NotFound").withClaim("aud", "EDMS_APP").withClaim("projectPeopleId", projectPeopleId).withClaim("permissions", permissions).withIssuedAt(iatDate).withExpiresAt(expiresDate).sign(Algorithm.HMAC256(SECRET));
         return token;
     }
 
-    public static Map<String, Claim> verifyToken(String token) {
-        DecodedJWT jwt = null;
+    public static Object verifyToken(String token) {
+        DecodedJWT jwt;
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
             jwt = verifier.verify(token);
         } catch(Exception e) {
-            e.printStackTrace();
+            return false;
         }
         return jwt.getClaims();
     }
 
     public static Integer getProjectPeopleId(String token) {
-        Map<String, Claim> claims = verifyToken(token);
+        Map<String, Claim> claims = (Map<String, Claim>) verifyToken(token);
         Claim projectPeopleIdClaim = claims.get("projectPeopleId");
         return Integer.valueOf(projectPeopleIdClaim.asString());
     }

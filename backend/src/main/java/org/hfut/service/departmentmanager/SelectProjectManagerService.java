@@ -20,13 +20,10 @@ import java.util.List;
 public class SelectProjectManagerService {
 
     private ProjectManagerMapper projectManagerMapper;
-    private ProjectPeopleMapper projectPeopleMapper;
 
     @Autowired
-    public SelectProjectManagerService(ProjectManagerMapper projectManagerMapper,
-                                       ProjectPeopleMapper projectPeopleMapper) {
+    public SelectProjectManagerService(ProjectManagerMapper projectManagerMapper) {
         this.projectManagerMapper = projectManagerMapper;
-        this.projectPeopleMapper = projectPeopleMapper;
     }
 
     public List<Integer> selectProjectManager(Integer projectId) {

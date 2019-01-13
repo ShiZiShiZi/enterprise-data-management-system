@@ -48,7 +48,7 @@ public class AlertFinancialModelService {
         }
     }
 
-    public void alertFinancialmodel(FinancialModel financialModeId) {
+    public void alertFinancialModel(FinancialModel financialModeId) {
         financialModelMapper.updateByPrimaryKeySelective(financialModeId);
     }
 
