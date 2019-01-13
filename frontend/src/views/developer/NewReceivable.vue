@@ -120,7 +120,7 @@ export default {
       axios.get('http://localhost:8080/static/receivableList.json', { // URL:/financialModelSearch
         params: {
           projectId: this.selectedProjectID,
-          type: 1,
+          type: 0,
           isActive: 1
         }
       }).then(res => {

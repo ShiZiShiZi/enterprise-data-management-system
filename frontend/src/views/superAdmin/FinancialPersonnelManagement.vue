@@ -48,10 +48,12 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           axios.get('http://localhost:8080/static/projectList.json', { // URL: /addUser
-            name: this.ruleForm.name,
-            email: this.ruleForm.mail,
-            phoneNum: this.ruleForm.phoneNum,
-            type: 3
+            params: {
+              name: this.ruleForm.name,
+              email: this.ruleForm.mail,
+              phoneNum: this.ruleForm.phoneNum,
+              type: 3
+            }
           }).then(res => {
             this.msg = res.data.msg
             alert(this.msg)
