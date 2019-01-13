@@ -1,48 +1,27 @@
 <template>
   <el-card class="box-card">
-    <div class="text item" align="center">
-      <el-table
-      :data="feedbackList"
-      style="width: 100%">
-      <el-table-column
-        prop="projectName"
-        label="项目名称"
-        width="240">
+    <div class="text" align="center">
+      <el-table :data="feedbackList">
+      <el-table-column prop="projectTitle" label="项目标题" width="100">
       </el-table-column>
-      <el-table-column
-        prop="type"
-        label="类型"
-        width="150">
+      <el-table-column prop="title" label="费用名" width="120">
       </el-table-column>
-      <el-table-column
-        prop="name"
-        label="名称"
-        width="60">
+      <el-table-column prop="requestTime" label="申请时间" width="100">
       </el-table-column>
-      <el-table-column
-        prop="time"
-        label="时间"
-        width="60">
+      <el-table-column prop="state" label="状态" width="100">
+        <template slot-scope="scope">
+          <el-tag v-if="feedbackList[scope.$index].state === 0">待审核</el-tag>
+          <el-tag type="success" v-if="feedbackList[scope.$index].state === 1">已通过</el-tag>
+          <el-tag type="danger" v-if="feedbackList[scope.$index].state === 2">被拒绝</el-tag>
+        </template>
       </el-table-column>
-      <el-table-column
-        prop="status"
-        label="状态"
-        width="60">
-      </el-table-column>
-      <el-table-column
-        prop="remark"
-        label="备注"
-        width="90">
+      <el-table-column prop="description" label="备注" width="300">
       </el-table-column>
     </el-table>
     </div>
-    <div class="block" align="center">
-      <span class="demonstration"></span>
-      <el-pagination
-        layout="prev, pager, next"
-        :total="50">
-      </el-pagination>
-    </div>
+    <el-pagination @current-change="handleCurrentChange" align="center"
+            layout="prev, pager, next" :total="maxPage*10"></el-pagination>
+
   </el-card>
 
 </template>
@@ -50,33 +29,41 @@
 <script>
 import axios from 'axios'
 export default {
-  methods: {
-
-  },
-  data () {
+  data: function () {
     return {
+      currentPage: 1,
+      pageSize: 10,
+      maxPage: '',
       feedbackList: []
     }
   },
-  created () {
-    axios.get('http://localhost:8080/static/feedbackList.json').then(res => {
-      this.feedbackList = res.data.feedbackList
-    }).catch(function (error) {
-      alert(error)
-    })
+  mounted: function () {
+    this.getFeedBackList()
+  },
+  methods: {
+    getFeedBackList: function () {
+      axios.get('http://localhost:8080/static/feedbackList.json', { // URL: developer/getFeedbackList
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+        }
+      }).then(res => {
+        this.maxPage = res.data.maxPage
+        this.feedbackList = res.data.feedbackList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    handleCurrentChange: function (currentPage) {
+      this.getFeedBackList()
+    }
   }
 }
 </script>
-
 <style scoped>
   .text {
     font-size: 14px;
   }
-
-  .item {
-    padding: 18px 0;
-  }
-
   .box-card {
     width: 900px;
   }
