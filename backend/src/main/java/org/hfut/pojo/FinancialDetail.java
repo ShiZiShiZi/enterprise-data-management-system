@@ -1,5 +1,7 @@
 package org.hfut.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class FinancialDetail {
@@ -8,7 +10,7 @@ public class FinancialDetail {
     private String title;
 
     private Double num;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private Integer financialModelId;
@@ -41,6 +43,7 @@ public class FinancialDetail {
         this.num = num;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getTime() {
         return time;
     }
