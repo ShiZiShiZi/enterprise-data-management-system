@@ -49,7 +49,6 @@ public class SystemLog {
         this.systemLogMapper = systemLogMapper;
     }
 
-
     public Object doSystemLog(ProceedingJoinPoint joinPoint) {
 
         try {
@@ -77,7 +76,7 @@ public class SystemLog {
 
     private void init(ProceedingJoinPoint joinPoint) {
         systemLog = new org.hfut.pojo.SystemLog();
-        resultMap = new HashMap<>(3);
+        resultMap = new HashMap<>(4);
         this.joinPoint = joinPoint;
         methodName = joinPoint.getSignature().getName();
         HttpServletRequest request = SystemContent.getRequest();
@@ -90,6 +89,7 @@ public class SystemLog {
         resultMap.put("data", null);
         resultMap.put("result", FAILURE);
         resultMap.put("msg", null);
+        resultMap.put("token", null);
     }
 
     private void doLoginLog() {
@@ -128,6 +128,16 @@ public class SystemLog {
             projectPeopleId = claimMap.get("projectPeopleId").asInt();
             permissions = claimMap.get("permissions").asInt().byteValue();
             passInspection = true;
+            updateToken(claimMap.get("expiresDate").asDate());
+            resultMap.put("token", token);
+        }
+    }
+
+    private void updateToken(Date expiresDate) {
+        Date now = new Date();
+        final int halfOverdueTime = 1000 * 60 * 60 * 6;
+        if(expiresDate.getTime() - now.getTime() < halfOverdueTime) {
+            token = Token.getToken(projectPeopleId, permissions);
         }
     }
 
