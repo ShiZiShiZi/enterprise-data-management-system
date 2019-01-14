@@ -137,7 +137,7 @@ public class SystemLog {
         Date now = new Date();
         final int halfOverdueTime = 1000 * 60 * 60 * 6;
         if(expiresDate.getTime() - now.getTime() < halfOverdueTime) {
-            token = Token.getToken(projectPeopleId, permissions);
+            token = Token.getToken(projectPeopleId, permissions, Token.VALIDITY_PERIOD_LOGIN);
         }
     }
 
