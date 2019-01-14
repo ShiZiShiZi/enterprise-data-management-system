@@ -32,10 +32,27 @@ import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure
 import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
 import LoginRegister from '@/components/LoginRegister'
 import DoingProjectDepartment from '@/views/superAdmin/DoingProjectDepartment'
+import vuex from 'vuex'
+import axios from 'axios'
+
+Vue.use(Router)
+Vue.use(vuex)
+let store = new vuex.Store({ // store对象
+  state: {
+    token: '3423',
+    permission: 15
+  },
+  mutations: {
+    logout (state) {
+      state.token = ''
+      state.permission = 0
+    }
+  }
+})
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -46,51 +63,91 @@ export default new Router({
     {
       path: '/superAdmin',
       name: 'OverallFramework',
+      meta: {
+        requireAuth: true,
+        permission: 4
+      },
       component: OverallFramework,
       children: [
         {
           path: 'departmentMng',
           name: 'DepartmentManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: DepartmentManagement
         },
         {
           path: 'closedProjectMng',
           name: 'ClosedProjectManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: ClosedProjectManagement
         },
         {
           path: 'doingProjectMng/:id',
           name: 'DoingProjectManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: DoingProjectManagement
         },
         {
           path: 'subDepartment/:id/:name',
           name: 'SubDepartmentManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: SubDepartmentManagement
         },
         {
           path: 'businessMng',
           name: 'BusinessManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: BusinessManagement
         },
         {
           path: 'financialPersonnelMng',
           name: 'FinancialPersonnelManagement',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: FinancialPersonnelManagement
         },
         {
           path: 'showDoingProject/:id/:name',
           name: 'ShowDoingProject',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: ShowDoingProject
         },
         {
           path: 'showClosedProject/:id/:name',
           name: 'ShowClosedProject',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: ShowClosedProject
         },
         {
           path: 'doingProjectDepartment',
           name: 'DoingProjectDepartment',
+          meta: {
+            requireAuth: true,
+            permission: 4
+          },
           component: DoingProjectDepartment
         }
       ]
@@ -98,21 +155,37 @@ export default new Router({
     {
       path: '/developer',
       name: 'OverallDeveloper',
+      meta: {
+        requireAuth: true,
+        permission: 1
+      },
       component: OverallDeveloper,
       children: [
         {
           path: 'viewFeedback',
           name: 'ViewFeedback',
+          meta: {
+            requireAuth: true,
+            permission: 1
+          },
           component: ViewFeedback
         },
         {
           path: 'newReceivable',
           name: 'NewReceivable',
+          meta: {
+            requireAuth: true,
+            permission: 1
+          },
           component: NewReceivable
         },
         {
           path: 'newCost',
           name: 'NewCost',
+          meta: {
+            requireAuth: true,
+            permission: 1
+          },
           component: NewCost
         }
       ]
@@ -120,36 +193,64 @@ export default new Router({
     {
       path: '/departmentManager',
       name: 'OverallDepartment',
+      meta: {
+        requireAuth: true,
+        permission: 2
+      },
       component: OverallDepartment,
       children: [
         {
           path: 'projectManage',
           name: 'ProjectManage',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: ProjectManage
         },
         {
           path: 'dataManage',
           name: 'DataManage',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: DataManage
         },
         {
           path: 'projectFinanceManage/:id/:title',
           name: 'ProjectFinanceManage',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: ProjectFinanceManage
         },
         {
           path: 'staffEditor/:id/:name',
           name: 'StaffEditor',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: StaffEditor
         },
         {
           path: 'editingFinancialModel/:id/:title',
           name: 'editingFinancialModel',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: EditingFinancialModel
         },
         {
           path: 'personnelUseRequest',
           name: 'personnelUseRequest',
+          meta: {
+            requireAuth: true,
+            permission: 2
+          },
           component: PersonnelUseRequest
         }
       ]
@@ -157,46 +258,82 @@ export default new Router({
     {
       path: '/financial',
       name: 'OverallFinancial',
+      meta: {
+        requireAuth: true,
+        permission: 8
+      },
       component: OverallFinancial,
       children: [
         {
           path: 'financialMng',
           name: 'FinancialManagement',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: FinancialManagement
         },
         {
           path: 'recordReceivable/:id/:name',
           name: 'RecordReceivable',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: RecordReceivable
         },
         {
           path: 'confirmReceivable/:id/:name',
           name: 'ConfirmReceivable',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: ConfirmReceivable
         },
         {
           path: 'confirmExpenditure/:id/:name',
           name: 'ConfirmExpenditure',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: ConfirmExpenditure
         },
         {
           path: 'linkToRecordReceivable/:id',
           name: 'LinkToRecordReceivable',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: LinkToRecordReceivable
         },
         {
           path: 'linkToConfirmReceivable/:id',
           name: 'LinkToConfirmReceivable',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: LinkToConfirmReceivable
         },
         {
           path: 'linkToConfirmExpenditure/:id',
           name: 'LinkToConfirmExpenditure',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: LinkToConfirmExpenditure
         },
         {
           path: 'linkToRefuseExpenditure/:id',
           name: 'LinkToRefuseExpenditure',
+          meta: {
+            requireAuth: true,
+            permission: 8
+          },
           component: LinkToRefuseExpenditure
         }
       ]
@@ -208,3 +345,48 @@ export default new Router({
     }
   ]
 })
+export default router
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    if (store.state.token !== '' && (store.state.permission & to.meta.permission)) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
+axios.interceptors.request.use(
+  config => {
+    if (store.state.token) {
+      config.headers.Authorization = `token ${store.state.token}`
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  })
+
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          // 返回 401 清除token信息并跳转到登录页面
+          store.commit('logout')
+          router.replace({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath}
+          })
+      }
+    }
+    return Promise.reject(error.response.data) // 返回接口返回的错误信息
+  })
