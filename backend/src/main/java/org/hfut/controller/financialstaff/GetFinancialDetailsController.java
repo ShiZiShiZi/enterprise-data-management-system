@@ -26,12 +26,12 @@ public class GetFinancialDetailsController {
     @Autowired
     private GetFinancialDetailsService getFinancialDetailsService;
 
-    @Log(needLog = false, serviceDescription = "根据项目ID查询财务细节", permission = 1)
+    @Log(needLog = false, serviceDescription = "根据项目ID查询财务细节", permission = 4)
     @ResponseBody
     @RequestMapping(value = "/financial/getFinancialDetails", method = RequestMethod.GET)
     public Map<String, Object> selectFinancialDetails(
             @RequestParam(name = "projectId", required = false) Integer projectId,
-            @RequestParam(name = "financialDetailType", required = false) Integer financialDetailType, Model model) {
+            @RequestParam(name = "financialDetailType", required = false) Integer financialDetailType) {
         Map<String, Object> map = new HashMap<>(10);
         List<FinancialDetail> list;
         list = getFinancialDetailsService.listFinancialDetails(projectId, financialDetailType);

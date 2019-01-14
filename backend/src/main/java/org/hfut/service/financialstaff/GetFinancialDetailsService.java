@@ -24,16 +24,19 @@ public class GetFinancialDetailsService {
     private FinancialModelMapper financialModelMapper;
 
     public List<FinancialDetail> listFinancialDetails(Integer projectId, Integer financialDetailType) {
-        List<FinancialModel> list = new ArrayList<>();
-        List<FinancialDetail> list1 = new ArrayList<>();
+        List<FinancialModel> list;
+        List<FinancialDetail> list1;
+        List<Integer> financialModelId = new ArrayList<>();
         FinancialModelExample financialModelExample = new FinancialModelExample();
         FinancialModelExample.Criteria criteria = financialModelExample.createCriteria();
         criteria.andProjectIdEqualTo(projectId);
         list = financialModelMapper.selectByExample(financialModelExample);
-        int financialModelId = list.get(0).getId();
+        for (int i = 0; i < list.size(); i++) {
+            financialModelId.add(list.get(i).getId());
+        }
         FinancialDetailExample financialDetailExample = new FinancialDetailExample();
         FinancialDetailExample.Criteria criteria1 = financialDetailExample.createCriteria();
-        criteria1.andFinancialModelIdEqualTo(financialModelId);
+        criteria1.andFinancialModelIdIn(financialModelId);
         Byte b = 0;
         Byte d = 1;
         Integer num = 0;
