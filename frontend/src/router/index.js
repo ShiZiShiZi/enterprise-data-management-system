@@ -30,7 +30,8 @@ import LinkToRecordReceivable from '@/views/financial/LinkToRecordReceivable'
 import LinkToConfirmReceivable from '@/views/financial/LinkToConfirmReceivable'
 import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure'
 import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
-import LoginRegister from '@/components/LoginRegister'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
 import DoingProjectDepartment from '@/views/superAdmin/DoingProjectDepartment'
 import vuex from 'vuex'
 import axios from 'axios'
@@ -340,8 +341,13 @@ const router = new Router({
     },
     {
       path: '/login',
-      name: 'loginRegister',
-      component: LoginRegister
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register/:token',
+      name: 'register',
+      component: Register
     }
   ]
 })
