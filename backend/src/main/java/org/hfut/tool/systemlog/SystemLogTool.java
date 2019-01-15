@@ -77,4 +77,8 @@ public class SystemLogTool {
                 return true;
         }
     }
+
+    public static boolean isCommonMethod(String methodName) {
+        return "registerCheck".equals(methodName);
+    }
 }
