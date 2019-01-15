@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col :span="10">
+        <el-col :span="12">
             <el-card class="box-card">
                 <span>项目已有人员</span>
                 <el-table :data="projectPeopleList" style="width: 100%" :row-class-name="tableRowClassName">
@@ -27,7 +27,7 @@
                 </el-pagination>
             </el-card>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
             <el-card class="box-card1">
                 <el-row>
                     <el-col :span="6">名字:</el-col>
@@ -51,7 +51,7 @@
                 </el-pagination>
             </el-card>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="4">
             <el-card class="box-card2">
                 <el-row>
                     <el-col :span="6">名字:</el-col>
@@ -97,6 +97,7 @@ export default {
       maxPage3: 1,
       name: '',
       table2name: '',
+      projectPeopleIdList: [],
       projectPeopleList: [],
       departmentPeopleList: [],
       departmentPeopleListState: [],
@@ -135,15 +136,26 @@ export default {
         alert(error)
       })
     },
+    getProjectPeopleIdList: function () {
+      axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL: /getProjectMember
+        params: {
+          projectId: this.id
+        }
+      }).then(res => {
+        this.projectPeopleIdList = res.data.projectPeopleList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
     getProjectPeopleList: function () {
+      this.getProjectPeopleIdList()
       axios.get('http://localhost:8080/static/projectPeopleList.json', { // URL: /getProjectMember
         params: {
           currentPage: this.currentPage1,
-          pageSize: this.pageSize,
-          sortColumn: 'start_time',
+          pageSize: this.projectPeopleIdList.length,
+          sortColumn: 'id',
           sortOrder: 1,
-          startTime: this.startTime,
-          projectTitle: this.projectTitle
+          projectId: this.projectPeopleIdList
         }
       }).then(res => {
         this.projectPeopleList = res.data.projectPeopleList
@@ -167,7 +179,7 @@ export default {
         params: {
           currentPage: this.currentPage2,
           pageSize: this.pageSize,
-          departmentId: localStorage.getItem('departmentId'),
+          departmentId: this.$store.state.person.departmentId,
           sortColumn: 'id',
           sortOrder: 1,
           name: this.name
@@ -194,7 +206,7 @@ export default {
         params: {
           currentPage: this.currentPage3,
           pageSize: this.pageSize,
-          departmentId: localStorage.getItem('departmentId'),
+          departmentId: this.$store.state.person.departmentId,
           sortColumn: 'id',
           isDepartmentIdIn: 0,
           sortOrder: 1,
@@ -285,7 +297,7 @@ export default {
         params: {
           projectId: this.id,
           peopleIdList: peopleIdList,
-          departmentId: localStorage.getItem('departmentId')
+          departmentId: this.$store.state.person.departmentId
         }
       }).then(res => {
         alert('添加成功')
@@ -300,7 +312,7 @@ export default {
 
 <style scoped>
     .box-card {
-        width: 500px;
+        width: 450px;
     }
     .box-card1 {
         width: 300px;

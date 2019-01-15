@@ -96,8 +96,8 @@ export default {
       axios.get('http://localhost:8080/static/financialModelList.json', { // URL:/financialModelSearch
         params: {
           projectId: this.id,
-          type: '0',
-          isActive: '1'
+          type: 0,
+          isActive: 1
         }
       }).then(res => {
         this.costFinancialModelList = res.data.financialModelList
@@ -109,8 +109,8 @@ export default {
       axios.get('http://localhost:8080/static/financialModelList.json', { // URL:/financialModelSearch
         params: {
           projectId: this.id,
-          type: '1',
-          isActive: '1'
+          type: 1,
+          isActive: 1
         }
       }).then(res => {
         this.revenueFinancialModelList = res.data.financialModelList

@@ -60,6 +60,7 @@ export default {
             } else {
               this.$store.commit('setToken', res.data.token)
               this.$store.commit('setPermission', res.data.person.permissions)
+              this.$store.state.person = res.data.person
               this.jumpToFunctionPage()
             }
           }).catch(function (error) {

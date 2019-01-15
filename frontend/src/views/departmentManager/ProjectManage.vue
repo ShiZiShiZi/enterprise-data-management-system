@@ -48,6 +48,9 @@
                     <el-col :span="2" :offset="1">
                         <el-button plain @click="jumpToEditingFinancialModel(project.id, project.title)">财务模型</el-button>
                     </el-col>
+                    <el-col :span="2" :offset="1">
+                        <el-button plain @click="jumpToDataAnalysis(project.id, project.title)">数据分析</el-button>
+                    </el-col>
                 </el-row>
             </el-collapse-item>
         </el-collapse>
@@ -159,6 +162,9 @@ export default {
     jumpToEditingFinancialModel: function (id, title) {
       this.$router.push('editingFinancialModel/' + id + '/' + title)
     },
+    jumpToDataAnalysis: function (id, title) {
+      this.$router.push('projectFinanceManage/' + id + '/' + title)
+    },
     editProject: function (index) {
       this.dialogVisible = true
       this.dynamicValidateForm.newFinishTime = this.projectList[index].finishTime
@@ -212,7 +218,7 @@ export default {
         params: {
           currentPage: this.currentPage,
           pageSize: this.pageSize,
-          departmentId: localStorage.getItem('departmentId'),
+          departmentId: this.$store.state.person.departmentId,
           sortColumn: 'start_time',
           sortOrder: 1,
           startTime: this.startTime,
@@ -238,8 +244,6 @@ export default {
       }).catch(function (error) {
         alert(error)
       })
-    },
-    handleAddProject: function () {
     }
   }
 }

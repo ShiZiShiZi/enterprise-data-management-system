@@ -1,10 +1,11 @@
 <template>
   <el-tabs width="800px" type="card">
     <el-tab-pane label="人员信息">
-        <el-table ref="singleTable" :data="projectPeopleList" highlight-current-row width="500px">
-          <el-table-column type="index" width="100px" text-align="center"></el-table-column>
-          <el-table-column property="id" label="人员id" width="200px" text-align="center"></el-table-column>
-          <el-table-column property="name" label="姓名" width="200px" text-align="center"></el-table-column>
+        <el-table ref="singleTable" :data="developerList" highlight-current-row>
+          <el-table-column property="id" label="工号" width="120"></el-table-column>
+          <el-table-column property="name" label="姓名" width="120"></el-table-column>
+          <el-table-column property="phoneNum" label="电话" width="200"></el-table-column>
+          <el-table-column property="email" label="邮箱" width="200"></el-table-column>
         </el-table>
         <el-pagination
           @current-change="handleCurrentChange"
@@ -95,7 +96,7 @@ export default {
     return {
       id: 0,
       name: '',
-      projectPeopleList: [],
+      developerList: [],
       currentPage: 1,
       pageSize: 5,
       maxPage: 1,
@@ -119,7 +120,7 @@ export default {
   created: function () {
     let myDate = new Date()
     this.year = myDate.getFullYear().toString()
-    this.getProjectPeopleList()
+    this.getDeveloperList()
     axios.get('http://localhost:8080/static/departmentDataTotal.json', {
       params: {
         departmentId: this.id
@@ -454,17 +455,19 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      this.getProjectPeopleList()
+      this.getDeveloperList()
     },
-    getProjectPeopleList: function () {
-      axios.get('http://localhost:8080/static/developerList.json', {
+    getDeveloperList: function () {
+      axios.get('http://localhost:8080/static/developerList.json', { // URL:/projectPeopleSearch
         params: {
-          departmentId: this.id,
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          departmentId: this.id,
+          sortColumn: 'id',
+          sortOrder: 1
         }
       }).then(res => {
-        this.projectPeopleList = res.data.projectPeopleList
+        this.developerList = res.data.projectPeopleList
         this.maxPage = res.data.maxPage
       }).catch(function (error) {
         alert(error)

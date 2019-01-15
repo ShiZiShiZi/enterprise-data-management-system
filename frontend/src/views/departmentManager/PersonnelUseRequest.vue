@@ -49,7 +49,7 @@ export default {
     getRequest: function () {
       axios.get('http://localhost:8080/static/requestList.json', { // URL: 待定
         params: {
-          departmentId: localStorage.getItem('departmentId')
+          departmentId: this.$store.state.person.departmentId
         }
       }).then(res => {
         this.requestList = res.data.requestList

@@ -16,7 +16,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({ // store对象
   state: {
     token: '434',
-    permission: 15
+    permission: 15,
+    person: ''
   },
   mutations: {
     logout (state) {
