@@ -33,23 +33,6 @@ import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import DoingProjectDepartment from '@/views/superAdmin/DoingProjectDepartment'
-import vuex from 'vuex'
-import axios from 'axios'
-
-Vue.use(Router)
-Vue.use(vuex)
-let store = new vuex.Store({ // store对象
-  state: {
-    token: '3423',
-    permission: 15
-  },
-  mutations: {
-    logout (state) {
-      state.token = ''
-      state.permission = 0
-    }
-  }
-})
 
 Vue.use(Router)
 
@@ -352,47 +335,3 @@ const router = new Router({
   ]
 })
 export default router
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    if (store.state.token !== '' && (store.state.permission & to.meta.permission)) {
-      next()
-    } else {
-      next({
-        path: '/login',
-        query: {redirect: to.fullPath}
-      })
-    }
-  } else {
-    next()
-  }
-})
-axios.interceptors.request.use(
-  config => {
-    if (store.state.token) {
-      config.headers.Authorization = `token ${store.state.token}`
-    }
-    return config
-  },
-  err => {
-    return Promise.reject(err)
-  })
-
-axios.interceptors.response.use(
-  response => {
-    return response
-  },
-  error => {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          // 返回 401 清除token信息并跳转到登录页面
-          store.commit('logout')
-          router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-          })
-      }
-    }
-    return Promise.reject(error.response.data) // 返回接口返回的错误信息
-  })
