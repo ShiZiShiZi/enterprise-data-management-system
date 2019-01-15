@@ -1,6 +1,6 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="项目总览" class="finance" @tab-click="drawTotal">
+    <el-tab-pane label="项目总览" class="finance">
       <el-card class="box-card">
         <el-row>
           <el-col :span="20">
@@ -28,7 +28,9 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -42,7 +44,9 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>

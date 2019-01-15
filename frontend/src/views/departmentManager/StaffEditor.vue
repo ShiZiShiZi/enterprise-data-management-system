@@ -21,7 +21,6 @@
                     </el-table-column>
                 </el-table>
                 <el-pagination
-                        @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         layout="prev, pager, next"
                         :total="maxPage1*10">
@@ -46,7 +45,6 @@
                     </el-table-column>
                 </el-table>
                 <el-pagination
-                        @size-change="handleSizeChange"
                         @current-change="handleCurrentChange1"
                         layout="prev, pager, next"
                         :total="maxPage2*10">
@@ -74,7 +72,6 @@
                     </el-table-column>
                 </el-table>
                 <el-pagination
-                        @size-change="handleSizeChange"
                         @current-change="handleCurrentChange1"
                         layout="prev, pager, next"
                         :total="maxPage3*10">

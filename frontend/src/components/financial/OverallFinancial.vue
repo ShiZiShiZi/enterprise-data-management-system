@@ -15,14 +15,16 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#303133"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="3">
+          <el-menu-item index="1">
+          <i class="el-icon-location"></i>
+          <span slot="title" @click="jumpToIncome">收入</span>
+          </el-menu-item>
+          <el-menu-item index="2">
             <i class="el-icon-document"></i>
-            <span slot="title" @click="jumpToFinancial">财务人员</span>
+            <span slot="title" @click="jumpToExpenditure">支出</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -37,8 +39,11 @@
 export default {
   name: 'OverallFinancial',
   methods: {
-    jumpToFinancial: function () {
+    jumpToIncome: function () {
       this.$router.push('/financial/financialMng')
+    },
+    jumpToExpenditure: function () {
+      this.$router.push('/financial/confirmExpenditure')
     }
   }
 

@@ -1,37 +1,35 @@
 <template>
   <el-card class="box-card">
-    <template>
-      <div  class="text item">
-        选择应收项：<el-select v-model="title" placeholder="请选择类别">
-        <el-option
-          v-for="costType in financialDetailList"
-          :key="costType.id"
-          :label="costType.title"
-          :value="costType.id">
-        </el-option>
-      </el-select><br><br>
-        填入应收数：<el-input v-model="amount" placeholder="请输入金额"></el-input><br><br>
-      </div>
-    </template>
-    <template>
+    <el-row>
+      <el-col :span="2">选择类别：</el-col>
+      <el-col :span="4">
+        <el-select v-model="selectedModelId" placeholder="请选择类别">
+          <el-option v-for="financial in financialModelList"
+                     :key="financial.id"
+                     :label="financial.name"
+                     :value="financial.id">
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-form :model="addReceivableForm" ref="addReceivableForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="金额" prop="num" :rules= addReceivableForm.rules.num>
+        <el-input v-model="addReceivableForm.num"></el-input>
+      </el-form-item>
       <el-upload
-        class="upload-demo"
-        action=""
-        :http-request="fileList"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        :on-change="setFileList"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed">
+              class="upload-demo"
+              action=""
+              :http-request="setFileList"
+              :before-remove="beforeRemove"
+              :on-change="setFileList"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed">
         <el-button size="small" type="primary">选择文件</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload><br><br>
-    </template>
-    <template>
-      <el-button type="success" @click="uploading">提交</el-button>
-    </template>
+        <div slot="tip" class="el-upload__tip">只能上传pdf文件，且不超过500kb</div>
+      </el-upload>
+      <el-button type="primary" @click="submitForm('addReceivableForm')">提交</el-button>
+    </el-form>
   </el-card>
 </template>
 
@@ -41,65 +39,79 @@ export default {
   name: 'LinkToRecordReceivable',
   data: function () {
     return {
-      amount: '',
-      type: 0,
-      financialDetailId: '',
-      contractList: [],
-      projectId: '',
-      financialDetailType: 0,
-      financialDetailList: [],
-      title: '',
+      selectedProjectID: '',
+      financialModelList: [],
+      selectedModelId: '',
+      addReceivableForm: {
+        num: '',
+        rules: {
+          num: [{required: true, message: '请输入数额', trigger: 'blur'},
+            { pattern: /^\d{1,10}$/, message: '请正确填写数额' }]
+        }
+      },
       fileList: [],
-      fileByteList: []
+      fileByteList: [],
+      fileNameList: []
     }
   },
   created: function () {
-    this.projectId = this.$route.params.id
-    axios.get('http://localhost:8080/static/getFinancialDetails.json', {
-      params: {
-        projectId: this.projectId,
-        financialDetailType: this.financialDetailType
-      }
-    }).then(res => {
-      this.financialDetailList = res.data.financialDetailList
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.selectedProjectID = this.$route.params.id
+    this.getFinancialModelList()
   },
   methods: {
+    getFinancialModelList: function () {
+      axios.get('http://localhost:8080/static/receivableList.json', { // URL:/financialModelSearch
+        params: {
+          projectId: this.selectedProjectID,
+          type: 1,
+          isActive: 1
+        }
+      }).then(res => {
+        this.financialModelList = res.data.financialModelList
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
     setFileList: function (file, fileList) {
       this.fileList = fileList
     },
     uploading: function () {
       let that = this
+      this.fileNameList = []
+      this.fileByteList = []
       for (let i = 0; i < this.fileList.length; i++) {
-        var reader = new FileReader()
+        let reader = new FileReader()
         reader.readAsArrayBuffer(this.fileList[i].raw)
+        this.fileNameList.push(this.fileList[i].name)
         reader.onload = function (e) {
           let buffer = e.target.result
           that.fileByteList.push(conversionToBinaryStream(buffer))
         }
       }
-      // 还需要校验填写的数据
-      axios.get('/need to be done', {
-        params: {
-          amount: this.amount,
-          type: this.type,
-          financialDetailType: this.financialDetailType,
-          contractList: this.fileByteList
-        }
-      }).then(function (response) {
-        alert('需要添加弹窗和重定向')
-      })
-    },
-    submit: function () {
-
     },
     handleExceed (files, fileList) {
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
     beforeRemove (file) {
       return this.$confirm(`确定移除 ${file.name}？`)
+    },
+    submitForm: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid && this.selectedModelId !== '' && this.fileList.length !== 0) {
+          this.uploading()
+          axios.post('/need to be done', { // URL:/financial/insertFinancialLog
+            financialModelId: this.selectedModelId,
+            type: 0,
+            num: this.addReceivableForm.num,
+            contractList: this.fileByteList,
+            fileNameList: this.fileNameList
+          }).then(res => {
+            alert(res.data.msg)
+          })
+        } else {
+          alert('请完成完整的上传流程')
+        }
+      })
     }
   }
 }

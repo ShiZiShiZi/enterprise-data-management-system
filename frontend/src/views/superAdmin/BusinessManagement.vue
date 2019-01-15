@@ -17,6 +17,7 @@
     </el-form>
     <el-upload
             class="upload-demo"
+            action=""
             :http-request="uploadLogoMethod"
             :on-change="setLogo"
             multiple

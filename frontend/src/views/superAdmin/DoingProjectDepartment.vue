@@ -48,9 +48,6 @@ export default {
     }
   },
   methods: {
-    handleSizeChange: function (size) {
-      this.pageSize = size
-    },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
       this.getDepartmentList()
