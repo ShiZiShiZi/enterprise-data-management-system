@@ -14,24 +14,24 @@
             </el-col>
         </el-row>
         <el-table ref="singleTable" :data="projectList" highlight-current-row>
-            <el-table-column type="index" width="50">
-            </el-table-column>
-            <el-table-column property="title" label="项目名称" width="120">
-            </el-table-column>
-            <el-table-column property="description" label="项目描述" width="240">
-            </el-table-column>
-            <el-table-column property="startTime" label="开始时间" width="120">
-            </el-table-column>
-            <el-table-column property="finishTime" label="预计结束时间" width="120">
-            </el-table-column>
-            <el-table-column width="360" align="center">
-                <template slot-scope="scope">
-                    <el-button type="primary" plain @click="jumpToReceiveInAdvance(scope.row)">记录预收</el-button>
-                    <el-button type="primary" plain @click="jumpToIncomeConfirmation(scope.row)">确认收入</el-button>
-                    <el-button type="primary" plain @click="jumpToOutcomeConfirmation(scope.row)">确认支出</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <el-table-column type="index" width="50">
+        </el-table-column>
+        <el-table-column property="title" label="项目名称" width="120">
+        </el-table-column>
+        <el-table-column property="description" label="项目描述" width="240">
+        </el-table-column>
+        <el-table-column property="startTime" label="开始时间" width="120">
+        </el-table-column>
+        <el-table-column property="finishTime" label="预计结束时间" width="120">
+        </el-table-column>
+        <el-table-column width="360" align="center">
+            <template slot-scope="scope">
+                <el-button type="primary" plain @click="jumpToReceiveInAdvance(scope.row)">记录预收</el-button>
+                <el-button type="primary" plain @click="jumpToIncomeConfirmation(scope.row)">确认收入</el-button>
+                <el-button type="primary" plain @click="jumpToOutcomeConfirmation(scope.row)">确认支出</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
         <el-pagination
                 @current-change="handleCurrentChange"
                 layout="prev, pager, next"

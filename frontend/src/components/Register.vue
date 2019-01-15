@@ -47,6 +47,7 @@ export default {
     }
     return {
       token: '',
+      id: '',
       background: {
         backgroundImage: 'url("../../static/backgroundPicture.jpg")',
         backgroundRepeat: 'no-repeat',
@@ -82,7 +83,7 @@ export default {
   },
   methods: {
     confirmationToken: function (token) {
-      axios.get('http://localhost:8080/static/addProject.json', { // URL: /confirmationToken
+      axios.get('http://localhost:8080/static/addProject.json', { // URL: /tokenConfirm
         params: {
           token: token
         }
@@ -90,6 +91,7 @@ export default {
         if (res.data.isExpired === 1) {
           this.$router.push('/login')
         }
+        this.id = res.data.id
       }).catch(function (error) {
         alert(error)
       })
@@ -99,6 +101,7 @@ export default {
         if (valid) {
           axios.get('http://localhost:8080/static/addProject.json', { // URL: /register
             params: {
+              id: this.id,
               phoneNum: this.registerForm.phoneNum,
               email: this.registerForm,
               password: this.password
