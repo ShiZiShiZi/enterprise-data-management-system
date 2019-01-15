@@ -19,10 +19,11 @@ import java.util.Map;
 public class Token {
 
     private static final String SECRET = "*>*$)$_NOT_FOUND*>*";
+    public static final int VALIDITY_PERIOD_LOGIN = 12;
 
-    public static String getToken(Integer projectPeopleId, Byte permissions) {
+    public static String getToken(Integer projectPeopleId, Byte permissions, Integer validityPeriod) {
         Date iatDate = new Date();
-        Date expiresDate = new Date(iatDate.getTime() + (long) 1000 * 60 * 60 * 12);
+        Date expiresDate = new Date(iatDate.getTime() + (long) 1000 * 60 * 60 * validityPeriod);
 
         Map<String, Object> map = new HashMap<>(2);
         map.put("alg", "HS256");
