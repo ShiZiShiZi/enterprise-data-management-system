@@ -27,7 +27,7 @@ public class ProjectPeopleSearchController {
     @Autowired
     private ProjectPeopleSearchService projectPeopleSearchService;
 
-    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 1)
+    @Log(needLog = false, serviceDescription = "项目人员筛选以及分页", permission = 15)
     @ResponseBody
     @RequestMapping(value = "/projectPeopleSearch", method = RequestMethod.GET)
     public Map<String, Object> selectProjectPeople(@RequestParam(name = "currentPage", required = false) Integer currentPage,
@@ -38,8 +38,7 @@ public class ProjectPeopleSearchController {
                                                    @RequestParam(name = "isDepartmentIdIn", required = false) Integer isDepartmentIdIn,
                                                    @RequestParam(name = "departmentId", required = false) Integer departmentId,
                                                    @RequestParam(name = "sortColumn", required = false) String sortColumn,
-                                                   @RequestParam(name = "sortOrder", required = false) Integer sortOrder,
-                                                   Model model) {
+                                                   @RequestParam(name = "sortOrder", required = false) Integer sortOrder) {
         Map<String, Object> map = new HashMap<>(10);
         List<ProjectPeople> list;
         if (projectId == null) {

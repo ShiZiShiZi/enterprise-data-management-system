@@ -23,7 +23,7 @@ public class AddProjectPeopleController {
     @Autowired
     private AddProjectPeopleService addProjectPeopleService;
 
-    @Log(needLog = false, serviceDescription = "查找已关闭项目", permission = 1)
+    @Log(needLog = false, serviceDescription = "查找已关闭项目", permission = 2)
     @ResponseBody
     @RequestMapping(value = "/departmentManager/addProjectPeople", method = RequestMethod.GET)
     public Map<String, Object> addProjectPeople(@RequestParam(name = "projectId", required = false) Integer projectId,

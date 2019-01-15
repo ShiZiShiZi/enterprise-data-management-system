@@ -22,7 +22,7 @@ public class AddFinancialModelController {
     @Autowired
     private AddFinancialModelService addFinancialModelService;
 
-    @Log(needLog = true, serviceDescription = "添加财务模型", permission = 1)
+    @Log(needLog = true, serviceDescription = "添加财务模型", permission = 2)
     @ResponseBody
     @RequestMapping(value = "/departmentManager/addFinancialModel", method = RequestMethod.GET)
     public Map<String, Object> addCloseProject(@RequestParam(name = "projectId", required = false) Integer projectId,

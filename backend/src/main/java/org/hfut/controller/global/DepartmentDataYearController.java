@@ -21,12 +21,11 @@ public class DepartmentDataYearController {
     @Autowired
     DepartmentDataYearService departmentDataYearService;
 
-    @Log(needLog = false, serviceDescription = "部门年数据查询", permission = 1)
+    @Log(needLog = false, serviceDescription = "部门年数据查询", permission = 15)
     @ResponseBody
     @RequestMapping(value = "/departmentDataYear", method = RequestMethod.GET)
     public Map<String, Object> selectDepartmentDataYear(@RequestParam(name = "departmentId", required = false) Integer departmentId,
-                                                        @RequestParam(name = "year", required = false) String year,
-                                                        Model model) {
+                                                        @RequestParam(name = "year", required = false) String year) {
         return departmentDataYearService.searchDepartmentDataYear(departmentId, year);
     }
 }
