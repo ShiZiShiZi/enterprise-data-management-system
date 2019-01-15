@@ -82,4 +82,20 @@ public class InviteProjectPeopleController {
         }
         return resultMap;
     }
+
+    @Log(needLog = false, serviceDescription = "注册前token验证", permission = 15)
+    @RequestMapping(value = "/tokenConfirm", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> registerCheck(@RequestParam(name = "token") String token) {
+        Map<String, Object> resultMap = new HashMap<>(1);
+        Object verifyResult;
+
+        verifyResult = Token.verifyToken(token);
+        if(verifyResult.getClass().equals(Boolean.class)) {
+            resultMap.put("msg", "refuse");
+        } else {
+            resultMap.put("msg", "success");
+        }
+        return resultMap;
+    }
 }

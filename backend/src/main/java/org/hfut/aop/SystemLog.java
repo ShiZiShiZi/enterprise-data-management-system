@@ -51,16 +51,19 @@ public class SystemLog {
 
     public Object doSystemLog(ProceedingJoinPoint joinPoint) {
 
-        try {
-            return joinPoint.proceed();
-        } catch(Throwable throwable) {
-            throwable.printStackTrace();
-        }
+        //        try {
+        //            return joinPoint.proceed();
+        //        } catch(Throwable throwable) {
+        //            throwable.printStackTrace();
+        //        }
 
 
         init(joinPoint);
         if(SystemLogTool.isLoginMethod(methodName)) {
             doLoginLog();
+        } else if(SystemLogTool.isCommonMethod(methodName)) {
+            doCommonLog();
+            execute();
         } else {
             verifyToken();
             doCommonLog();
@@ -84,6 +87,8 @@ public class SystemLog {
         log = SystemLogTool.getMethodLogInfo(joinPoint);
         forceWrite = false;
         stopWrite = false;
+        projectPeopleId = 1;
+        permissions = 15;
 
         systemLog.setErrorMsg(null);
         resultMap.put("data", null);
