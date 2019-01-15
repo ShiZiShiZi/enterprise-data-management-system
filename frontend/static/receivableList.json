@@ -1,37 +1,17 @@
 {
-  "departmentList": [{
-    "id": "1",
-    "name": "营销部"
-  }, {
-    "id": "2",
-    "name": "人力资源部"
-
-  }, {
-    "id": "3",
-    "name": "随便啥部"
-  }],
-  "projectList": [{
-    "id": "1",
-    "title": "项目1"
-  }, {
-    "id": "2",
-    "title": "项目2"
-
-  }, {
-    "id": "3",
-    "title": "项目3"
-  }, {
-    "id": "4",
-    "title": "项目4"
-  }, {
-    "id": "5",
-    "title": "项目5"
-  }],
   "financialDetailList": [{
     "id": "1",
-    "title": "伙食费"
-  }, {
-      "id": "5",
-      "title": "出行费"
-  }]
+    "num": 20,
+    "title": "伙食费",
+    "projectPeopleId ": 1,
+    "time": "2018-09-01"
+  },
+  {
+    "id": "5",
+    "num": 20,
+    "title": "出行费",
+    "projectPeopleId ": 1,
+    "time": "2018-09-01"
+  }],
+  "maxPage": 2
 }
