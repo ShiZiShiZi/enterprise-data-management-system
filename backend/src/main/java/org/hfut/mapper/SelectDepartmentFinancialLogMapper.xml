@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hfut.mapper.SelectDepartmentFinancialLogMapper">
+  <resultMap id="BaseResultMap" type="org.hfut.pojo.SelectDepartmentFinancialLog">
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="log_id" jdbcType="INTEGER" property="logId" />
+    <result column="log_num" jdbcType="DOUBLE" property="logNum" />
+    <result column="log_type" jdbcType="TINYINT" property="logType" />
+    <result column="tax_rate" jdbcType="REAL" property="taxRate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    department_id, name, project_id, log_id, log_num, log_type, tax_rate
+  </sql>
+  <select id="selectByExample" parameterType="org.hfut.pojo.SelectDepartmentFinancialLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from select_department_financial_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="org.hfut.pojo.SelectDepartmentFinancialLogExample">
+    delete from select_department_financial_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.hfut.pojo.SelectDepartmentFinancialLog">
+    insert into select_department_financial_log (department_id, name, project_id, 
+      log_id, log_num, log_type, 
+      tax_rate)
+    values (#{departmentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, 
+      #{logId,jdbcType=INTEGER}, #{logNum,jdbcType=DOUBLE}, #{logType,jdbcType=TINYINT}, 
+      #{taxRate,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="org.hfut.pojo.SelectDepartmentFinancialLog">
+    insert into select_department_financial_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="logNum != null">
+        log_num,
+      </if>
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="taxRate != null">
+        tax_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="logId != null">
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="logNum != null">
+        #{logNum,jdbcType=DOUBLE},
+      </if>
+      <if test="logType != null">
+        #{logType,jdbcType=TINYINT},
+      </if>
+      <if test="taxRate != null">
+        #{taxRate,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.hfut.pojo.SelectDepartmentFinancialLogExample" resultType="java.lang.Long">
+    select count(*) from select_department_financial_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update select_department_financial_log
+    <set>
+      <if test="record.departmentId != null">
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logId != null">
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logNum != null">
+        log_num = #{record.logNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.logType != null">
+        log_type = #{record.logType,jdbcType=TINYINT},
+      </if>
+      <if test="record.taxRate != null">
+        tax_rate = #{record.taxRate,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update select_department_financial_log
+    set department_id = #{record.departmentId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      project_id = #{record.projectId,jdbcType=INTEGER},
+      log_id = #{record.logId,jdbcType=INTEGER},
+      log_num = #{record.logNum,jdbcType=DOUBLE},
+      log_type = #{record.logType,jdbcType=TINYINT},
+      tax_rate = #{record.taxRate,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
