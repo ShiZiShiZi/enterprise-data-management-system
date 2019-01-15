@@ -1,8 +1,8 @@
 package org.hfut.service.global;
 
-import org.hfut.mapper.SelectProjectMaxExpenditureTypeMapper;
-import org.hfut.pojo.SelectProjectMaxExpenditureType;
-import org.hfut.pojo.SelectProjectMaxExpenditureTypeExample;
+import org.hfut.mapper.SelectProjectMaxIncomeTypeMapper;
+import org.hfut.pojo.SelectProjectMaxIncomeType;
+import org.hfut.pojo.SelectProjectMaxIncomeTypeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +10,16 @@ import java.util.*;
 
 /**
  * @author Lee
- * @date 2019/1/10
+ * @date 2019/1/15
  **/
 @Service
-public class ProjectMaxExpenditureTypeService {
+public class ProjectMaxIncomeTypeService {
     @Autowired
-    private SelectProjectMaxExpenditureTypeMapper selectProjectMaxExpenditureTypeMapper;
+    private SelectProjectMaxIncomeTypeMapper selectProjectMaxIncomeTypeMapper;
 
-    public List<Map> searchProjectMaxExpenditureType(Integer projectId, List<String> chooseDate) {
+    public List<Map> searchProjectMaxIncomeType(Integer projectId, List<String> chooseDate) {
         List<Map> list = new ArrayList<>();
-        List<SelectProjectMaxExpenditureType> l;
+        List<SelectProjectMaxIncomeType> l;
         Map<String, Double> map = new HashMap<>(11);
         String[] time1 = chooseDate.get(0).split("-");
         String[] time2 = chooseDate.get(1).split("-");
@@ -45,11 +45,11 @@ public class ProjectMaxExpenditureTypeService {
         date2.setMinutes(59);
         date2.setSeconds(59);
 
-        SelectProjectMaxExpenditureTypeExample selectProjectMaxExpenditureTypeExample = new SelectProjectMaxExpenditureTypeExample();
-        SelectProjectMaxExpenditureTypeExample.Criteria criteria = selectProjectMaxExpenditureTypeExample.createCriteria();
+        SelectProjectMaxIncomeTypeExample selectProjectMaxIncomeTypeExample = new SelectProjectMaxIncomeTypeExample();
+        SelectProjectMaxIncomeTypeExample.Criteria criteria = selectProjectMaxIncomeTypeExample.createCriteria();
         criteria.andProjectIdEqualTo(projectId);
         criteria.andTimeBetween(date1, date2);
-        l = selectProjectMaxExpenditureTypeMapper.selectByExample(selectProjectMaxExpenditureTypeExample);
+        l = selectProjectMaxIncomeTypeMapper.selectByExample(selectProjectMaxIncomeTypeExample);
         Map<String, Double> m = new TreeMap<String, Double>();
         Double sum = new Double(0);
         int x = 10;
