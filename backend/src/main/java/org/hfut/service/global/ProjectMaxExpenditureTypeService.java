@@ -19,8 +19,8 @@ public class ProjectMaxExpenditureTypeService {
 
     public List<Map> searchProjectMaxExpenditureType(Integer projectId, List<String> chooseDate) {
         List<Map> list = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>(11);
-        List<SelectProjectMaxExpenditureType> l = new ArrayList<>();
+        List<SelectProjectMaxExpenditureType> l;
+        Map<String, Double> map = new HashMap<>(11);
         String[] time1 = chooseDate.get(0).split("-");
         String[] time2 = chooseDate.get(1).split("-");
         int year1 = Integer.parseInt(time1[0]);
@@ -72,15 +72,16 @@ public class ProjectMaxExpenditureTypeService {
                 }
             }
         });
-        for (Map.Entry<String, Double> set : lists) {
-            System.out.println(set.getKey() + " " + set.getValue());
-        }
+
         if (lists.size() > x) {
             for (int j = 10; j < lists.size(); j++) {
                 sum += lists.get(j).getValue();
             }
-            m.put("其他", sum);
-            list.add(m);
+            for (int k = 0; k < x; k++) {
+                map.put(lists.get(k).getKey(), lists.get(k).getValue());
+            }
+            map.put("其他", sum);
+            list.add(map);
         } else {
             list.add(m);
         }

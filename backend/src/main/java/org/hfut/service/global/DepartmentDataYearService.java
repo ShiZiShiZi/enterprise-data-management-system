@@ -31,7 +31,7 @@ public class DepartmentDataYearService {
         SelectDepartmentDataYearExample selectDepartmentDataYearExample = new SelectDepartmentDataYearExample();
         SelectDepartmentDataYearExample.Criteria criteria = selectDepartmentDataYearExample.createCriteria();
         for (int i = 0; i < x; i++) {
-            List<SelectDepartmentDataYear> list = new ArrayList<>();
+            List<SelectDepartmentDataYear> list;
             Double in = new Double(0);
             Double out = new Double(0);
             Double make;

@@ -23,12 +23,11 @@ public class ProjectMaxExpenditureTypeController {
     @Autowired
     private ProjectMaxExpenditureTypeService projectMaxExpenditureTypeService;
 
-    @Log(needLog = false, serviceDescription = "获得项目支出种类", permission = 1)
+    @Log(needLog = false, serviceDescription = "获得项目支出种类", permission = 15)
     @ResponseBody
     @RequestMapping(value = "/projectMaxExpenditureType", method = RequestMethod.GET)
     public Map<String, Object> selectProjectMaxExpenditureType(@RequestParam(name = "projectId", required = false) Integer projectId,
-                                                               @RequestParam(name = "chooseDate", required = false) List<String> chooseDate,
-                                                               Model model) {
+                                                               @RequestParam(name = "chooseDate", required = false) List<String> chooseDate) {
         Map<String, Object> map = new HashMap<>(1);
         List<Map> list = projectMaxExpenditureTypeService.searchProjectMaxExpenditureType(projectId, chooseDate);
         map.put("expenditurePart", list);

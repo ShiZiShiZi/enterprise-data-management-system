@@ -21,7 +21,7 @@ public class ProjectPeopleSearchService {
     public List<ProjectPeople> listProjectPeople(List<Integer> projectId, String name, Integer isAcrossDepartment,
                                                  Integer isDepartmentIdIn, Integer departmentId, String sortColumn,
                                                  Integer sortOrder) {
-        List<ProjectPeople> list = new ArrayList<>();
+        List<ProjectPeople> list;
         String str = "0";
         Integer num = -1;
         Integer num1 = 0;
