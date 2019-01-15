@@ -27,11 +27,11 @@
     "id": "5",
     "title": "项目5"
   }],
-  "financialModelList": [{
+  "financialDetailList": [{
     "id": "1",
-    "name": "伙食费"
+    "title": "伙食费"
   }, {
       "id": "5",
-      "name": "出行费"
+      "title": "出行费"
   }]
 }

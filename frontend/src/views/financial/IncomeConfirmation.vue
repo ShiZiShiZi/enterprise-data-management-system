@@ -1,49 +1,49 @@
 <template>
-  <el-card class="box-card">
-    <el-row>
-      <el-col :span="2">选择类别：</el-col>
-      <el-col :span="4">
-        <el-select v-model="selectedModelId" placeholder="请选择类别">
-          <el-option v-for="financial in financialModelList"
-                     :key="financial.id"
-                     :label="financial.name"
-                     :value="financial.id">
-          </el-option>
-        </el-select>
-      </el-col>
-    </el-row>
-    <el-form :model="addReceivableForm" ref="addReceivableForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="金额" prop="num" :rules= addReceivableForm.rules.num>
-        <el-input v-model="addReceivableForm.num"></el-input>
-      </el-form-item>
-      <el-form-item label="税率" prop="taxRate" :rules= addReceivableForm.rules.taxRate>
-        <el-input v-model="addReceivableForm.taxRate"></el-input>
-      </el-form-item>
-      <el-upload
-              class="upload-demo"
-              action=""
-              :http-request="setFileList"
-              :before-remove="beforeRemove"
-              :on-change="setFileList"
-              multiple
-              :limit="3"
-              :on-exceed="handleExceed">
-        <el-button size="small" type="primary">选择文件</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传pdf文件，且不超过500kb</div>
-      </el-upload>
-      <el-button type="primary" @click="submitForm('addReceivableForm')">提交</el-button>
-    </el-form>
-  </el-card>
+    <el-card class="box-card">
+        <el-row>
+            <el-col :span="2">选择类别：</el-col>
+            <el-col :span="4">
+                <el-select v-model="selectedModelId" placeholder="请选择类别">
+                    <el-option v-for="financial in financialDetailList"
+                               :key="financial.id"
+                               :label="financial.title"
+                               :value="financial.id">
+                    </el-option>
+                </el-select>
+            </el-col>
+        </el-row>
+        <el-form :model="addReceivableForm" ref="addReceivableForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="金额" prop="num" :rules= addReceivableForm.rules.num>
+                <el-input v-model="addReceivableForm.num"></el-input>
+            </el-form-item>
+            <el-form-item label="税率" prop="taxRate" :rules= addReceivableForm.rules.taxRate>
+                <el-input v-model="addReceivableForm.taxRate"></el-input>
+            </el-form-item>
+            <el-upload
+                    class="upload-demo"
+                    action=""
+                    :http-request="setFileList"
+                    :before-remove="beforeRemove"
+                    :on-change="setFileList"
+                    multiple
+                    :limit="3"
+                    :on-exceed="handleExceed">
+                <el-button size="small" type="primary">选择文件</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传pdf文件，且不超过500kb</div>
+            </el-upload>
+            <el-button type="primary" @click="submitForm('addReceivableForm')">提交</el-button>
+        </el-form>
+    </el-card>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-  name: 'LinkToRecordReceivable',
+  name: 'IncomeConfirmation',
   data: function () {
     return {
       selectedProjectID: '',
-      financialModelList: [],
+      financialDetailList: [],
       selectedModelId: '',
       addReceivableForm: {
         num: '',
@@ -69,11 +69,10 @@ export default {
       axios.get('http://localhost:8080/static/receivableList.json', { // URL:/financialModelSearch
         params: {
           projectId: this.selectedProjectID,
-          type: 1,
-          isActive: 1
+          financialDetailType: 1
         }
       }).then(res => {
-        this.financialModelList = res.data.financialModelList
+        this.financialDetailList = res.data.financialDetailList
       }).catch(function (error) {
         alert(error)
       })
@@ -128,15 +127,15 @@ function conversionToBinaryStream (buffer) {
 </script>
 
 <style scoped>
-  .text {
-    font-size: 14px;
-  }
+    .text {
+        font-size: 14px;
+    }
 
-  .item {
-    padding: 18px 0;
-  }
+    .item {
+        padding: 18px 0;
+    }
 
-  .box-card {
-    width: 480px;
-  }
+    .box-card {
+        width: 480px;
+    }
 </style>
