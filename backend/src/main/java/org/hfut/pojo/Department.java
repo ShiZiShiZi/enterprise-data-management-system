@@ -20,4 +20,13 @@ public class Department {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Department) {
+            Department department = (Department)obj;
+            return id.intValue() == department.getId() && this.name.equals(department.getName());
+        }
+        return super.equals(obj);
+    }
 }
