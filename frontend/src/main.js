@@ -15,7 +15,7 @@ Vue.use(ElementUI)
 Vue.use(Vuex)
 const store = new Vuex.Store({ // store对象
   state: {
-    token: '',
+    token: '434',
     permission: 15
   },
   mutations: {

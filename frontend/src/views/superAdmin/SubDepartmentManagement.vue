@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" @tab-click="handleClick">
+  <el-tabs>
     <el-tab-pane label="部门设置"><el-col :span="10">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -44,7 +44,6 @@
           <el-table-column property="email" label="邮箱" width="200"></el-table-column>
         </el-table>
         <el-pagination
-          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           layout="prev, pager, next"
           :total="maxPage*10">
@@ -80,7 +79,9 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              @change="drawIncome" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -94,7 +95,9 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              @change="drawExpenditure" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -108,7 +111,9 @@
           </el-col>
           <el-col :span="7">
             <el-date-picker
-              v-model="projectData.chooseDate" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" @change="drawProfit" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
+              v-model="projectData.chooseDate" type="daterange"
+              range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+              @change="drawProfit" unlink-panels format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-col>
         </el-row>
@@ -167,7 +172,6 @@ export default {
     this.getDeveloperList()
     let myDate = new Date()
     this.year = myDate.getFullYear().toString()
-    this.getProjectPeopleList()
     axios.get('http://localhost:8080/static/departmentDataTotal.json', {
       params: {
         departmentId: this.id

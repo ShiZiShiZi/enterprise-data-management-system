@@ -46,9 +46,7 @@
       <el-upload
               class="upload-demo"
               action=""
-              :http-request="fileList"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
+              :http-request="setFileList"
               :before-remove="beforeRemove"
               :on-change="setFileList"
               multiple
