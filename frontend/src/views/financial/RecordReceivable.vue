@@ -1,27 +1,32 @@
 <template>
   <el-card class="box-card" align="center">
-    <el-table
-      ref="singleTable"
-      :data="projectList"
-      highlight-current-row>
-      <el-table-column
-        type="index"
-        width="50">
+    <el-row>
+      <el-col :span="3" class="text-left">项目开始时间：</el-col>
+      <el-col :span="9">
+        <el-date-picker v-model="startTime" type="daterange" range-separator="至" value-format="yyyy-MM-dd"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+        </el-date-picker>
+      </el-col>
+      <el-col :span="2" class="text-left">搜索项目：</el-col>
+      <el-col :span="3">
+        <el-input v-model="projectTitle" placeholder="请输入内容"></el-input>
+      </el-col>
+    </el-row>
+    <el-table ref="singleTable" :data="projectList" highlight-current-row>
+      <el-table-column type="index" width="50">
       </el-table-column>
-      <el-table-column
-        property="title"
-        label="项目名"
-        width="120" align="center">
+      <el-table-column property="title" label="项目名称" width="120">
       </el-table-column>
-      <el-table-column
-        property="description"
-        label="项目描述"
-        width="150" align="center">
+      <el-table-column property="description" label="项目描述" width="240">
       </el-table-column>
-      <el-table-column
-        width="120" align="center">
+      <el-table-column property="startTime" label="开始时间" width="120">
+      </el-table-column>
+      <el-table-column property="finishTime" label="预计结束时间" width="120">
+      </el-table-column>
+      <el-table-column width="120" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-share" @click="toRecord(scope.row)"></el-button>
+          <el-button type="primary" plain @click="jumpToRecord(scope.row)">添加</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -40,38 +45,55 @@ export default {
   name: 'RecordReceivable',
   data: function () {
     return {
-      id: '',
-      title: '',
-      description: '',
       departmentId: '',
       projectList: [],
       currentPage: 1,
       pageSize: 2,
       maxPage: 1,
-      sortColumn: '部门id',
-      sortOrder: 1,
-      active: 1
+      projectTitle: '',
+      startTime: ''
+    }
+  },
+  watch: {
+    startTime (val) {
+      this.currentPage = 1
+      this.getDoingProjectList()
+    },
+    projectTitle (val) {
+      this.currentPage = 1
+      this.getDoingProjectList()
     }
   },
   created: function () {
     this.departmentId = this.$route.params.id
-    axios.get('http://localhost:8080/static/projectSearch.json', {
-      params: {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize,
-        sortColumn: this.sortColumn,
-        sortOrder: this.sortOrder,
-        active: this.active
-      }
-    }).then(res => {
-      this.projectList = res.data.projectList
-    }).catch(function (error) {
-      alert(error)
-    })
+    this.getProjectList()
   },
   methods: {
-    toRecord: function (row) {
+    getProjectList: function () {
+      axios.get('http://localhost:8080/static/projectList.json', { // URL:/projectSearch
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+          departmentId: this.departmentId,
+          active: 1,
+          startTime: this.startTime,
+          projectTitle: this.projectTitle,
+          sortColumn: 'start_time',
+          sortOrder: 1
+        }
+      }).then(res => {
+        this.projectList = res.data.projectList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
+    },
+    jumpToRecord: function (row) {
       this.$router.push('../../linkToRecordReceivable/' + row.id)
+    },
+    handleCurrentChange: function (currentPage) {
+      this.currentPage = currentPage
+      this.getProjectList()
     }
   }
 }

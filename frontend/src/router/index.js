@@ -276,7 +276,7 @@ const router = new Router({
           component: ConfirmReceivable
         },
         {
-          path: 'confirmExpenditure/:id/:name',
+          path: 'confirmExpenditure',
           name: 'ConfirmExpenditure',
           meta: {
             requireAuth: true,

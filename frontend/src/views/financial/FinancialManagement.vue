@@ -1,70 +1,52 @@
 <template>
   <el-card class="box-card">
-    <el-table
-      ref="singleTable"
-      :data="departmentList"
-      highlight-current-row>
-      <el-table-column
-        type="index"
-        width="50">
+    <el-row>
+      <el-col :span="3" class="text-left">搜索部门名称：</el-col>
+      <el-col :span="7">
+        <el-input v-model="name" placeholder="请输入内容"></el-input>
+      </el-col>
+    </el-row>
+    <el-table ref="singleTable" :data="departmentList" highlight-current-row>
+      <el-table-column type="index" width="50">
       </el-table-column>
-      <el-table-column
-        property="id"
-        label="部门id"
-        width="120">
+      <el-table-column property="name" label="部门名称" width="120">
       </el-table-column>
-      <el-table-column
-        property="name"
-        label="部门名"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        label="操作"
-        width="120">
+      <el-table-column label="操作" width="120">
         <template slot-scope="scope">
           <el-button @click="firstClick(scope.row)" type="text">记录预收</el-button>
           <el-button @click="secondClick(scope.row)" type="text">确认收入</el-button>
-          <el-button @click="thirdClick(scope.row)" type="text">确认费用支出</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      layout="prev, pager, next"
-      :total="maxPage*10">
+            @current-change="handleCurrentChange"
+            layout="prev, pager, next"
+            :total="maxPage*10">
     </el-pagination>
   </el-card>
 </template>
 
 <script>
 import axios from 'axios'
-
 export default {
   name: 'DepartmentManagement',
   data: function () {
     return {
       departmentList: [],
       currentPage: 1,
-      pageSize: 2,
+      pageSize: 10,
       maxPage: 1,
-      sortColumn: '部门id',
-      sortOrder: 1
+      name: ''
     }
   },
-  created: function () {
-    axios.get('http://localhost:8080/static/departmentList.json', {
-      params: {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize,
-        sortColumn: this.sortColumn,
-        sortOrder: this.sortOrder
-      }
-    }).then(res => {
-      this.departmentList = res.data.departmentList
-    }).catch(function (error) {
-      alert(error)
-    })
+  mounted: function () {
+    this.getDepartmentList()
+  },
+  watch: {
+    name (val) {
+      this.currentPage = 1
+      this.getDepartmentList()
+    }
   },
   methods: {
     handleSizeChange: function (size) {
@@ -72,17 +54,7 @@ export default {
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      axios.get('http://localhost:8080/static/departmentList2.json', {
-        params: {
-          currentPage: this.currentPage,
-          pageSize: this.pageSize
-        }
-      }).then(res => {
-        this.departmentList = res.data.departmentList
-        this.maxPage = res.data.maxPage
-      }).catch(function (error) {
-        alert(error)
-      })
+      this.getDepartmentList()
     },
     firstClick: function (row) {
       this.$router.push('recordReceivable/' + row.id + '/' + row.name)
@@ -90,8 +62,21 @@ export default {
     secondClick: function (row) {
       this.$router.push('confirmReceivable/' + row.id + '/' + row.name)
     },
-    thirdClick: function (row) {
-      this.$router.push('confirmExpenditure/' + row.id + '/' + row.name)
+    getDepartmentList: function () {
+      axios.get('http://localhost:8080/static/departmentList.json', { // URL:/departmentSearch
+        params: {
+          currentPage: this.currentPage,
+          pageSize: this.pageSize,
+          name: this.name,
+          sortColumn: 'id',
+          sortOrder: 1
+        }
+      }).then(res => {
+        this.departmentList = res.data.departmentList
+        this.maxPage = res.data.maxPage
+      }).catch(function (error) {
+        alert(error)
+      })
     }
   }
 }
