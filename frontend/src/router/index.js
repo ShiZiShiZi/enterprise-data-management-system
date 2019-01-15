@@ -22,14 +22,11 @@ import StaffEditor from '@/views/departmentManager/StaffEditor'
 import EditingFinancialModel from '@/views/departmentManager/EditingFinancialModel'
 import PersonnelUseRequest from '@/views/departmentManager/PersonnelUseRequest'
 import OverallFinancial from '@/components/financial/OverallFinancial'
-import FinancialManagement from '@/views/financial/FinancialManagement'
-import ConfirmExpenditure from '@/views/financial/ConfirmExpenditure'
-import ConfirmReceivable from '@/views/financial/ConfirmReceivable'
-import RecordReceivable from '@/views/financial/RecordReceivable'
-import LinkToRecordReceivable from '@/views/financial/LinkToRecordReceivable'
-import LinkToConfirmReceivable from '@/views/financial/LinkToConfirmReceivable'
-import LinkToConfirmExpenditure from '@/views/financial/LinkToConfirmExpenditure'
-import LinkToRefuseExpenditure from '@/views/financial/LinkToRefuseExpenditure'
+import SelectDepartment from '@/views/financial/SelectDepartment'
+import IncomeConfirmation from '@/views/financial/IncomeConfirmation'
+import ReceiveInAdvance from '@/views/financial/ReceiveInAdvance'
+import SelectProject from '@/views/financial/SelectProject'
+import OutcomeConfirmation from '@/views/financial/OutcomeConfirmation'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import DoingProjectDepartment from '@/views/superAdmin/DoingProjectDepartment'
@@ -249,76 +246,49 @@ const router = new Router({
       component: OverallFinancial,
       children: [
         {
-          path: 'financialMng',
-          name: 'FinancialManagement',
+          path: 'selectDepartment',
+          name: 'selectDepartment',
           meta: {
             requireAuth: true,
             permission: 8
           },
-          component: FinancialManagement
+          component: SelectDepartment
         },
         {
-          path: 'recordReceivable/:id/:name',
-          name: 'RecordReceivable',
+          path: 'selectProject/:id',
+          name: 'selectProject',
           meta: {
             requireAuth: true,
             permission: 8
           },
-          component: RecordReceivable
+          component: SelectProject
         },
         {
-          path: 'confirmReceivable/:id/:name',
-          name: 'ConfirmReceivable',
+          path: 'receiveInAdvance/:id',
+          name: 'receiveInAdvance',
           meta: {
             requireAuth: true,
             permission: 8
           },
-          component: ConfirmReceivable
+          component: ReceiveInAdvance
         },
         {
-          path: 'confirmExpenditure',
-          name: 'ConfirmExpenditure',
+          path: 'incomeConfirmation/:id',
+          name: 'IncomeConfirmation',
           meta: {
             requireAuth: true,
             permission: 8
           },
-          component: ConfirmExpenditure
+          component: IncomeConfirmation
         },
         {
-          path: 'linkToRecordReceivable/:id',
-          name: 'LinkToRecordReceivable',
+          path: 'outcomeConfirmation/:id',
+          name: 'outcomeConfirmation',
           meta: {
             requireAuth: true,
             permission: 8
           },
-          component: LinkToRecordReceivable
-        },
-        {
-          path: 'linkToConfirmReceivable/:id',
-          name: 'LinkToConfirmReceivable',
-          meta: {
-            requireAuth: true,
-            permission: 8
-          },
-          component: LinkToConfirmReceivable
-        },
-        {
-          path: 'linkToConfirmExpenditure/:id',
-          name: 'LinkToConfirmExpenditure',
-          meta: {
-            requireAuth: true,
-            permission: 8
-          },
-          component: LinkToConfirmExpenditure
-        },
-        {
-          path: 'linkToRefuseExpenditure/:id',
-          name: 'LinkToRefuseExpenditure',
-          meta: {
-            requireAuth: true,
-            permission: 8
-          },
-          component: LinkToRefuseExpenditure
+          component: OutcomeConfirmation
         }
       ]
     },
